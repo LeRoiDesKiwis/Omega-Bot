@@ -30,10 +30,10 @@ public class CommandManager {
 
     /**
      * Register a command
-     * @param name the name of the command
      * @param command the command
      */
-    private void register(String name, Command command) {
+    private void register(Command command) {
+        String name = command.register().getName();
         commands.put(name, command);
     }
 
