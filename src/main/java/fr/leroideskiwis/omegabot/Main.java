@@ -23,7 +23,6 @@ public class Main {
         this.eventManager = new EventManager();
         this.userManager = new UserManager();
         this.commandManager = new CommandManager(jda, eventManager, userManager);
-        commandManager.registerInDiscord();
 
         jda.addEventListener(new MessageListener(eventManager));
         jda.addEventListener(new CommandListener(commandManager));

@@ -5,6 +5,7 @@ import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,15 +38,9 @@ public class CommandManager {
      * @param command the command
      */
     private void register(Command command) {
-        String name = command.register().getName();
-        commands.put(name, command);
-    }
-
-    /**
-     * Register the commands in discord
-     */
-    public void registerInDiscord(){
-        jda.updateCommands().addCommands(commands.values().stream().map(Command::register).toList()).queue();
+        SlashCommandData data = command.commandData();
+        commands.put(data.getName(), command);
+        jda.updateCommands().addCommands(data).queue();
     }
 
     /**
