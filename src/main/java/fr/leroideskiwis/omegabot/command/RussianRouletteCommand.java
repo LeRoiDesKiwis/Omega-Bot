@@ -27,7 +27,7 @@ public class RussianRouletteCommand implements Command{
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OmegaUser toPlayUser = userManager.from(event.getOption("user").getAsMember());
-        if(user.getPoints() < PRICE){
+        if(!user.hasEnoughPoints(PRICE)){
             event.reply("You don't have enough points to play russian roulette.").queue();
             return;
         }

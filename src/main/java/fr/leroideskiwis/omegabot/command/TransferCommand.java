@@ -34,7 +34,7 @@ public class TransferCommand implements Command{
             event.reply("You can't transfer negative points.").queue();
             return;
         }
-        if(user.getPoints() < points){
+        if(user.hasEnoughPoints(points)){
             event.reply("You don't have enough points to transfer.").queue();
             return;
         }
