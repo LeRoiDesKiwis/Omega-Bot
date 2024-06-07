@@ -1,5 +1,6 @@
 package fr.leroideskiwis.omegabot.command;
 
+import fr.leroideskiwis.omegabot.BuyType;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -31,6 +32,11 @@ public class RussianRouletteCommand implements Command{
             event.reply("You don't have enough points to play russian roulette.").queue();
             return;
         }
+        if(toPlayUser.isImmune(BuyType.RUSSIAN_ROULETTE)){
+            event.reply(toPlayUser.getName()+" est immunise").setEphemeral(true).queue();
+            return;
+        }
+
         user.takePoints(PRICE);
         if(Math.random() < 0.1666666666f){
             event.reply(String.format("%s a joue a la roulette russe et a perdu ! Au goulag !", toPlayUser.getAsMention())).queue();
