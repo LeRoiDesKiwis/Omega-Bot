@@ -19,7 +19,7 @@ public class GivePointsCommand implements Command{
     }
 
     @Override
-    public SlashCommandData register() {
+    public SlashCommandData commandData() {
         return Commands.slash("givepoints", "Donner des points")
                 .addOption(OptionType.INTEGER, "points", "Le nombre de points à donner", true)
                 .addOption(OptionType.USER, "user", "L'utilisateur à qui donner les points", false)

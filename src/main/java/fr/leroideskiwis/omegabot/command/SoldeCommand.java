@@ -16,7 +16,7 @@ public class SoldeCommand implements Command{
     }
 
     @Override
-    public SlashCommandData register() {
+    public SlashCommandData commandData() {
         return Commands.slash("solde", "Voir votre solde")
                 .addOption(OptionType.USER, "user", "L'utilisateur dont vous voulez voir le solde", false);
     }

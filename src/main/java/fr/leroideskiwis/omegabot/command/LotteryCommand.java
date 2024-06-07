@@ -13,7 +13,7 @@ public class LotteryCommand implements Command{
     private final int PRICE = 25;
 
     @Override
-    public SlashCommandData register() {
+    public SlashCommandData commandData() {
         return Commands.slash("lottery", "Start a lottery");
     }
 

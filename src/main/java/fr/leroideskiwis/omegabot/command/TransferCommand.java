@@ -20,7 +20,7 @@ public class TransferCommand implements Command{
     }
 
     @Override
-    public SlashCommandData register() {
+    public SlashCommandData commandData() {
         return Commands.slash("transfer", "Transfer points to another user")
                 .addOption(OptionType.USER, "user", "The user to transfer points to", true)
                 .addOption(OptionType.INTEGER, "points", "The amount of points to transfer", true);
