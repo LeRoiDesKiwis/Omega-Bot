@@ -28,6 +28,7 @@ public class CommandManager {
         register(new TransferCommand(userManager));
         register(new LotteryCommand());
         register(new RussianRouletteCommand(userManager));
+        register(new ShameGoulagCommand(userManager));
 
     }
 

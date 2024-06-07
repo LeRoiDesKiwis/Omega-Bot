@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Member;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -125,5 +126,18 @@ public class OmegaUser {
 
     public String getName() {
         return member.getEffectiveName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OmegaUser omegaUser = (OmegaUser) o;
+        return Objects.equals(member, omegaUser.member);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(member);
     }
 }
