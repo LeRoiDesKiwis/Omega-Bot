@@ -30,7 +30,8 @@ public class CommandManager {
         register(new LotteryCommand());
         register(new RussianRouletteCommand(userManager));
         register(new ShameGoulagCommand(userManager));
-
+        register(new RemoveAutoUserCommand(userManager, eventManager));
+        register(new AnonymousCommand());
     }
 
     /**
@@ -40,7 +41,7 @@ public class CommandManager {
     private void register(Command command) {
         SlashCommandData data = command.commandData();
         commands.put(data.getName(), command);
-        jda.updateCommands().addCommands(data).queue();
+        jda.upsertCommand(data).queue();
     }
 
     /**
