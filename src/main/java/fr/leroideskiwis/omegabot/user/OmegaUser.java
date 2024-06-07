@@ -46,11 +46,21 @@ public class OmegaUser {
     }
 
     /**
-     * timeout the user for {@code time} seconds
+     * timeout the user for {@code time} minutes
      * @param time duration of the timeout
+     * @see #goulag(int, TimeUnit)
      */
     public void goulag(int time){
-        member.timeoutFor(time, TimeUnit.SECONDS).queue();
+        goulag(time, TimeUnit.MINUTES);
+    }
+
+    /**
+     * timeout the user for {@code time} of {@code unit}
+     * @param time duration of the timeout
+     * @param unit the unit of the duration
+     */
+    public void goulag(int time, TimeUnit unit){
+        member.timeoutFor(time, unit).queue();
     }
 
     /**
@@ -105,4 +115,11 @@ public class OmegaUser {
         if(guild.getRoleById(id) != null) guild.removeRoleFromMember(member, guild.getRoleById(id)).queue();
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public String getAsMention() {
+        return member.getAsMention();
+    }
 }
