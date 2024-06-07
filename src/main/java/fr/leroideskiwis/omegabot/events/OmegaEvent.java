@@ -6,4 +6,6 @@ public interface OmegaEvent {
     boolean isFinished();
     boolean isApplicable(MessageReceivedEvent event);
     void apply(MessageReceivedEvent event);
+
+    void end();
 }
