@@ -22,10 +22,13 @@ public class CommandManager {
         this.userManager = userManager;
         this.jda = jda;
 
-        register("timeoutbomb", new TimeoutBombCommand(eventManager, userManager));
-        register("solde", new SoldeCommand(userManager));
-        register("givepoints", new GivePointsCommand(userManager));
-        register("transfer", new TransferCommand(userManager));
+        register(new TimeoutBombCommand(eventManager, userManager));
+        register(new SoldeCommand(userManager));
+        register(new GivePointsCommand(userManager));
+        register(new TransferCommand(userManager));
+        register(new LotteryCommand());
+        register(new RussianRouletteCommand(userManager));
+
     }
 
     /**
