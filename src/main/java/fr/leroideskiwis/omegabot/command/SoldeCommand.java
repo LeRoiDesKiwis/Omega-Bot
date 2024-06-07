@@ -7,11 +7,11 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
-public class CommandPoints implements Command{
+public class SoldeCommand implements Command{
 
     private UserManager userManager;
 
-    public CommandPoints(UserManager userManager) {
+    public SoldeCommand(UserManager userManager) {
         this.userManager = userManager;
     }
 

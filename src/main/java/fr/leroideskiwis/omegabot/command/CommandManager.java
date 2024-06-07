@@ -23,7 +23,7 @@ public class CommandManager {
         this.jda = jda;
 
         register("timeoutbomb", new TimeoutBombCommand(eventManager, userManager));
-        register("solde", new CommandPoints(userManager));
+        register("solde", new SoldeCommand(userManager));
         register("givepoints", new GivePointsCommand(userManager));
     }
 
