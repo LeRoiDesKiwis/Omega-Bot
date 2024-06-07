@@ -25,6 +25,7 @@ public class CommandManager {
         register("timeoutbomb", new TimeoutBombCommand(eventManager, userManager));
         register("solde", new SoldeCommand(userManager));
         register("givepoints", new GivePointsCommand(userManager));
+        register("transfer", new TransferCommand(userManager));
     }
 
     /**

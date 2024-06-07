@@ -122,4 +122,8 @@ public class OmegaUser {
     public String getAsMention() {
         return member.getAsMention();
     }
+
+    public String getName() {
+        return member.getEffectiveName();
+    }
 }
