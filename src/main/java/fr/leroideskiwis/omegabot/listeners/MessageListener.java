@@ -1,6 +1,6 @@
-package fr.leroideskiwis.omegabot.commands.listeners;
+package fr.leroideskiwis.omegabot.listeners;
 
-import fr.leroideskiwis.omegabot.commands.events.OmegaEvent;
+import fr.leroideskiwis.omegabot.events.OmegaEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 

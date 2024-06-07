@@ -1,6 +1,6 @@
-package fr.leroideskiwis.omegabot.commands.user;
+package fr.leroideskiwis.omegabot.user;
 
-import fr.leroideskiwis.omegabot.commands.BuyType;
+import fr.leroideskiwis.omegabot.BuyType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 

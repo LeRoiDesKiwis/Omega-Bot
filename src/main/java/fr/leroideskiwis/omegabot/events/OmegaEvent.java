@@ -1,4 +1,4 @@
-package fr.leroideskiwis.omegabot.commands.events;
+package fr.leroideskiwis.omegabot.events;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 

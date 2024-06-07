@@ -1,4 +1,4 @@
-package fr.leroideskiwis.omegabot.commands.user;
+package fr.leroideskiwis.omegabot.user;
 
 import net.dv8tion.jda.api.entities.Member;
 

@@ -1,7 +1,7 @@
-package fr.leroideskiwis.omegabot.commands.command;
+package fr.leroideskiwis.omegabot.command;
 
-import fr.leroideskiwis.omegabot.commands.user.OmegaUser;
-import fr.leroideskiwis.omegabot.commands.user.UserManager;
+import fr.leroideskiwis.omegabot.user.OmegaUser;
+import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
