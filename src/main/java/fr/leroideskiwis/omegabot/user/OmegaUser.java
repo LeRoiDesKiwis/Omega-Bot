@@ -94,7 +94,7 @@ public class OmegaUser {
      * @param member the member to compare
      * @return if the user is the same as the {@code member}
      */
-    public boolean isUser(Member member){
+    public boolean isMember(Member member){
         return this.member.equals(member);
     }
 

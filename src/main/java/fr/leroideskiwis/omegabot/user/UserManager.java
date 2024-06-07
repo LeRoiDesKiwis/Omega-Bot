@@ -18,7 +18,7 @@ public class UserManager {
      * @return the OmegaUser
      */
     public OmegaUser from(Member member){
-        return users.stream().filter(omegaUser -> omegaUser.isUser(member)).findFirst().orElseGet(() -> {
+        return users.stream().filter(omegaUser -> omegaUser.isMember(member)).findFirst().orElseGet(() -> {
             OmegaUser user = new OmegaUser(member);
             users.add(user);
             return user;
