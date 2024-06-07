@@ -8,8 +8,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class TimeoutEvent implements OmegaEvent{
@@ -18,7 +17,8 @@ public class TimeoutEvent implements OmegaEvent{
     private UserManager userManager;
     private long textChannelId;
     private Message message;
-    private List<User> users = new ArrayList<>();
+    private Map<Integer, User> users = new HashMap<>();
+    private Random random = new Random();
 
     public TimeoutEvent(Message message, MessageChannelUnion textChannel, UserManager userManager){
         this.userManager = userManager;
@@ -39,8 +39,9 @@ public class TimeoutEvent implements OmegaEvent{
 
     @Override
     public void apply(MessageReceivedEvent event) {
-        userManager.from(event.getMember()).goulag(2, TimeUnit.SECONDS);
-        users.add(event.getAuthor());
+        int duration = random.nextInt(5, 15);
+        userManager.from(event.getMember()).goulag(duration, TimeUnit.SECONDS);
+        users.put(duration, event.getAuthor());
         counter--;
     }
 
@@ -48,10 +49,10 @@ public class TimeoutEvent implements OmegaEvent{
     public void end(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\nCamarades tombes au combat : \n");
-        for(User user : users){
-            stringBuilder.append("- ").append(user.getName()).append("\n");
+        for(Map.Entry<Integer, User> user : users.entrySet()){
+            stringBuilder.append(String.format("- %s : %d secondes\n", user.getValue().getAsMention(), user.getKey()));
         }
 
-        message.editMessage(message.getContentDisplay()+stringBuilder.toString()).queue();
+        message.editMessage(message.getContentDisplay()+ stringBuilder).queue();
     }
 }
