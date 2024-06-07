@@ -1,5 +1,6 @@
 package fr.leroideskiwis.omegabot.command;
 
+import fr.leroideskiwis.omegabot.events.EventManager;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
@@ -17,9 +18,13 @@ public class CommandManager {
     private final UserManager userManager;
     private final JDA jda;
 
-    public CommandManager(JDA jda, UserManager userManager) {
+    public CommandManager(JDA jda, EventManager eventManager, UserManager userManager) {
         this.userManager = userManager;
         this.jda = jda;
+
+        register("timeoutbomb", new TimeoutBombCommand(eventManager, userManager));
+        register("solde", new CommandPoints(userManager));
+        register("givepoints", new GivePointsCommand(userManager));
     }
 
     /**
@@ -27,7 +32,7 @@ public class CommandManager {
      * @param name the name of the command
      * @param command the command
      */
-    public void register(String name, Command command) {
+    private void register(String name, Command command) {
         commands.put(name, command);
     }
 
