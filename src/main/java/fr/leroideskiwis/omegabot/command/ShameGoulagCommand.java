@@ -56,7 +56,7 @@ public class ShameGoulagCommand implements Command {
                     OmegaUser goulaged = check > cross ? toGoulagUser : user;
                     goulaged.goulag(10, TimeUnit.SECONDS);
                     event.getChannel().sendMessage(String.format("%d :white_check_mark: vs %d :x: : le %s l'emporte donc et %s se prend 5min de goulag.",
-                            check, cross, (check >= cross ? ":white_check_mark:" : ":x:"), goulaged.getAsMention())).queue();
+                            check, cross, (check > cross ? ":white_check_mark:" : ":x:"), goulaged.getAsMention())).queue();
                 }
             }, 5000);
         }));
