@@ -39,8 +39,8 @@ public class TimeoutEvent implements OmegaEvent{
 
     @Override
     public void apply(MessageReceivedEvent event) {
-        int duration = random.nextInt(5, 15);
-        userManager.from(event.getMember()).goulag(duration, TimeUnit.SECONDS);
+        int duration = random.nextInt(3, 6);
+        userManager.from(event.getMember()).goulag(duration, TimeUnit.MINUTES);
         users.put(duration, event.getAuthor());
         counter--;
     }
@@ -50,7 +50,7 @@ public class TimeoutEvent implements OmegaEvent{
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\nCamarades tombes au combat : \n");
         for(Map.Entry<Integer, User> user : users.entrySet()){
-            stringBuilder.append(String.format("- %s : %d secondes\n", user.getValue().getAsMention(), user.getKey()));
+            stringBuilder.append(String.format("- %s : %d minutes\n", user.getValue().getAsMention(), user.getKey()));
         }
 
         message.editMessage(message.getContentDisplay()+ stringBuilder).queue();

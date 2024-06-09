@@ -10,7 +10,7 @@ import java.util.Random;
 public class LotteryCommand implements Command{
 
     private Random random = new Random();
-    private final int PRICE = 25;
+    private final int PRICE = 15;
 
     @Override
     public SlashCommandData commandData() {

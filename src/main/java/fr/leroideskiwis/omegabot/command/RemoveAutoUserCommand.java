@@ -34,7 +34,7 @@ public class RemoveAutoUserCommand implements Command{
         }
         user.takePoints(PRICE);
         OmegaUser toRemove = userManager.from(event.getOption("user").getAsMember());
-        long end = System.currentTimeMillis() + 15*60000;
+        long end = System.currentTimeMillis() + 10*60000;
         eventManager.addEvent(new RemoveMessageAutoEvent(end, toRemove));
         event.reply("L'utilisateur "+toRemove.getAsMention()+" a ete puni pendant 10min. :smiling_imp:").setEphemeral(true).queue();
     }

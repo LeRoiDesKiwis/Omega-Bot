@@ -12,7 +12,7 @@ public class TimeoutBombCommand implements Command {
 
     private final EventManager eventManager;
     private final UserManager userManager;
-    private final int PRICE = 10;
+    private final int PRICE = 300;
 
     public TimeoutBombCommand(EventManager eventManager, UserManager userManager) {
         this.eventManager = eventManager;

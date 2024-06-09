@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class ShameGoulagCommand implements Command {
 
     private UserManager userManager;
-    private final int PRICE = 100;
+    private final int PRICE = 150;
 
     public ShameGoulagCommand(UserManager userManager) {
         this.userManager = userManager;

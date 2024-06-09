@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 public class AnonymousCommand implements Command{
 
-    private final int PRICE = 100;
+    private final int PRICE = 20;
 
     @Override
     public SlashCommandData commandData() {
