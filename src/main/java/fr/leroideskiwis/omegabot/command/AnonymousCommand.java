@@ -31,9 +31,13 @@ public class AnonymousCommand implements Command{
             return;
         }
         user.takePoints(PRICE);
-        event.reply("Message envoyé !").setEphemeral(true).queue();
         TextChannel channel = event.getOption("channel") == null ? event.getGuildChannel().asTextChannel() : event.getOption("channel").getAsChannel().asTextChannel();
+        if(!user.canSendAt(channel)){
+            event.reply("Vous ne pouvez pas envoyer de message dans ce channel.").setEphemeral(true).queue();
+            return;
+        }
         channel.sendMessage(event.getOption("message").getAsString()).queue();
+        event.reply("Message envoye !").setEphemeral(true).queue();
     }
 
 }

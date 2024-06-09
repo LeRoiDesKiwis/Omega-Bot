@@ -140,4 +140,8 @@ public class OmegaUser {
     public int hashCode() {
         return Objects.hash(member);
     }
+
+    public boolean canSendAt(TextChannel channel) {
+        return channel.canTalk(member);
+    }
 }
