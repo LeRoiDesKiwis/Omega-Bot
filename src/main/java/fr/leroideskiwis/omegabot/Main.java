@@ -24,7 +24,7 @@ public class Main {
         this.userManager = new UserManager();
         this.commandManager = new CommandManager(jda, eventManager, userManager);
 
-        jda.addEventListener(new MessageListener(eventManager));
+        jda.addEventListener(new MessageListener(eventManager, userManager));
         jda.addEventListener(new CommandListener(commandManager));
 
     }
