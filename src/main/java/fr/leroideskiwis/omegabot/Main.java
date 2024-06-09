@@ -29,10 +29,8 @@ public class Main {
 
     }
 
-
-
     public static void main(String[] args) {
-        new Main().launch(args[0]);
+        new Main().launch(System.getenv("BOT_TOKEN"));
     }
 
 }
