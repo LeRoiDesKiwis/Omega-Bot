@@ -43,4 +43,9 @@ public class TimeoutBombCommand implements Command {
     public int price() {
         return PRICE;
     }
+
+    @Override
+    public boolean isLoggable() {
+        return true;
+    }
 }

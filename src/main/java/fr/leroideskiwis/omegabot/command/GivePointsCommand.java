@@ -41,4 +41,9 @@ public class GivePointsCommand implements Command{
     public int price() {
         return 0;
     }
+
+    @Override
+    public boolean isLoggable() {
+        return true;
+    }
 }

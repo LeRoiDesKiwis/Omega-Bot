@@ -51,4 +51,9 @@ public class RussianRouletteCommand implements Command{
     public int price() {
         return PRICE;
     }
+
+    @Override
+    public boolean isLoggable() {
+        return true;
+    }
 }

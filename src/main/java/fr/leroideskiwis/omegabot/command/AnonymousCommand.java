@@ -45,4 +45,9 @@ public class AnonymousCommand implements Command{
         return PRICE;
     }
 
+    @Override
+    public boolean isLoggable() {
+        return true;
+    }
+
 }

@@ -59,9 +59,10 @@ public class CommandManager {
         commands.entrySet().stream()
                 .filter(command -> command.getKey().equalsIgnoreCase(event.getName()))
                 .findFirst()
-                .ifPresent(command -> command.getValue().execute(user, event));
-
-        event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
+                .ifPresent(command -> {
+                    command.getValue().execute(user, event);
+                    if(command.getValue().isLoggable()) event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
+                });
     }
 
     private MessageEmbed createLogEmbed(SlashCommandInteraction event){

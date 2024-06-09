@@ -53,6 +53,11 @@ public class TransferCommand implements Command{
         return 0;
     }
 
+    @Override
+    public boolean isLoggable() {
+        return true;
+    }
+
     private MessageEmbed.Field createField(String name, int oldSolde, int newSolde){
         return new MessageEmbed.Field("Nouveau solde de "+name, String.format("%d (avant: %d)", newSolde, oldSolde), true);
     }
