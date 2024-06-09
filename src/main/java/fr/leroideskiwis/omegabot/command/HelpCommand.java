@@ -20,24 +20,24 @@ public class HelpCommand implements Command{
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder("---- AIDE ---- (<option> = obligatoire, [option] = facultatif)\n");
 
         commandManager.forEach((name, command) -> {
-            builder.append(name);
+            builder.append("/").append(name);
             command.commandData().getOptions().forEach(optionData -> {
                         if(optionData.isRequired()) builder.append(" <");
                         else builder.append(" [");
                         builder.append(optionData.getName());
                         if(optionData.isRequired()) builder.append(" >");
-                        else builder.append(" ]");
+                        else builder.append("]");
             });
 
             builder.append(" : ").append(command.commandData().getDescription());
 
-            if(command.price() > 0) builder.append("PRICE: ").append(command.price());
+            if(command.price() > 0) builder.append(" (**Prix: ").append(command.price()).append("pts**)");
             builder.append("\n");
         });
-        event.reply(builder.toString()).queue();
+        event.reply(builder.toString()).setEphemeral(true).queue();
     }
 
     @Override
