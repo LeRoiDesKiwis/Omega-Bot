@@ -76,6 +76,9 @@ public class CommandManager {
     }
 
     public void forEach(BiConsumer<String, Command> consumer) {
-        commands.forEach(consumer);
+        commands.entrySet()
+                .stream()
+                .sorted((o1, o2) -> o2.getValue().price() - o1.getValue().price())
+                .forEach(entry -> consumer.accept(entry.getKey(), entry.getValue()));
     }
 }
