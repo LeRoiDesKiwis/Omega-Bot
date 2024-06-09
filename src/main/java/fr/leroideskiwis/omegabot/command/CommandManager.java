@@ -1,6 +1,5 @@
 package fr.leroideskiwis.omegabot.command;
 
-import fr.leroideskiwis.omegabot.Constants;
 import fr.leroideskiwis.omegabot.events.EventManager;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
@@ -14,6 +13,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * Manage the commands
@@ -37,6 +37,7 @@ public class CommandManager {
         register(new ShameGoulagCommand(userManager));
         register(new RemoveAutoUserCommand(userManager, eventManager));
         register(new AnonymousCommand());
+        register(new HelpCommand(this));
     }
 
     /**
@@ -71,5 +72,9 @@ public class CommandManager {
                 .setDescription(event.getCommandString())
                 .setTimestamp(event.getTimeCreated());
         return embedBuilder.build();
+    }
+
+    public void forEach(BiConsumer<String, Command> consumer) {
+        commands.forEach(consumer);
     }
 }
