@@ -24,7 +24,7 @@ public class SoldeCommand implements Command{
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OmegaUser toCheck = event.getOption("user") == null ? user : userManager.from(event.getOption("user").getAsMember());
-        event.reply(toCheck.getAsMention()+" a " + toCheck.getPoints() + " points.").queue();
+        event.reply(toCheck.getAsMention()+" a " + toCheck.getPoints() + " points.").setEphemeral(true).queue();
     }
 
     @Override
