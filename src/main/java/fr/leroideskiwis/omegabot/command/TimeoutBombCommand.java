@@ -21,7 +21,7 @@ public class TimeoutBombCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("timeoutbomb", "Timeout for 5 minutes next 3 users who send a message in this channel.")
+        return Commands.slash("timeoutbomb", "Met au goulag pendant 5min les 3 prochaines personnes qui parleront")
                 .setGuildOnly(true);
     }
 

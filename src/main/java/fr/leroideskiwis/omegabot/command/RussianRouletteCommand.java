@@ -21,7 +21,7 @@ public class RussianRouletteCommand implements Command{
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("russianroulette", "Play a russian roulette")
+        return Commands.slash("russianroulette", "Une chance sur 6 que la personne mentionnee prenne 10min de goulag, sinon elle gagne 100pts.")
                 .addOption(OptionType.USER, "user", "The user to play with", true);
     }
 
