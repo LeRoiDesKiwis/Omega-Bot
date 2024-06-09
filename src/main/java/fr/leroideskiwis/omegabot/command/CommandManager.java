@@ -60,7 +60,7 @@ public class CommandManager {
                 .findFirst()
                 .ifPresent(command -> command.getValue().execute(user, event));
 
-        event.getGuild().getChannelById(TextChannel.class, Constants.logChannel).sendMessageEmbeds(createLogEmbed(event)).queue();
+        event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
     }
 
     private MessageEmbed createLogEmbed(SlashCommandInteraction event){
