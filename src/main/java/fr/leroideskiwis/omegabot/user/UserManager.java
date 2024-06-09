@@ -2,6 +2,7 @@ package fr.leroideskiwis.omegabot.user;
 
 import net.dv8tion.jda.api.entities.Member;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class UserManager {
     public OmegaUser from(Member member){
         return users.stream().filter(omegaUser -> omegaUser.isMember(member)).findFirst().orElseGet(() -> {
             OmegaUser user = new OmegaUser(member);
+            try {
+                user.load();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             users.add(user);
             return user;
         });

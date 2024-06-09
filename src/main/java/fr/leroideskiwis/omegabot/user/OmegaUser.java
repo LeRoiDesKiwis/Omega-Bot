@@ -1,9 +1,12 @@
 package fr.leroideskiwis.omegabot.user;
 
 import fr.leroideskiwis.omegabot.BuyType;
+import fr.leroideskiwis.omegabot.database.Database;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +28,7 @@ public class OmegaUser {
     }
 
     public OmegaUser(Member member) {
-        this(member, 0);
+        this(member, 100);
     }
 
     /**
@@ -70,6 +73,7 @@ public class OmegaUser {
      */
     public void takePoints(int points){
         this.points -= points;
+        save(); //pas opti mais comme y'a pas bcp de membres ça va
     }
 
     /**
@@ -78,6 +82,7 @@ public class OmegaUser {
      */
     public void givePoints(int points){
         this.points += points;
+        save(); //pas opti mais comme y'a pas bcp de membres ça va
     }
 
     /**
@@ -143,5 +148,18 @@ public class OmegaUser {
 
     public boolean canSendAt(TextChannel channel) {
         return channel.canTalk(member);
+    }
+
+    public void save() {
+        try {
+            Database.getDatabase().execute("INSERT OR REPLACE INTO users (id, points) VALUES (?, ?)", member.getId(), points);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void load() throws SQLException {
+        this.points = Database.getDatabase().getFirst("SELECT * FROM users WHERE id = ?", "points", Integer.class, member.getId())
+                .orElse(points);
     }
 }
