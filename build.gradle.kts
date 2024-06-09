@@ -19,3 +19,10 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.register<JavaExec>("run") {
+    group = "application"
+    description = "Runs the main class"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("fr.leroideskiwis.omegabot.Main")
+}
