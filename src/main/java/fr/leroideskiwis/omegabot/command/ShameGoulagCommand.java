@@ -61,4 +61,9 @@ public class ShameGoulagCommand implements Command {
             }, 5000);
         }));
     }
+
+    @Override
+    public int price() {
+        return PRICE;
+    }
 }

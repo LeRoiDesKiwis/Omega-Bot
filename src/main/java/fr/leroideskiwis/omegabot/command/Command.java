@@ -8,4 +8,6 @@ public interface Command {
 
     SlashCommandData commandData();
     void execute(OmegaUser user, SlashCommandInteraction event);
+
+    int price();
 }

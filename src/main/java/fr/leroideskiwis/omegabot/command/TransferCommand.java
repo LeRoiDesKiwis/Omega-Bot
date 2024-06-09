@@ -48,6 +48,11 @@ public class TransferCommand implements Command{
         event.replyEmbeds(embedBuilder.build()).queue();
     }
 
+    @Override
+    public int price() {
+        return 0;
+    }
+
     private MessageEmbed.Field createField(String name, int oldSolde, int newSolde){
         return new MessageEmbed.Field("Nouveau solde de "+name, String.format("%d (avant: %d)", newSolde, oldSolde), true);
     }

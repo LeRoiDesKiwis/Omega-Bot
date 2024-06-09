@@ -37,5 +37,9 @@ public class RemoveAutoUserCommand implements Command{
         long end = System.currentTimeMillis() + 15*60000;
         eventManager.addEvent(new RemoveMessageAutoEvent(end, toRemove));
         event.reply("L'utilisateur "+toRemove.getAsMention()+" a ete puni pendant 15min. :smiling_imp:").queue();
+
+    @Override
+    public int price() {
+        return PRICE;
     }
 }

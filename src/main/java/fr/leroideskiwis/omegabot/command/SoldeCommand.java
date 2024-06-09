@@ -26,4 +26,9 @@ public class SoldeCommand implements Command{
         OmegaUser toCheck = event.getOption("user") == null ? user : userManager.from(event.getOption("user").getAsMember());
         event.reply(toCheck.getAsMention()+" a " + toCheck.getPoints() + " points.").queue();
     }
+
+    @Override
+    public int price() {
+        return 0;
+    }
 }

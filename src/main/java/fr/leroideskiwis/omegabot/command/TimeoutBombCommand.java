@@ -38,4 +38,9 @@ public class TimeoutBombCommand implements Command {
         event.getChannel().sendMessage("C'est l'heure de faire boom-boom ! :bomb:").queue(message -> eventManager.addEvent(new TimeoutEvent(message, event.getChannel(), userManager)));
 
     }
+
+    @Override
+    public int price() {
+        return PRICE;
+    }
 }

@@ -36,4 +36,9 @@ public class GivePointsCommand implements Command{
 
         event.reply(":dollar: Vous avez "+message+" "+ Math.abs(money) + " points a " + toGiveUser.getAsMention()).queue();
     }
+
+    @Override
+    public int price() {
+        return 0;
+    }
 }

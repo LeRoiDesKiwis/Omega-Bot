@@ -46,4 +46,9 @@ public class RussianRouletteCommand implements Command{
             toPlayUser.givePoints(100);
         }
     }
+
+    @Override
+    public int price() {
+        return PRICE;
+    }
 }

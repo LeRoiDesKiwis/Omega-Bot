@@ -32,4 +32,9 @@ public class LotteryCommand implements Command{
             event.reply("Tu as perdu a la lotterie deso.").setEphemeral(true).queue();
         }
     }
+
+    @Override
+    public int price() {
+        return PRICE;
+    }
 }

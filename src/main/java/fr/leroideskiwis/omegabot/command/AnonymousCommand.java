@@ -40,4 +40,9 @@ public class AnonymousCommand implements Command{
         event.reply("Message envoye !").setEphemeral(true).queue();
     }
 
+    @Override
+    public int price() {
+        return PRICE;
+    }
+
 }
