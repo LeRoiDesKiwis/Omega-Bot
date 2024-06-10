@@ -12,8 +12,10 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 /**
  * Manage the commands
@@ -81,5 +83,9 @@ public class CommandManager {
                 .stream()
                 .sorted((o1, o2) -> o2.getValue().price() - o1.getValue().price())
                 .forEach(entry -> consumer.accept(entry.getKey(), entry.getValue()));
+    }
+
+    public List<Command> getByCategory(Category category){
+        return commands.values().stream().sorted((o1, o2) -> o2.price() - o1.price()).filter(command -> command.category() == category).collect(Collectors.toList());
     }
 }
