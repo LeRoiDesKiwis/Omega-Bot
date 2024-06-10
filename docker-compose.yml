@@ -9,4 +9,4 @@ services:
         dockerfile: Dockerfile
     environment:
       - BOT_TOKEN=${BOT_TOKEN}
-      - LOG_CHANNEL=${LOG_CHANNEL}
+      - LOG_CHANNEL_ID=${LOG_CHANNEL}
