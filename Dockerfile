@@ -1,13 +1,23 @@
-FROM amazoncorretto:21
+FROM --platform=$BUILDPLATFORM amazoncorretto:21 AS build-stage
 LABEL authors="leroideskiwis"
 
-RUN mkdir /opt/omega-bot/
-WORKDIR /opt/omega-bot/
+WORKDIR /builder/
 COPY . .
 
+# Construisez l'application
 RUN ./gradlew build
+RUN ./gradlew jar
+
+FROM alpine:latest
 
 ENV BOT_TOKEN=YOUR_TOKEN
 ENV LOG_CHANNEL_ID=YOUR_CHANNEL_ID
 
-CMD ["/opt/omega-bot/gradlew", "run"]
+WORKDIR /opt/omega-bot/
+COPY --from=build-stage /builder/build/libs/Omega-Bot-1.0-SNAPSHOT.jar /opt/omega-bot/omega-bot.jar
+COPY --from=build-stage /builder/data /opt/omega-bot/data
+
+RUN apk add --no-cache openjdk21-jre
+
+# Démarrez l'application
+CMD ["java", "-jar", "omega-bot.jar"]
