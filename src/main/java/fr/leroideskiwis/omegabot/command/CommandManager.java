@@ -70,7 +70,7 @@ public class CommandManager {
 
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setColor(Color.YELLOW)
-                .setAuthor("Commande executee par LeRoiDesKiwis", null, event.getMember().getAvatarUrl())
+                .setAuthor("Commande executee par "+event.getMember().getUser().getEffectiveName(), null, event.getMember().getUser().getAvatarUrl())
                 .setDescription(event.getCommandString())
                 .setTimestamp(event.getTimeCreated());
         return embedBuilder.build();
