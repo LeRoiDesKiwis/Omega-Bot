@@ -38,6 +38,7 @@ public class CommandManager {
         register(new RemoveAutoUserCommand(userManager, eventManager));
         register(new AnonymousCommand());
         register(new HelpCommand(this));
+        register(new AboutCommand());
     }
 
     /**
