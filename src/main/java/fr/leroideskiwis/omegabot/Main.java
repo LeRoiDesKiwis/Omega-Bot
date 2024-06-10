@@ -20,7 +20,7 @@ public class Main {
     private JDA jda;
 
     private void launch(String token) {
-        this.jda = JDABuilder.create(token, GatewayIntent.GUILD_MEMBERS).build();
+        this.jda = JDABuilder.createLight(token).build();
         this.eventManager = new EventManager();
         this.userManager = new UserManager();
         this.commandManager = new CommandManager(jda, eventManager, userManager);
