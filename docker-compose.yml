@@ -1,8 +1,8 @@
 services:
   bot:
-    image: leroideskiwis/omega-bot:v1.0.2
+    image: leroideskiwis/omega-bot:latest
     volumes:
-      - ./database.sqlite:/opt/omega-bot/database.sqlite
+      - ./data/:/opt/omega-bot/data
     restart: always
     build:
         context: .

@@ -9,7 +9,7 @@ public class Database {
     public static Database database;
 
     public static Database getDatabase() throws SQLException {
-        return database == null ? database = new Database("database.sqlite") : database;
+        return database == null ? database = new Database("data/database.sqlite") : database;
     }
 
     public Database(String file) throws SQLException {
