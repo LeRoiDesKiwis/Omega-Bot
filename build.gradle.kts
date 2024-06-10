@@ -26,3 +26,10 @@ tasks.register<JavaExec>("run") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("fr.leroideskiwis.omegabot.Main")
 }
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "fr.leroideskiwis.omegabot.Main" // Remplacez par votre classe principale
+    }
+}
+
