@@ -27,11 +27,12 @@ public class AboutCommand implements Command{
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         EmbedBuilder builder = new EmbedBuilder().setTitle("Informations à propos de ce bot").setColor(Color.ORANGE);
 
-        User author = event.getGuild().getMemberById("327795708897787904").getUser();
+        String authorName = "LeRoiDesKiwis";
+        String authorAvatar = "https://cdn.discordapp.com/avatars/327795708897787904/5c48133164d2df7579ab2eaf13dd1484.png?size=1024";
 
         builder.addField("Github (n'hésitez pas à contribuer):", "https://github.com/LeRoiDesKiwis/Omega-Bot", false);
         builder.addField("Uptime", formatTime(System.currentTimeMillis() - launchTime), false);
-        builder.setFooter("Développeur: "+author.getEffectiveName(), author.getAvatarUrl());
+        builder.setFooter("Développeur: "+authorName, authorAvatar);
         builder.setThumbnail(event.getJDA().getSelfUser().getAvatarUrl());
 
         ReplyCallbackAction replyCallbackAction = event.replyEmbeds(builder.build());
