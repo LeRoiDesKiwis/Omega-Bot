@@ -6,12 +6,12 @@ COPY . .
 
 # Construisez l'application
 RUN ./gradlew build
-RUN ./gradlew jar
+RUN ./gradlew shadowJar
 
 FROM alpine:latest
 
 WORKDIR /opt/omega-bot/
-COPY --from=build-stage /builder/build/libs/Omega-Bot-1.0-SNAPSHOT.jar /opt/omega-bot/omega-bot.jar
+COPY --from=build-stage /builder/build/libs/Omega-Bot-1.0-SNAPSHOT-all.jar /opt/omega-bot/omega-bot.jar
 COPY --from=build-stage /builder/data /opt/omega-bot/data
 
 RUN apk add --no-cache openjdk21-jre
