@@ -28,7 +28,7 @@ public class MessageListener extends ListenerAdapter {
         OmegaUser user = userManager.from(event.getMember());
         if(userTimes.containsKey(user)) {
             long time = userTimes.get(user);
-            if(System.currentTimeMillis()-time < 120000) return; //5000 pour des raisons des test, 120000 en prod
+            if(System.currentTimeMillis()-time < 60000) return; //5000 pour des raisons des test, 120000 en prod
 
         }
         user.givePoints(1);
