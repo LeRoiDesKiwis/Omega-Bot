@@ -28,7 +28,7 @@ public class HelpCommand implements Command{
                         if(optionData.isRequired()) builder.append(" <");
                         else builder.append(" [");
                         builder.append(optionData.getName());
-                        if(optionData.isRequired()) builder.append(" >");
+                        if(optionData.isRequired()) builder.append(">");
                         else builder.append("]");
             });
 
