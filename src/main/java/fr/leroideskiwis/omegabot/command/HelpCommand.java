@@ -1,9 +1,13 @@
 package fr.leroideskiwis.omegabot.command;
 
 import fr.leroideskiwis.omegabot.user.OmegaUser;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+
+import java.awt.Color;
+import java.util.List;
 
 public class HelpCommand implements Command{
 
@@ -20,24 +24,25 @@ public class HelpCommand implements Command{
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        StringBuilder builder = new StringBuilder("---- AIDE ---- (<option> = obligatoire, [option] = facultatif)\n");
+        EmbedBuilder embedBuilder = new EmbedBuilder().setColor(Color.ORANGE);
+        embedBuilder.setTitle("Aide");
+        for(Category category : Category.values()){
+            List<Command> commands = commandManager.getByCategory(category);
+            if(commands.isEmpty()) continue;
+            StringBuilder stringBuilder = new StringBuilder(">>> ");
+            for(Command command : commands){
+                SlashCommandData slashCommandData = command.commandData();
+                //if(command.price() > 0) stringBuilder.append(":dollar: ").append(command.price());
+                //stringBuilder.append("`/").append(slashCommandData.getName()).append(" - ").append(slashCommandData.getDescription()).append("`\n");
+                stringBuilder.append("`/").append(slashCommandData.getName()).append(" - ");
+                if(command.price() > 0) stringBuilder.append(command.price()).append("pts").append(" - ");
+                stringBuilder.append(slashCommandData.getDescription()).append("`\n");
+            }
+            //stringBuilder.append("");
+            embedBuilder.addField(category.emote+"  "+category.name(), stringBuilder.toString(), false);
+        }
+        event.replyEmbeds(embedBuilder.build()).setEphemeral(true).queue();
 
-        commandManager.forEach((name, command) -> {
-            builder.append("/").append(name);
-            command.commandData().getOptions().forEach(optionData -> {
-                        if(optionData.isRequired()) builder.append(" <");
-                        else builder.append(" [");
-                        builder.append(optionData.getName());
-                        if(optionData.isRequired()) builder.append(">");
-                        else builder.append("]");
-            });
-
-            builder.append(" : ").append(command.commandData().getDescription());
-
-            if(command.price() > 0) builder.append(" (**Prix: ").append(command.price()).append("pts**)");
-            builder.append("\n");
-        });
-        event.reply(builder.toString()).setEphemeral(true).queue();
     }
 
     @Override
