@@ -19,8 +19,7 @@ public class AboutCommand implements Command{
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("about", "Informations à propos du bot")
-                .addOption(OptionType.BOOLEAN, "globalvisible", "Afficher à tout le monde ?");
+        return Commands.slash("about", "Informations à propos du bot");
     }
 
     @Override
@@ -35,10 +34,7 @@ public class AboutCommand implements Command{
         builder.setFooter("Développeur: "+authorName, authorAvatar);
         builder.setThumbnail(event.getJDA().getSelfUser().getAvatarUrl());
 
-        ReplyCallbackAction replyCallbackAction = event.replyEmbeds(builder.build());
-        OptionMapping option = event.getOption("globalvisible");
-        if(option == null || !option.getAsBoolean()) replyCallbackAction.setEphemeral(true);
-        replyCallbackAction.queue();
+        event.replyEmbeds(builder.build()).setEphemeral(true).queue();
     }
 
     private String formatTime(long l) {
