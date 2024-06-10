@@ -36,4 +36,9 @@ public class SoldeCommand implements Command{
     public boolean isLoggable() {
         return false;
     }
+
+    @Override
+    public Category category() {
+        return Category.BANQUE;
+    }
 }

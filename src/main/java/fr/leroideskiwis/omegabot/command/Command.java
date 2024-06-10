@@ -10,4 +10,5 @@ public interface Command {
     void execute(OmegaUser user, SlashCommandInteraction event);
     int price();
     boolean isLoggable();
+    Category category();
 }

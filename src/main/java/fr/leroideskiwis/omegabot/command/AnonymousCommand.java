@@ -50,4 +50,9 @@ public class AnonymousCommand implements Command{
         return true;
     }
 
+    @Override
+    public Category category() {
+        return Category.BOUTIQUE_CANAUX;
+    }
+
 }

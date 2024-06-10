@@ -56,4 +56,9 @@ public class RussianRouletteCommand implements Command{
     public boolean isLoggable() {
         return true;
     }
+
+    @Override
+    public Category category() {
+        return Category.BOUTIQUE_SANCTIONS;
+    }
 }

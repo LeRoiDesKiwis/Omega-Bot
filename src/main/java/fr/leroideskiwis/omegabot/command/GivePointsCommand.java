@@ -46,4 +46,11 @@ public class GivePointsCommand implements Command{
     public boolean isLoggable() {
         return true;
     }
+
+    @Override
+    public Category category() {
+        return Category.ADMIN;
+    }
+
+
 }

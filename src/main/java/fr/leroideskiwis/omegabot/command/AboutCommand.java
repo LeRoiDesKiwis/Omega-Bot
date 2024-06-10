@@ -55,4 +55,9 @@ public class AboutCommand implements Command{
     public boolean isLoggable() {
         return false;
     }
+
+    @Override
+    public Category category() {
+        return Category.DIVERS;
+    }
 }
