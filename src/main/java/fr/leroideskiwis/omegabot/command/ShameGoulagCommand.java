@@ -23,7 +23,7 @@ public class ShameGoulagCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("shamegoulag", "Goulag de la honte. Si il fonctionne, la personne ciblée se prend 5min, sinon tu te prends 5min.")
+        return Commands.slash("votetimeout", "Goulag de la honte. Si il fonctionne, la personne ciblée se prend 5min, sinon tu te prends 5min.")
                 .addOption(OptionType.USER, "user", "La personne ciblée", true);
     }
 
