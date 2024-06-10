@@ -20,16 +20,16 @@ public class LotteryCommand implements Command{
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         if(!user.hasEnoughPoints(PRICE)){
-            event.reply("Tu n'as pas assez de points pour jouer a la lotterie !").queue();
+            event.reply("Tu n'as pas assez de points pour jouer à la lotterie !").queue();
             return;
         }
         user.takePoints(PRICE);
         int number = random.nextInt(100);
         if(number == 1){
             user.givePoints(1000);
-            event.reply("Tu as gagne la lotterie ! +1000pts sur ton compte !").queue();
+            event.reply("Tu as gagné la lotterie ! +1000pts sur ton compte !").queue();
         }else{
-            event.reply("Tu as perdu a la lotterie deso.").setEphemeral(true).queue();
+            event.reply("Tu as perdu à la lotterie déso.").setEphemeral(true).queue();
         }
     }
 

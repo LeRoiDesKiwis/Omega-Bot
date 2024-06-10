@@ -32,9 +32,9 @@ public class GivePointsCommand implements Command{
         OptionMapping option = event.getOption("user");
         OmegaUser toGiveUser = option == null ? user : userManager.from(option.getAsMember());
         toGiveUser.givePoints(money);
-        String message = money > 0 ? "donne" : "retire";
+        String message = money > 0 ? "donné" : "retiré";
 
-        event.reply(":dollar: Vous avez "+message+" "+ Math.abs(money) + " points a " + toGiveUser.getAsMention()).queue();
+        event.reply(":dollar: Vous avez "+message+" "+ Math.abs(money) + " points à " + toGiveUser.getAsMention()).queue();
     }
 
     @Override

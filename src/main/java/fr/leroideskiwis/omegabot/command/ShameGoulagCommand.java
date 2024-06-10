@@ -23,15 +23,15 @@ public class ShameGoulagCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("shamegoulag", "Goulag de la honte. Si il fonctionne, la personne ciblee se prend 5min, sinon tu te prends 5min.")
-                .addOption(OptionType.USER, "user", "La personne ciblee", true);
+        return Commands.slash("shamegoulag", "Goulag de la honte. Si il fonctionne, la personne ciblée se prend 5min, sinon tu te prends 5min.")
+                .addOption(OptionType.USER, "user", "La personne ciblée", true);
     }
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OmegaUser toGoulagUser = userManager.from(event.getOption("user").getAsMember());
         if (toGoulagUser.equals(user)) {
-            event.reply("Tu ne peux pas te goulag toi meme.").setEphemeral(true).queue();
+            event.reply("Tu ne peux pas te goulag toi même.").setEphemeral(true).queue();
             return;
         }
         if (!user.hasEnoughPoints(PRICE)) {
@@ -40,9 +40,9 @@ public class ShameGoulagCommand implements Command {
         }
         user.takePoints(PRICE);
 
-        event.reply(String.format("Un goulag de la honte a ete emis par %s sur %s.\n" +
+        event.reply(String.format("Un goulag de la honte a ete émis par %s sur %s.\n" +
                         "Si il y a plus de :white_check_mark: que de :x: sur ce message dans les 30 prochaines secondes, %s se prendra 5min de goulag, sinon %s se prendra 5min.\n" +
-                        "Ce vote necessite la majorite absolue. En cas d'egalite, %s se prendre le goulag.",
+                        "Ce vote nécessite la majorité absolue. En cas d'égalité, %s se prendre le goulag.",
                 user.getAsMention(), toGoulagUser.getAsMention(), toGoulagUser.getAsMention(), user.getAsMention(), user.getAsMention())).queue(hook -> hook.retrieveOriginal().queue(message -> {
             message.addReaction(Emoji.fromUnicode("\u2705")).queue();
             message.addReaction(Emoji.fromUnicode("\u274C")).queue();

@@ -37,7 +37,7 @@ public class AnonymousCommand implements Command{
             return;
         }
         channel.sendMessage(event.getOption("message").getAsString()).queue();
-        event.reply("Message envoye !").setEphemeral(true).queue();
+        event.reply("Message envoyé !").setEphemeral(true).queue();
     }
 
     @Override
