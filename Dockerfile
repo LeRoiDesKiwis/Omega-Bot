@@ -10,9 +10,6 @@ RUN ./gradlew jar
 
 FROM alpine:latest
 
-ENV BOT_TOKEN=YOUR_TOKEN
-ENV LOG_CHANNEL_ID=YOUR_CHANNEL_ID
-
 WORKDIR /opt/omega-bot/
 COPY --from=build-stage /builder/build/libs/Omega-Bot-1.0-SNAPSHOT.jar /opt/omega-bot/omega-bot.jar
 COPY --from=build-stage /builder/data /opt/omega-bot/data
