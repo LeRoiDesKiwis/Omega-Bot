@@ -41,6 +41,7 @@ public class CommandManager {
         register(new AnonymousCommand());
         register(new HelpCommand(this));
         register(new AboutCommand());
+        //register(new GrosPuantCommand()); (dont work)
     }
 
     /**
