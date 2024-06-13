@@ -1,5 +1,6 @@
 package fr.leroideskiwis.omegabot.command;
 
+import fr.leroideskiwis.omegabot.Main;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -24,7 +25,7 @@ public class AboutCommand implements Command{
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        EmbedBuilder builder = new EmbedBuilder().setTitle("Informations à propos de ce bot").setColor(Color.ORANGE);
+        EmbedBuilder builder = new EmbedBuilder().setTitle(event.getJDA().getSelfUser().getEffectiveName()+" v"+Main.version+"").setColor(Color.ORANGE);
 
         String authorName = "LeRoiDesKiwis";
         String authorAvatar = "https://cdn.discordapp.com/avatars/327795708897787904/5c48133164d2df7579ab2eaf13dd1484.png?size=1024";

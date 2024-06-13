@@ -13,6 +13,7 @@ import java.util.EnumSet;
 
 public class Main {
 
+    public static String version = "1.1.0";
     private CommandManager commandManager;
     private EventManager eventManager;
     private UserManager userManager;
