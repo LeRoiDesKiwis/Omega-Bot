@@ -30,14 +30,15 @@ public class AnonymousCommand implements Command{
             event.reply(String.format("Vous n'avez pas assez de points pour utiliser cette commande. (il vous manque %d points).", missingPoints)).queue();
             return;
         }
-        user.takePoints(PRICE);
-        TextChannel channel = event.getOption("channel") == null ? event.getGuildChannel().asTextChannel() : event.getOption("channel").getAsChannel().asTextChannel();
-        if(!user.canSendAt(channel)){
+        Channel channel = event.getOption("channel") == null ? (GuildChannelUnion) event.getGuildChannel() : event.getOption("channel").getAsChannel();
+
+        if(!(channel instanceof TextChannel) || !user.canSendAt((TextChannel)channel)){
             event.reply("Vous ne pouvez pas envoyer de message dans ce channel.").setEphemeral(true).queue();
             return;
         }
-        channel.sendMessage(event.getOption("message").getAsString()).queue();
-        event.reply("Message envoyé !").setEphemeral(true).queue();
+        ((TextChannel)channel).sendMessage(event.getOption("message").getAsString()).queue();
+        user.takePoints(PRICE);
+	event.reply("Message envoyé !").setEphemeral(true).queue();
     }
 
     @Override
