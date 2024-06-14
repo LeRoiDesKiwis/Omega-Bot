@@ -2,6 +2,7 @@ package fr.leroideskiwis.omegabot.user;
 
 import fr.leroideskiwis.omegabot.BuyType;
 import fr.leroideskiwis.omegabot.database.Database;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -64,7 +65,8 @@ public class OmegaUser {
      * @param unit the unit of the duration
      */
     public void goulag(int time, TimeUnit unit){
-        member.timeoutFor(time, unit).queue();
+        if(member.getGuild().getSelfMember().hasPermission(Permission.MODERATE_MEMBERS)) member.timeoutFor(time, unit).queue();
+        else member.getGuild().getDefaultChannel().asStandardGuildMessageChannel().sendMessage("ERREUR IMPORTANTE: il me manque la permission de timeout !").queue();
     }
 
     /**
