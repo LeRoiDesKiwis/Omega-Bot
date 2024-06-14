@@ -34,7 +34,9 @@ public class Main {
                 new ShameGoulagCommand(userManager),
                 new RemoveAutoUserCommand(userManager, eventManager),
                 new AnonymousCommand(),
-                new AboutCommand());
+                new AboutCommand(),
+                new SlotMachineCommand()
+        );
 
         jda.addEventListener(new MessageListener(eventManager, userManager));
         jda.addEventListener(new CommandListener(commandManager));
