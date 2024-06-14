@@ -2,17 +2,12 @@ name: ci
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags: [ "*" ]
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -24,9 +19,14 @@ jobs:
         with:
           username: leroideskiwis
           password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Extract Git tag
+        id: extract_tag
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: leroideskiwis/omega-bot:latest
+          tags: |
+            leroideskiwis/omega-bot:latest
+            leroideskiwis/omega-bot:${{ env.TAG }}
