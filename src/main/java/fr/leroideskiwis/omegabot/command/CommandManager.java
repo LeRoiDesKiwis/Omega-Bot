@@ -26,21 +26,13 @@ public class CommandManager {
     private final UserManager userManager;
     private final JDA jda;
 
-    public CommandManager(JDA jda, EventManager eventManager, UserManager userManager) {
+    public CommandManager(JDA jda, UserManager userManager, Command... commands) {
         this.userManager = userManager;
         this.jda = jda;
-
-        register(new TimeoutBombCommand(eventManager, userManager));
-        register(new SoldeCommand(userManager));
-        register(new GivePointsCommand(userManager));
-        register(new TransferCommand(userManager));
-        register(new LotteryCommand());
-        register(new RussianRouletteCommand(userManager));
-        register(new ShameGoulagCommand(userManager));
-        register(new RemoveAutoUserCommand(userManager, eventManager));
-        register(new AnonymousCommand());
         register(new HelpCommand(this));
-        register(new AboutCommand());
+        for (Command command : commands) {
+            register(command);
+        }
         //register(new GrosPuantCommand()); (dont work)
     }
 
