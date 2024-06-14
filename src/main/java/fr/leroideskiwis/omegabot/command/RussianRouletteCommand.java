@@ -43,7 +43,7 @@ public class RussianRouletteCommand implements Command{
             toPlayUser.goulag(10, TimeUnit.MINUTES); //10min pour la version finale
         }else{
             event.reply(String.format("%s a gagné à la roulette russe ! +100pts !", toPlayUser.getAsMention())).queue();
-            toPlayUser.givePoints(100);
+            toPlayUser.givePoints(PRICE);
         }
     }
 
