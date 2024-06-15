@@ -31,11 +31,11 @@ public class SlotMachineCommand implements Command {
             return;
         }
         if(random.nextBoolean()){
-            int won = random.nextInt(1, (int)(mise*0.5));
+            int won = random.nextInt((int)(mise*0.5))+1;
             user.givePoints(won);
             event.reply(String.format("Vous avez gagné %d points !", won)).queue();
         } else {
-            int lost = random.nextInt(mise);
+            int lost = random.nextInt(mise)+1;
             user.takePoints(lost);
             event.reply(String.format("Vous avez perdu %d points.", lost)).queue();
         }
