@@ -1,5 +1,6 @@
 package fr.leroideskiwis.omegabot.user;
 
+import fr.leroideskiwis.omegabot.Bomb;
 import fr.leroideskiwis.omegabot.BuyType;
 import fr.leroideskiwis.omegabot.database.Database;
 import net.dv8tion.jda.api.Permission;
@@ -23,6 +24,7 @@ public class OmegaUser {
     private final Member member;
     private int points;
     private final Map<BuyType, Date> immunes = new HashMap<>();
+    private Bomb bomb;
 
     public OmegaUser(Member member, int points) {
         this.member = member;
@@ -181,5 +183,14 @@ public class OmegaUser {
     public void load() throws SQLException {
         this.points = Database.getDatabase().getFirst("SELECT * FROM users WHERE id = ?", "points", Integer.class, member.getId())
                 .orElse(points);
+    }
+
+    /**
+     * Give a bomb to the user
+     * @param user the user to give the bomb
+     */
+    public void giveBomb(OmegaUser user){
+        user.bomb = bomb;
+        this.bomb = null;
     }
 }
