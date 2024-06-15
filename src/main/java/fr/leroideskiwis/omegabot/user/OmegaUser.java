@@ -83,6 +83,10 @@ public class OmegaUser {
      * @param points the amount of points to give
      */
     public void givePoints(int points){
+        if(points < 0) {
+            takePoints(-points);
+            return;
+        }
         this.points += points;
         save(); //pas opti mais comme y'a pas bcp de membres ça va
     }

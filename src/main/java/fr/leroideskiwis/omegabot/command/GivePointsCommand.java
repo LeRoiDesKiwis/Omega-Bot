@@ -29,12 +29,17 @@ public class GivePointsCommand implements Command{
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         int money = event.getOption("points").getAsInt();
+        if(money == 0){
+            event.reply("Rien n'a changé.").setEphemeral(true).queue();
+            return;
+        }
         OptionMapping option = event.getOption("user");
         OmegaUser toGiveUser = option == null ? user : userManager.from(option.getAsMember());
         toGiveUser.givePoints(money);
         String message = money > 0 ? "donné" : "retiré";
+        String emote = money > 0 ? ":chart_with_upwards_trend:" : ":chart_with_downwards_trend:";
 
-        event.reply(":dollar: Vous avez "+message+" "+ Math.abs(money) + " points à " + toGiveUser.getAsMention()).queue();
+        event.reply(String.format(":dollar: %s Vous avez %s %d points à %s (ancien solde: **%d**, nouveau solde: **%d**)", emote, message, Math.abs(money), toGiveUser.getAsMention(), user.getPoints()-money, user.getPoints())).queue();
     }
 
     @Override
