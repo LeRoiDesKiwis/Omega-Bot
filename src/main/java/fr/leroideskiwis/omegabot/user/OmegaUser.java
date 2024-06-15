@@ -65,8 +65,7 @@ public class OmegaUser {
      * @param unit the unit of the duration
      */
     public void goulag(int time, TimeUnit unit){
-        if(member.getGuild().getSelfMember().hasPermission(Permission.MODERATE_MEMBERS)) member.timeoutFor(time, unit).queue();
-        else member.getGuild().getDefaultChannel().asStandardGuildMessageChannel().sendMessage("ERREUR IMPORTANTE: il me manque la permission de timeout !").queue();
+        member.timeoutFor(time, unit).queue();
     }
 
     /**

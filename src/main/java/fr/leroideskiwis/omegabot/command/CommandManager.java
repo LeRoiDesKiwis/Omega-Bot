@@ -3,6 +3,7 @@ package fr.leroideskiwis.omegabot.command;
 import fr.leroideskiwis.omegabot.command.other.HelpCommand;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
+import fr.leroideskiwis.omegabot.util.MessageUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -56,7 +57,15 @@ public class CommandManager {
                 .filter(command -> command.getKey().equalsIgnoreCase(event.getName()))
                 .findFirst()
                 .ifPresent(command -> {
-                    command.getValue().execute(user, event);
+                    int pointsBefore = 0;
+                    try {
+                        pointsBefore = user.getPoints();
+                        command.getValue().execute(user, event);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        user.givePoints(pointsBefore- user.getPoints());
+                        event.getChannel().sendMessageEmbeds(MessageUtil.error(e)).queue();
+                    }
                     if(command.getValue().isLoggable()) event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
                 });
     }
