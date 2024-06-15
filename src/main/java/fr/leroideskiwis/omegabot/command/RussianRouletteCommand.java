@@ -21,7 +21,7 @@ public class RussianRouletteCommand implements Command{
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("russianroulette", "Une chance sur 6 que la personne mentionnée prenne 10min de goulag, sinon elle gagne 100pts.")
+        return Commands.slash("russianroulette", "Une chance sur 6 que la personne mentionnée prenne 10min de goulag, sinon elle gagne "+(int)(PRICE*0.9f)+"pts.")
                 .addOption(OptionType.USER, "user", "Le joueur", true);
     }
 
@@ -38,12 +38,12 @@ public class RussianRouletteCommand implements Command{
         }
 
         user.takePoints(PRICE);
-        if(Math.random() < 0.1666666666f){
+        if(Math.random() < 1f/5f){
             event.reply(String.format("%s a joué à la roulette russe et a perdu ! Au goulag !", toPlayUser.getAsMention())).queue();
             toPlayUser.goulag(10, TimeUnit.MINUTES); //10min pour la version finale
         }else{
-            event.reply(String.format("%s a gagné à la roulette russe ! +100pts !", toPlayUser.getAsMention())).queue();
-            toPlayUser.givePoints(PRICE);
+            event.reply(String.format("%s a gagné à la roulette russe ! +%dpts !", toPlayUser.getAsMention(), (int)(PRICE*0.9f))).queue();
+            toPlayUser.givePoints((int)(PRICE*0.9f));
         }
     }
 
