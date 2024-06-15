@@ -16,7 +16,7 @@ public class RussianRouletteCommand implements Command {
 
     private UserManager userManager;
     private final int PRICE = 100;
-    private final float MULTIPLICATOR = 0.95f;
+    private final float MULTIPLICATOR = 1f;
 
     public RussianRouletteCommand(UserManager userManager) {
         this.userManager = userManager;
