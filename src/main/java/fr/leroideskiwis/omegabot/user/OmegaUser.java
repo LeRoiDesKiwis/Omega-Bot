@@ -74,7 +74,7 @@ public class OmegaUser {
      * @param points the amount of points to remove
      */
     public void takePoints(int points){
-        this.points -= points;
+        this.points = Math.max(0, this.points - points);
         save(); //pas opti mais comme y'a pas bcp de membres ça va
     }
 
