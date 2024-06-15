@@ -17,6 +17,7 @@ public class RussianRouletteCommand implements Command {
     private UserManager userManager;
     private final int PRICE = 100;
     private final float MULTIPLICATOR = 1f;
+    private final int CHANCE = 5;
 
     public RussianRouletteCommand(UserManager userManager) {
         this.userManager = userManager;
@@ -24,7 +25,7 @@ public class RussianRouletteCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("russianroulette", "Une chance sur 6 que la personne mentionnée prenne 10min de goulag, sinon elle gagne "+(int)(PRICE*MULTIPLICATOR)+"pts.")
+        return Commands.slash("russianroulette", "Une chance sur "+CHANCE+" que la personne mentionnée prenne 10min de goulag, sinon elle gagne "+(int)(PRICE*MULTIPLICATOR)+"pts.")
                 .addOption(OptionType.USER, "user", "Le joueur", true);
     }
 
@@ -38,7 +39,7 @@ public class RussianRouletteCommand implements Command {
         }
 
         if(!user.buy(event, PRICE)) return;
-        if(Math.random() < 1f/5f){
+        if(Math.random() < 1f/CHANCE){
             event.reply(String.format("%s a joué à la roulette russe et a perdu ! Au goulag !", toPlayUser.getAsMention())).queue();
             toPlayUser.goulag(10, TimeUnit.MINUTES); //10min pour la version finale
         }else{
