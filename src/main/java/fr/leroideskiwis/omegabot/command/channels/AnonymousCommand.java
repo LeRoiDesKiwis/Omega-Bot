@@ -1,18 +1,16 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.channels;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.entities.channel.unions.ChannelUnion;
-import net.dv8tion.jda.api.entities.channel.unions.GuildChannelUnion;
-import net.dv8tion.jda.api.entities.channel.unions.GuildMessageChannelUnion;
-import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
-public class AnonymousCommand implements Command{
+public class AnonymousCommand implements Command {
 
     private final int PRICE = 20;
 

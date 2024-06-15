@@ -1,5 +1,7 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.bank;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -11,7 +13,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.awt.*;
 
-public class TransferCommand implements Command{
+public class TransferCommand implements Command {
 
     private UserManager userManager;
 

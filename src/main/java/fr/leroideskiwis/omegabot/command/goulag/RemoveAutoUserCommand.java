@@ -1,5 +1,7 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.goulag;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.events.EventManager;
 import fr.leroideskiwis.omegabot.events.RemoveMessageAutoEvent;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
@@ -9,7 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
-public class RemoveAutoUserCommand implements Command{
+public class RemoveAutoUserCommand implements Command {
 
     private final int PRICE = 1000;
     private UserManager userManager;

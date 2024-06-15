@@ -1,6 +1,8 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.goulag;
 
 import fr.leroideskiwis.omegabot.BuyType;
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -10,7 +12,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.util.concurrent.TimeUnit;
 
-public class RussianRouletteCommand implements Command{
+public class RussianRouletteCommand implements Command {
 
     private UserManager userManager;
     private final int PRICE = 100;

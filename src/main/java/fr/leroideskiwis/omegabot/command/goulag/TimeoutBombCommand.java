@@ -1,5 +1,7 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.goulag;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.events.EventManager;
 import fr.leroideskiwis.omegabot.events.TimeoutEvent;
 import fr.leroideskiwis.omegabot.user.OmegaUser;

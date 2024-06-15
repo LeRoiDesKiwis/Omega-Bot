@@ -1,5 +1,7 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.admin;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.Permission;
@@ -10,7 +12,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
-public class GivePointsCommand implements Command{
+public class GivePointsCommand implements Command {
 
     private UserManager userManager;
 

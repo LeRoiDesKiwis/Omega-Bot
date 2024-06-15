@@ -1,12 +1,12 @@
 package fr.leroideskiwis.omegabot.command;
 
+import fr.leroideskiwis.omegabot.command.other.HelpCommand;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.requests.RestAction;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

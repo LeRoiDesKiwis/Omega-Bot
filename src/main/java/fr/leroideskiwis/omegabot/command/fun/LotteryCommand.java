@@ -1,5 +1,7 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.fun;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -7,7 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.util.Random;
 
-public class LotteryCommand implements Command{
+public class LotteryCommand implements Command {
 
     private Random random = new Random();
     private final int PRICE = 15;

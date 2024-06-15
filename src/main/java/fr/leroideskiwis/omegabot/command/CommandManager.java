@@ -1,6 +1,6 @@
 package fr.leroideskiwis.omegabot.command;
 
-import fr.leroideskiwis.omegabot.events.EventManager;
+import fr.leroideskiwis.omegabot.command.other.HelpCommand;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.EmbedBuilder;

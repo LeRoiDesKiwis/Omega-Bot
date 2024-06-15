@@ -1,5 +1,8 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.other;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
+import fr.leroideskiwis.omegabot.command.CommandManager;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
@@ -9,7 +12,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import java.awt.Color;
 import java.util.List;
 
-public class HelpCommand implements Command{
+public class HelpCommand implements Command {
 
     private final CommandManager commandManager;
 

@@ -1,6 +1,8 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.other;
 
 import fr.leroideskiwis.omegabot.Main;
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -14,7 +16,7 @@ import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 
 import java.awt.*;
 
-public class AboutCommand implements Command{
+public class AboutCommand implements Command {
 
     private long launchTime = System.currentTimeMillis();
 

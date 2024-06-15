@@ -1,5 +1,7 @@
-package fr.leroideskiwis.omegabot.command;
+package fr.leroideskiwis.omegabot.command.fun;
 
+import fr.leroideskiwis.omegabot.command.Category;
+import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -8,7 +10,7 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
-public class GrosPuantCommand implements Command{
+public class GrosPuantCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
