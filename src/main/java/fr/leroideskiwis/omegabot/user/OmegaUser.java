@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -99,6 +100,20 @@ public class OmegaUser {
         return this.points >= points;
     }
 
+    /**
+     * Buy a command (check if the user has enough points and remove the points)
+     * @param event the event
+     * @param price the price of the command
+     * @return if the user has enough points
+     */
+    public boolean buy(SlashCommandInteraction event, int price){
+        if(!hasEnoughPoints(price)){
+            event.reply("Tu n'as pas assez de points pour acheter cet objet.").setEphemeral(true).queue();
+            return false;
+        }
+        takePoints(price);
+        return true;
+    }
     /**
      * check if the user is the same as the {@code member}
      * @param member the member to compare

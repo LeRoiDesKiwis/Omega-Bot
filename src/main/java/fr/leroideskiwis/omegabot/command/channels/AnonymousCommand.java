@@ -23,19 +23,14 @@ public class AnonymousCommand implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        if(!user.hasEnoughPoints(PRICE)){
-            int missingPoints = PRICE - user.getPoints();
-            event.reply(String.format("Vous n'avez pas assez de points pour utiliser cette commande. (il vous manque %d points).", missingPoints)).queue();
-            return;
-        }
         Channel channel = event.getOption("channel") == null ? event.getGuildChannel() : event.getOption("channel").getAsChannel();
 
         if(!(channel instanceof TextChannel) || !user.canSendAt((TextChannel)channel)){
             event.reply("Vous ne pouvez pas envoyer de message dans ce channel.").setEphemeral(true).queue();
             return;
         }
+        if(!user.buy(event, PRICE)) return;
         ((TextChannel)channel).sendMessage(event.getOption("message").getAsString()).queue();
-        user.takePoints(PRICE);
 	event.reply("Message envoyé !").setEphemeral(true).queue();
     }
 

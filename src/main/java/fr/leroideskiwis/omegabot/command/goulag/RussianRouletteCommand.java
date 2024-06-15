@@ -30,16 +30,13 @@ public class RussianRouletteCommand implements Command {
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OmegaUser toPlayUser = userManager.from(event.getOption("user").getAsMember());
-        if(!user.hasEnoughPoints(PRICE)){
-            event.reply("Tu n'as pas assez de points.").queue();
-            return;
-        }
+
         if(toPlayUser.isImmune(BuyType.RUSSIAN_ROULETTE)){
             event.reply(toPlayUser.getName()+" est immunisé").setEphemeral(true).queue();
             return;
         }
 
-        user.takePoints(PRICE);
+        if(!user.buy(event, PRICE)) return;
         if(Math.random() < 1f/5f){
             event.reply(String.format("%s a joué à la roulette russe et a perdu ! Au goulag !", toPlayUser.getAsMention())).queue();
             toPlayUser.goulag(10, TimeUnit.MINUTES); //10min pour la version finale

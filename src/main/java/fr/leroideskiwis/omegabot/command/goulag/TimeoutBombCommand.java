@@ -29,13 +29,8 @@ public class TimeoutBombCommand implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
+        if(!user.buy(event, PRICE)) return;
 
-        if(!user.hasEnoughPoints(PRICE)){
-            int missingPoints = PRICE - user.getPoints();
-            event.reply(String.format("Vous n'avez pas assez de points pour utiliser cette commande. (il vous manque %d points).", missingPoints)).queue();
-            return;
-        }
-        user.takePoints(PRICE);
         event.reply("Bombe planted hehe").setEphemeral(true).queue();
         event.getChannel().sendMessage("C'est l'heure de faire boom-boom ! :bomb:").queue(message -> eventManager.addEvent(new TimeoutEvent(message, event.getChannel(), userManager)));
 

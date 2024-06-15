@@ -36,11 +36,9 @@ public class TransferCommand implements Command {
             event.reply("You can't transfer negative points.").queue();
             return;
         }
-        if(user.hasEnoughPoints(points)){
-            event.reply("You don't have enough points to transfer.").queue();
-            return;
-        }
-        user.takePoints(points);
+
+        if(!user.buy(event, points)) return;
+
         toGiveUser.givePoints(points);
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(String.format("Transfert de points entre %s et %s", user.getName(), toGiveUser.getName()));

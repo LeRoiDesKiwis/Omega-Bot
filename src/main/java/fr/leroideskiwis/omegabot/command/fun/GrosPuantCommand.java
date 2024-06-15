@@ -25,6 +25,7 @@ public class GrosPuantCommand implements Command {
             event.reply("Vous devez mentionner un utilisateur.").setEphemeral(true).queue();
             return;
         }
+        if(!user.buy(event, price())) return;
 
         Role grosPuant = event.getGuild().getRoleById(System.getenv("GROS_PUANT_ID"));
         event.getGuild().getMembersWithRoles(grosPuant).forEach(member -> event.getGuild().removeRoleFromMember(member, grosPuant).queue());

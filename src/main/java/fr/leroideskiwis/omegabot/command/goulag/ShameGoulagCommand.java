@@ -36,11 +36,7 @@ public class ShameGoulagCommand implements Command {
             event.reply("Tu ne peux pas te goulag toi même.").setEphemeral(true).queue();
             return;
         }
-        if (!user.hasEnoughPoints(PRICE)) {
-            event.reply("Tu n'as pas assez de points pour goulager quelqu'un.").queue();
-            return;
-        }
-        user.takePoints(PRICE);
+        if (!user.buy(event, PRICE)) return;
 
         event.reply(String.format("Un goulag de la honte a ete émis par %s sur %s.\n" +
                         "Si il y a plus de :white_check_mark: que de :x: sur ce message dans les 30 prochaines secondes, %s se prendra 5min de goulag, sinon %s se prendra 5min.\n" +

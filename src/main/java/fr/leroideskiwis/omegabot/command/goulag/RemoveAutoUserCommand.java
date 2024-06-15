@@ -30,11 +30,8 @@ public class RemoveAutoUserCommand implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        if(!user.hasEnoughPoints(PRICE)){
-            event.reply("Tu n'as pas assez de points pour utiliser cette commande.").queue();
-            return;
-        }
-        user.takePoints(PRICE);
+        if(!user.buy(event, PRICE)) return;
+
         OmegaUser toRemove = userManager.from(event.getOption("user").getAsMember());
         long end = System.currentTimeMillis() + 10*60000;
         eventManager.addEvent(new RemoveMessageAutoEvent(end, toRemove));

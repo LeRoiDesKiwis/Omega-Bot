@@ -21,11 +21,8 @@ public class LotteryCommand implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        if(!user.hasEnoughPoints(PRICE)){
-            event.reply("Tu n'as pas assez de points pour jouer à la lotterie !").queue();
-            return;
-        }
-        user.takePoints(PRICE);
+        if(!user.buy(event, PRICE)) return;
+
         int number = random.nextInt(100);
         if(number == 1){
             user.givePoints(1000);
