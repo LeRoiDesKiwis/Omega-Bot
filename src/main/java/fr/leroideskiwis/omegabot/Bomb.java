@@ -24,8 +24,12 @@ public class Bomb {
     }
 
     public void giveBomb(IReplyCallback callback, OmegaUser user){
-        if(locked) callback.reply("La bombe ne peut plus être donnée").queue();
+        if(locked) {
+            callback.reply("La bombe ne peut plus être donnée").queue();
+            return;
+        }
         callback.reply(String.format("Vous avez donné une bombe à %s (pour rappel, elle explosera dans %d secondes)", user.getAsMention(), count)).queue();
+        this.user.giveBomb(user);
         this.user = user;
     }
 
@@ -48,7 +52,7 @@ public class Bomb {
     }
 
     public void addGoulagTime(int time){
-        goulagTime += time;
+        goulagTime += Math.max(0, time);
     }
 
     public void run() {
@@ -61,4 +65,7 @@ public class Bomb {
         }, 1000, 1000);
     }
 
+    public String toString(){
+        return count+" "+goulagTime;
+    }
 }
