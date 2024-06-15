@@ -26,9 +26,9 @@ public class LotteryCommand implements Command {
         int number = random.nextInt(100);
         if(number == 1){
             user.givePoints(1000);
-            event.reply("Tu as gagné la lotterie ! +1000pts sur ton compte !").queue();
+            event.reply("Tu as gagné la loterie ! +1000pts sur ton compte !").queue();
         }else{
-            event.reply("Tu as perdu à la lotterie déso.").setEphemeral(true).queue();
+            event.reply("Tu as perdu à la loterie déso.").setEphemeral(true).queue();
         }
     }
 
