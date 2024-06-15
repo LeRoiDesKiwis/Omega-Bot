@@ -27,7 +27,7 @@ public class SlotMachineCommand implements Command {
             return;
         }
         if(!user.hasEnoughPoints(mise)){
-            event.reply("Vous n'avez pas assez de points.").queue();
+            event.reply("Vous n'avez pas assez de points.").setEphemeral(true).queue();
             return;
         }
         if(random.nextBoolean()){
