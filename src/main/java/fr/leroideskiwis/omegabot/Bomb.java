@@ -1,10 +1,12 @@
 package fr.leroideskiwis.omegabot;
 
 import fr.leroideskiwis.omegabot.user.OmegaUser;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
-import org.w3c.dom.Text;
 
+import java.awt.Color;
 import java.util.Timer;
 
 public class Bomb {
@@ -68,5 +70,15 @@ public class Bomb {
 
     public String toString(){
         return count+" "+goulagTime;
+    }
+
+    public MessageEmbed buildInfoEmbed() {
+        return new EmbedBuilder()
+                .setColor(Color.ORANGE)
+                .setTitle(":warning: VOUS POSSÉDEZ UNE BOMBE ! :warning:")
+                .addField("Temps restant avant explosion", count+" secondes", false)
+                .addField("Temps de goulag", goulagTime+" minutes", false)
+                .addField("Bloquée", locked ? "Oui" : "Non", false)
+                .build();
     }
 }

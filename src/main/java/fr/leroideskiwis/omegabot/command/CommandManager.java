@@ -48,9 +48,8 @@ public class CommandManager {
         jda.upsertCommand(data).queue();
     }
 
-    public void register(Command command, boolean registerBaseCommand, Command... subcommands){
+    public void register(Command command, Command... subcommands){
         SlashCommandData data = command.commandData();
-        if(registerBaseCommand) commands.put(data.getName(), command);
         for(Command subcommand : subcommands) {
             SlashCommandData slashCommandData = subcommand.commandData();
             commands.put(data.getName()+" "+slashCommandData.getName(), subcommand);

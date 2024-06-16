@@ -15,9 +15,7 @@ public class BombCommand implements Command {
     }
 
     @Override
-    public void execute(OmegaUser user, SlashCommandInteraction event) {
-
-    }
+    public void execute(OmegaUser user, SlashCommandInteraction event) {}
 
     @Override
     public int price() {
@@ -32,5 +30,35 @@ public class BombCommand implements Command {
     @Override
     public Category category() {
         return Category.BOUTIQUE_SANCTIONS;
+    }
+
+    public static class InfoCommand implements Command {
+
+        @Override
+        public SlashCommandData commandData() {
+            return Commands.slash("info", "Affiche les informations de la bombe");
+        }
+
+        @Override
+        public void execute(OmegaUser user, SlashCommandInteraction event) {
+            user.ifBombPresentOrElse(bomb -> {
+                event.replyEmbeds(bomb.buildInfoEmbed()).setEphemeral(true).queue();
+            }, () -> event.reply("Vous n'avez pas de bombe.").setEphemeral(true).queue());
+        }
+
+        @Override
+        public int price() {
+            return 0;
+        }
+
+        @Override
+        public boolean isLoggable() {
+            return false;
+        }
+
+        @Override
+        public Category category() {
+            return Category.BOUTIQUE_SANCTIONS;
+        }
     }
 }

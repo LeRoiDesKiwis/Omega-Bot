@@ -45,10 +45,11 @@ public class Main {
                 new AboutCommand(),
                 new SlotMachineCommand()
         );
-        commandManager.register(new BombCommand(), false,
+        commandManager.register(new BombCommand(),
                 new AddTimeBomb(userManager),
                 new GiveBomb(userManager),
-                new LockBomb(userManager));
+                new LockBomb(userManager),
+                new BombCommand.InfoCommand());
 
         jda.addEventListener(new MessageListener(eventManager, userManager));
         jda.addEventListener(new CommandListener(commandManager));
