@@ -46,7 +46,7 @@ public class Main {
                 new SlotMachineCommand()
         );
         commandManager.register(new BombCommand(), false,
-                new AddTimeBomb(),
+                new AddTimeBomb(userManager),
                 new GiveBomb(userManager),
                 new LockBomb());
 
