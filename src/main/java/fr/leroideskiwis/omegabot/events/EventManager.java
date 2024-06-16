@@ -21,4 +21,8 @@ public class EventManager {
             }
         }
     }
+
+    public boolean contains(OmegaEvent event) {
+        return events.stream().anyMatch(omegaEvent -> omegaEvent.equals(event));
+    }
 }

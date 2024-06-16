@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 public class SpecialChannelCommand implements Command{
 
@@ -31,10 +32,15 @@ public class SpecialChannelCommand implements Command{
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         TextChannel channel = event.getGuild().getTextChannelById(System.getenv("LIVRE_DARGENT_ID"));
+        DeletePermissionEvent deletePermissionEvent = new DeletePermissionEvent(channel, event.getMember());
+        if(eventManager.contains(deletePermissionEvent)){
+            event.reply("Vous avez déjà l'autorisation d'écrire !").setEphemeral(true).queue();
+            return;
+        }
         if(!user.buy(event, price())) return;
         channel.getManager().putPermissionOverride(event.getMember(), EnumSet.of(Permission.MESSAGE_SEND, Permission.MESSAGE_ADD_REACTION), null).queue();
         event.reply("Vous avez maintenant la permission d'écrire dans le channel spécial").setEphemeral(true).queue();
-        eventManager.addEvent(new DeletePermissionEvent(channel, event.getMember()));
+        eventManager.addEvent(deletePermissionEvent);
     }
 
     @Override
@@ -76,11 +82,25 @@ public class SpecialChannelCommand implements Command{
         @Override
         public void apply(MessageReceivedEvent event) {
             channel.getManager().putPermissionOverride(member, null, EnumSet.of(Permission.MESSAGE_SEND, Permission.MESSAGE_ADD_REACTION)).queue();
+            this.finished = true;
         }
 
         @Override
         public void end() {
 
+        }
+
+        @Override
+        public final boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof DeletePermissionEvent that)) return false;
+
+            return channel.equals(that.channel) && member.equals(that.member);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(channel, member);
         }
     }
 }
