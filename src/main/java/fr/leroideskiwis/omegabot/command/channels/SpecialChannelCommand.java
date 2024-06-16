@@ -26,7 +26,7 @@ public class SpecialChannelCommand implements Command{
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("specialwrite", "permet d'écrire dans le channel spécial");
+        return Commands.slash("livredargent", "permet d'écrire dans le livre d'argent");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SpecialChannelCommand implements Command{
         }
         if(!user.buy(event, price())) return;
         channel.getManager().putPermissionOverride(event.getMember(), EnumSet.of(Permission.MESSAGE_SEND, Permission.MESSAGE_ADD_REACTION), null).queue();
-        event.reply("Vous avez maintenant la permission d'écrire dans le channel spécial").setEphemeral(true).queue();
+        event.reply("Vous avez maintenant la permission d'écrire dans le livre d'argent").setEphemeral(true).queue();
         eventManager.addEvent(deletePermissionEvent);
     }
 
