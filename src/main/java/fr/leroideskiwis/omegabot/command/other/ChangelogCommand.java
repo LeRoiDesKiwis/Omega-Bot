@@ -18,12 +18,12 @@ public class ChangelogCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("changelog", "Dernières nouveautées du bot.");
+        return Commands.slash("changelog", "Dernières nouveautés du Bot.");
     }
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        EmbedBuilder builder = new EmbedBuilder().setTitle("Nouveautées de la version v" + Main.version).setColor(new Color(109, 50, 109));
+        EmbedBuilder builder = new EmbedBuilder().setTitle("Nouveautés de la version v" + Main.version).setColor(new Color(109, 50, 109));
 
         String changelogFilePath = "changelog/" + Main.version + ".md";
 
