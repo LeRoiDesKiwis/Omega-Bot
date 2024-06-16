@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 public class GiveBomb implements Command {
 
     private final UserManager userManager;
+    private final int CREATION_PRICE = 200;
 
     public GiveBomb(UserManager userManager) {
         this.userManager = userManager;
@@ -19,7 +20,7 @@ public class GiveBomb implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte 50pts de plus si c'est une création)")
+        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte "+ CREATION_PRICE +"pts si c'est une création)")
                 .addOption(OptionType.USER, "user", "Utilisateur à qui donner la bombe", true);
     }
 
@@ -36,7 +37,7 @@ public class GiveBomb implements Command {
             user.ifBombPresentOrElse(bomb -> bomb.giveBomb(event, target), () -> {});
         }
         else {
-            if(!user.buy(event, price()+50)) return;
+            if(!user.buy(event, CREATION_PRICE)) return;
             target.createBomb(event.getGuildChannel().asTextChannel());
             event.reply(String.format("%s a donné une bombe à %s !", user.getAsMention(), target.getAsMention())).queue();
         }
@@ -45,7 +46,7 @@ public class GiveBomb implements Command {
 
     @Override
     public int price() {
-        return 50;
+        return 30;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class LockBomb implements Command {
 
     @Override
     public int price() {
-        return 200;
+        return 400;
     }
 
     @Override

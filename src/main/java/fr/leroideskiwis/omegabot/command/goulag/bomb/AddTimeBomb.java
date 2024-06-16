@@ -37,7 +37,7 @@ public class AddTimeBomb implements Command {
 
     @Override
     public int price() {
-        return 50;
+        return 30;
     }
 
     @Override
