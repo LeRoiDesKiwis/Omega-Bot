@@ -5,7 +5,6 @@ import fr.leroideskiwis.omegabot.command.Category;
 import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
@@ -36,7 +35,7 @@ public class ChangelogCommand implements Command {
             }
         } catch (FileNotFoundException e) {
             builder.setColor(Color.red);
-            builder.addField("Pas de changelog pour la v" + Main.version + " trouvé:", e.getMessage(), false);
+            builder.addField("Pas de changelog pour la v" + Main.version + " trouvé:", "", false);
         }
 
         event.replyEmbeds(builder.build()).setEphemeral(true).queue();
