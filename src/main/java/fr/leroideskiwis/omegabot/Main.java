@@ -5,6 +5,7 @@ import fr.leroideskiwis.omegabot.command.admin.GivePointsCommand;
 import fr.leroideskiwis.omegabot.command.bank.SoldeCommand;
 import fr.leroideskiwis.omegabot.command.bank.TransferCommand;
 import fr.leroideskiwis.omegabot.command.channels.AnonymousCommand;
+import fr.leroideskiwis.omegabot.command.channels.SpecialChannelCommand;
 import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
@@ -45,7 +46,8 @@ public class Main {
                 new AnonymousCommand(),
                 new AboutCommand(),
                 new SlotMachineCommand(),
-                new ClassementCommand(userManager)
+                new ClassementCommand(userManager),
+                new SpecialChannelCommand(eventManager)
         );
         commandManager.register(new BombCommand(),
                 new AddTimeBomb(userManager),
