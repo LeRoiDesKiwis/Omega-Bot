@@ -110,7 +110,7 @@ public class OmegaUser {
     public boolean buy(SlashCommandInteraction event, int price){
         if(price < 0) throw new IllegalArgumentException("Price can't be negative");
         if(!hasEnoughPoints(price)){
-            event.reply("Tu n'as pas assez de points pour acheter cet objet.").setEphemeral(true).queue();
+            event.reply(String.format("Tu n'as pas assez de points pour acheter cet objet. Il te manque %d points.", price-this.points)).setEphemeral(true).queue();
             return false;
         }
         takePoints(price);
