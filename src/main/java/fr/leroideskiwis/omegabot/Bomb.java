@@ -36,6 +36,7 @@ public class Bomb {
     public void explode(){
         channel.sendMessage(String.format("La bombe a explosé sur %s", user.getAsMention())).queue();
         user.goulag(goulagTime);
+        user.removeBomb();
     }
 
     public boolean tick(){

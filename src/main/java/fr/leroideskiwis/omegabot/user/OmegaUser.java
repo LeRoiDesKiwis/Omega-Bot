@@ -209,4 +209,8 @@ public class OmegaUser {
         this.bomb = new Bomb(this, channel);
         bomb.run();
     }
+
+    public void removeBomb() {
+        this.bomb = null;
+    }
 }
