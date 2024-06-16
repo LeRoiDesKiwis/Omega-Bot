@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Manage the users
@@ -29,5 +30,9 @@ public class UserManager {
             users.add(user);
             return user;
         });
+    }
+
+    public Stream<OmegaUser> stream() {
+        return users.stream();
     }
 }

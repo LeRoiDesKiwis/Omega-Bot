@@ -5,6 +5,7 @@ import fr.leroideskiwis.omegabot.command.admin.GivePointsCommand;
 import fr.leroideskiwis.omegabot.command.bank.SoldeCommand;
 import fr.leroideskiwis.omegabot.command.bank.TransferCommand;
 import fr.leroideskiwis.omegabot.command.channels.AnonymousCommand;
+import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
 import fr.leroideskiwis.omegabot.command.goulag.RemoveAutoUserCommand;
@@ -43,7 +44,8 @@ public class Main {
                 new RemoveAutoUserCommand(userManager, eventManager),
                 new AnonymousCommand(),
                 new AboutCommand(),
-                new SlotMachineCommand()
+                new SlotMachineCommand(),
+                new ClassementCommand(userManager)
         );
 
         jda.addEventListener(new MessageListener(eventManager, userManager));
