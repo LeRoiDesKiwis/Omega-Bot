@@ -48,7 +48,7 @@ public class OmegaUser {
      * @return if the user is immune
      */
     public boolean isImmune(BuyType type){
-        return immunes.containsKey(type) && immunes.get(type).before(new Date());
+        return immunes.containsKey(type) && immunes.get(type).after(new Date());
     }
 
     /**
@@ -74,6 +74,7 @@ public class OmegaUser {
      * @param points the amount of points to remove
      */
     public void takePoints(int points){
+        points = Math.max(0, points);
         this.points = Math.max(0, this.points - points);
         save(); //pas opti mais comme y'a pas bcp de membres ça va
     }
@@ -107,6 +108,7 @@ public class OmegaUser {
      * @return if the user has enough points
      */
     public boolean buy(SlashCommandInteraction event, int price){
+        if(price < 0) throw new IllegalArgumentException("Price can't be negative");
         if(!hasEnoughPoints(price)){
             event.reply("Tu n'as pas assez de points pour acheter cet objet.").setEphemeral(true).queue();
             return false;
@@ -127,7 +129,7 @@ public class OmegaUser {
      * Give a role to the user
      * @param id the id of the role
      */
-    public void giveRole(int id){
+    public void giveRole(long id){
         Guild guild = member.getGuild();
         if(guild.getRoleById(id) != null) guild.addRoleToMember(member, guild.getRoleById(id)).queue();
     }
@@ -136,7 +138,7 @@ public class OmegaUser {
      * Remove a role from the user
      * @param id the id of the role
      */
-    public void removeRole(int id){
+    public void removeRole(long id){
         Guild guild = member.getGuild();
         if(guild.getRoleById(id) != null) guild.removeRoleFromMember(member, guild.getRoleById(id)).queue();
     }
