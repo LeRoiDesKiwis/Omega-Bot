@@ -47,7 +47,7 @@ public class Main {
         );
         commandManager.register(new BombCommand(), false,
                 new AddTimeBomb(),
-                new GiveBomb(),
+                new GiveBomb(userManager),
                 new LockBomb());
 
         jda.addEventListener(new MessageListener(eventManager, userManager));

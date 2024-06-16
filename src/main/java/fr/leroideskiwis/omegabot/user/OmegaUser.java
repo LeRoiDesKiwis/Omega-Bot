@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * Represents a member of the Omega WTF server
@@ -192,5 +194,19 @@ public class OmegaUser {
     public void giveBomb(OmegaUser user){
         user.bomb = bomb;
         this.bomb = null;
+    }
+
+    public void ifBombPresentOrElse(Consumer<Bomb> consumer, Runnable runnable){
+        if(bomb == null) runnable.run();
+        else consumer.accept(bomb);
+    }
+
+    public boolean hasBomb(){
+        return bomb != null;
+    }
+
+    public void createBomb(TextChannel channel) {
+        this.bomb = new Bomb(this, channel);
+        bomb.run();
     }
 }
