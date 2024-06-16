@@ -56,7 +56,7 @@ public class CommandManager {
             commands.put(data.getName()+" "+slashCommandData.getName(), subcommand);
 
             SubcommandData subcommandData = new SubcommandData(slashCommandData.getName(), slashCommandData.getDescription());
-            subcommandData.getOptions().forEach(subcommandData::addOptions);
+            subcommandData.addOptions(slashCommandData.getOptions());
             data.addSubcommands(subcommandData);
         }
         jda.upsertCommand(data).queue();
