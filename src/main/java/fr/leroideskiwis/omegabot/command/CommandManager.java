@@ -87,7 +87,7 @@ public class CommandManager {
                 .forEach(entry -> consumer.accept(entry.getKey(), entry.getValue()));
     }
 
-    public List<Command> getByCategory(Category category){
-        return commands.values().stream().sorted((o1, o2) -> o2.price() - o1.price()).filter(command -> command.category() == category).collect(Collectors.toList());
+    public Map<String, Command> getByCategory(Category category){
+        return commands.entrySet().stream().filter(command -> command.getValue().category() == category).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

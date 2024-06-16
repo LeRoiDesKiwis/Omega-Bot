@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.awt.Color;
-import java.util.List;
+import java.util.Map;
 
 public class HelpCommand implements Command {
 
@@ -30,18 +30,17 @@ public class HelpCommand implements Command {
         EmbedBuilder embedBuilder = new EmbedBuilder().setColor(Color.ORANGE);
         embedBuilder.setTitle("Aide");
         for(Category category : Category.values()){
-            List<Command> commands = commandManager.getByCategory(category);
+            Map<String, Command> commands = commandManager.getByCategory(category);
             if(commands.isEmpty()) continue;
             StringBuilder stringBuilder = new StringBuilder(">>> ");
-            for(Command command : commands){
-                SlashCommandData slashCommandData = command.commandData();
+            commandManager.getByCategory(category).entrySet().stream().sorted((o1, o2) -> o2.getValue().price() - o1.getValue().price()).forEach(entryset -> {
+                SlashCommandData slashCommandData = entryset.getValue().commandData();
                 //if(command.price() > 0) stringBuilder.append(":dollar: ").append(command.price());
                 //stringBuilder.append("`/").append(slashCommandData.getName()).append(" - ").append(slashCommandData.getDescription()).append("`\n");
-                stringBuilder.append("`/").append(slashCommandData.getName()).append(" - ");
-                if(command.price() > 0) stringBuilder.append(command.price()).append("pts").append(" - ");
+                stringBuilder.append("`/").append(entryset.getKey()).append(" - ");
+                if(entryset.getValue().price() > 0) stringBuilder.append(entryset.getValue().price()).append("pts").append(" - ");
                 stringBuilder.append(slashCommandData.getDescription()).append("`\n");
-            }
-            //stringBuilder.append("");
+            });
             embedBuilder.addField(category.emote+"  "+category.name(), stringBuilder.toString(), false);
         }
         event.replyEmbeds(embedBuilder.build()).setEphemeral(true).queue();
