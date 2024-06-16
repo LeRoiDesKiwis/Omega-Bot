@@ -33,7 +33,7 @@ public class ChangelogCommand implements Command {
 
         } catch (Exception e) {
             builder.setColor(Color.red);
-            builder.addField("Pas de changelog pour la v" + Main.version + " trouvé:", "", false);
+            builder.setDescription("Pas de changelog pour la v" + Main.version + " trouvé");
         }
 
         event.replyEmbeds(builder.build()).setEphemeral(true).queue();
