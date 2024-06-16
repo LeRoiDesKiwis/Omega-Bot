@@ -19,7 +19,7 @@ public class GiveBomb implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte 50pts de plus si c'est une création")
+        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte 50pts de plus si c'est une création)")
                 .addOption(OptionType.USER, "user", "Utilisateur à qui donner la bombe", true);
     }
 
@@ -27,7 +27,7 @@ public class GiveBomb implements Command {
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OmegaUser target = userManager.from(event.getOption("user").getAsMember());
         if(target.hasBomb()) {
-            event.reply("Cet utilisateur a déjà une bombe !").queue();
+            event.reply("Cet utilisateur a déjà une bombe !").setEphemeral(true).queue();
             return;
         }
 
@@ -38,7 +38,7 @@ public class GiveBomb implements Command {
         else {
             if(!user.buy(event, price()+50)) return;
             target.createBomb(event.getGuildChannel().asTextChannel());
-            event.reply("Bombe créée et donnée à "+target.getAsMention()).queue();
+            event.reply(String.format("%s a donné une bombe à %s !", user.getAsMention(), target.getAsMention())).queue();
         }
 
     }

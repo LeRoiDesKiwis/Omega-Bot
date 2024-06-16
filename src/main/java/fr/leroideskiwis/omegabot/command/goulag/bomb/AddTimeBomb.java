@@ -18,7 +18,7 @@ public class AddTimeBomb implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("addtime", "ajoute du temps de goulag (50pt/min)")
+        return Commands.slash("addtime", "ajoute du temps de goulag ("+price()+"pt/min de plus)")
                 .addOption(OptionType.USER, "user", "utilisateur qui possède la bombe", true)
                 .addOption(OptionType.INTEGER, "time", "temps à ajouter", true);
     }
@@ -31,7 +31,7 @@ public class AddTimeBomb implements Command {
         target.ifBombPresentOrElse(bomb -> {
             if(!user.buy(event, cost)) return;
             bomb.addGoulagTime(time);
-            event.reply("Vous avez ajouté " + time + " minutes de goulag à " + target.getAsMention() + " pour " + cost + " points !").queue();
+            event.reply("Vous avez ajouté " + time + " minutes de goulag à la bombe de " + target.getAsMention() + " pour " + cost + " points !").queue();
         }, () -> event.reply("Cet utilisateur n'a pas de bombe !").setEphemeral(true).queue());
     }
 
