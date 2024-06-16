@@ -12,6 +12,7 @@ import fr.leroideskiwis.omegabot.command.goulag.RussianRouletteCommand;
 import fr.leroideskiwis.omegabot.command.goulag.ShameGoulagCommand;
 import fr.leroideskiwis.omegabot.command.goulag.TimeoutBombCommand;
 import fr.leroideskiwis.omegabot.command.other.AboutCommand;
+import fr.leroideskiwis.omegabot.command.other.ChangelogCommand;
 import fr.leroideskiwis.omegabot.events.EventManager;
 import fr.leroideskiwis.omegabot.listeners.CommandListener;
 import fr.leroideskiwis.omegabot.listeners.MessageListener;
@@ -43,7 +44,8 @@ public class Main {
                 new RemoveAutoUserCommand(userManager, eventManager),
                 new AnonymousCommand(),
                 new AboutCommand(),
-                new SlotMachineCommand()
+                new SlotMachineCommand(),
+                new ChangelogCommand()
         );
 
         jda.addEventListener(new MessageListener(eventManager, userManager));
