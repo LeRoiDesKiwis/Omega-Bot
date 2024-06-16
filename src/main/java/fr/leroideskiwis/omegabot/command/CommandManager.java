@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -47,6 +48,19 @@ public class CommandManager {
         jda.upsertCommand(data).queue();
     }
 
+    public void register(Command command, Command... subcommands){
+        SlashCommandData data = command.commandData();
+        for(Command subcommand : subcommands) {
+            SlashCommandData slashCommandData = subcommand.commandData();
+            commands.put(data.getName()+" "+slashCommandData.getName(), subcommand);
+
+            SubcommandData subcommandData = new SubcommandData(slashCommandData.getName(), slashCommandData.getDescription());
+            subcommandData.addOptions(slashCommandData.getOptions());
+            data.addSubcommands(subcommandData);
+        }
+        jda.upsertCommand(data).queue();
+    }
+
     /**
      * Execute the command
      * @param event the event
@@ -54,7 +68,7 @@ public class CommandManager {
     public void execute(SlashCommandInteraction event) {
         OmegaUser user = userManager.from(event.getMember());
         commands.entrySet().stream()
-                .filter(command -> command.getKey().equalsIgnoreCase(event.getName()))
+                .filter(command -> command.getKey().equalsIgnoreCase(event.getFullCommandName()))
                 .findFirst()
                 .ifPresent(command -> {
                     int pointsBefore = 0;

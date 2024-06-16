@@ -48,6 +48,7 @@ class CommandManagerTest {
     @Test
     void execute() {
         when(slashCommandInteraction.getName()).thenReturn("test");
+        when(slashCommandInteraction.getFullCommandName()).thenReturn("test");
         commandManager.execute(slashCommandInteraction);
         verify(command).execute(user, slashCommandInteraction);
     }
