@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.Member;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -13,6 +14,10 @@ import java.util.stream.Stream;
 public class UserManager {
 
     private final List<OmegaUser> users = new ArrayList<>();
+
+    public UserManager(OmegaUser... users){
+        this.users.addAll(Arrays.asList(users));
+    }
 
     /**
      * Convert a discord member to an OmegaUser (if the user is not in the list, it will be added)
