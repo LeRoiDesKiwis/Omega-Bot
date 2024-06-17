@@ -32,8 +32,14 @@ public class TransferCommand implements Command {
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OmegaUser toGiveUser = userManager.from(event.getOption("user").getAsMember());
         int points = event.getOption("points").getAsInt();
+
+        if(user.equals(toGiveUser)){
+            event.reply("Tu ne peux pas te donner des points à toi même.").setEphemeral(true).queue();
+            return;
+        }
+
         if(points <= 0){
-            event.reply("You can't transfer negative points.").queue();
+            event.reply("Tu ne peux pas donner un nombre négatif de points.").setEphemeral(true).queue();
             return;
         }
 
