@@ -19,7 +19,7 @@ public class LockBomb implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("lock", "empêche l'utilisateur de redonner la bombe.")
+        return Commands.slash("lock", "empêche l'utilisateur de redonner la bombe. (400 pts)")
                 .addOption(OptionType.USER, "user", "utilisateur à lock", true);
     }
 
