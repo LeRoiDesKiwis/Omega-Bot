@@ -1,4 +1,4 @@
-package fr.leroideskiwis.omegabot.command.other;
+package fr.leroideskiwis.omegabot.command.other.changelog;
 
 import java.util.regex.Pattern;
 

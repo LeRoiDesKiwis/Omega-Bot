@@ -12,7 +12,7 @@ import fr.leroideskiwis.omegabot.command.goulag.RussianRouletteCommand;
 import fr.leroideskiwis.omegabot.command.goulag.ShameGoulagCommand;
 import fr.leroideskiwis.omegabot.command.goulag.TimeoutBombCommand;
 import fr.leroideskiwis.omegabot.command.other.AboutCommand;
-import fr.leroideskiwis.omegabot.command.other.ChangelogCommand;
+import fr.leroideskiwis.omegabot.command.other.changelog.ChangelogCommand;
 import fr.leroideskiwis.omegabot.events.EventManager;
 import fr.leroideskiwis.omegabot.listeners.CommandListener;
 import fr.leroideskiwis.omegabot.listeners.MessageListener;
