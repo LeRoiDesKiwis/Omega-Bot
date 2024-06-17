@@ -35,7 +35,7 @@ public class ClassementCommand implements Command {
                     int i = counter.getAndIncrement();
                     if(i <= 10 || omegaUser.isMember(event.getMember())){
                         builder.append(i)
-                                .append(". ")
+                                .append(" - ")
                                 .append(omegaUser.getName())
                                 .append(" : ")
                                 .append(omegaUser.getPoints())
