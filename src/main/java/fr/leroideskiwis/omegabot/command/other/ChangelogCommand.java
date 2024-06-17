@@ -39,7 +39,7 @@ public class ChangelogCommand implements Command {
             AtomicBoolean returnValue = new AtomicBoolean(true);
             Arrays.stream(ChangeType.values()).iterator().forEachRemaining(
                     changeType -> {
-                        if (changeType.stringStartByIdentifier(line)) {
+                        if (changeType.startByIdentifier(line)) {
                             returnValue.set(false);
                         }
                     }
@@ -67,7 +67,7 @@ public class ChangelogCommand implements Command {
          * @param line the {@code String} to test
          * @return if {@code line} is in this category.
          */
-        private boolean stringStartByIdentifier(String line) {
+        private boolean startByIdentifier(String line) {
             return Pattern.compile("^" + identifier).matcher(line).find();
         }
     }
@@ -105,7 +105,7 @@ public class ChangelogCommand implements Command {
                             builder.appendDescription("## " + changeType.categoryName + ":\n");
                             changelog.forEach(
                                     line -> {
-                                        if (changeType.stringStartByIdentifier(line)) {
+                                        if (changeType.startByIdentifier(line)) {
                                             builder.appendDescription("- " + line.substring(changeType.identifier.length()) + "\n");
                                         } else if (ChangeType.isNotInCategory(line) && !other.contains(line)){
                                             other.add(line);
