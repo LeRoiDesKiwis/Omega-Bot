@@ -38,7 +38,7 @@ public class SpecialChannelCommand implements Command{
             return;
         }
         if(!user.buy(event, price())) return;
-        channel.upsertPermissionOverride(event.getMember()).grant(EnumSet.of(Permission.MESSAGE_SEND, Permission.MESSAGE_ADD_REACTION)).queue();
+        channel.upsertPermissionOverride(event.getMember()).grant(EnumSet.of(Permission.MESSAGE_SEND)).queue();
         event.reply("Vous avez maintenant la permission d'écrire dans le livre d'argent").setEphemeral(true).queue();
         eventManager.addEvent(deletePermissionEvent);
     }
@@ -86,7 +86,7 @@ public class SpecialChannelCommand implements Command{
 
         @Override
         public void apply(MessageReceivedEvent event) {
-            channel.upsertPermissionOverride(member).deny(EnumSet.of(Permission.MESSAGE_SEND, Permission.MESSAGE_ADD_REACTION)).queue();
+            channel.upsertPermissionOverride(member).deny(EnumSet.of(Permission.MESSAGE_SEND)).queue();
             this.finished = true;
         }
 
