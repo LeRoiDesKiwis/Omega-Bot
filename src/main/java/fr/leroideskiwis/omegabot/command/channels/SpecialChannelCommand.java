@@ -26,7 +26,7 @@ public class SpecialChannelCommand implements Command{
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("livredargent", "permet d'écrire dans le livre d'argent");
+        return Commands.slash("livredargent", "permet d'écrire dans le livre d'argent (15 pts)");
     }
 
     @Override
