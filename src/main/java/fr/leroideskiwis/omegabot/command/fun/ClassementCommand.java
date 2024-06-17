@@ -31,6 +31,7 @@ public class ClassementCommand implements Command {
         AtomicInteger counter = new AtomicInteger(1);
         userManager.stream()
                 .sorted((o1, o2) -> o2.getPoints() - o1.getPoints())
+                .limit(10)
                 .forEach(omegaUser -> builder
                         .append(counter.getAndIncrement())
                         .append(". ")
