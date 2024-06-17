@@ -15,7 +15,10 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -24,9 +27,25 @@ public class ChangelogCommand implements Command {
      * This enum keep track of all existing types of modifications possible in a changelog
      */
     private enum ChangeType {
-        FEAT("Features", "feat"),
-        FIX("Fixes", "fix"),
-        OTHER("Other", "");
+        FEAT("Features", "feat:"),
+        FIX("Fixes", "fix");
+
+        /**
+         * Static method to handle everything not in any category given by {@code ChangeType}.
+         * @param line the string to test
+         * @return if the given line isn't in any category.
+         */
+        static private boolean isNotInCategory(String line) {
+            AtomicBoolean returnValue = new AtomicBoolean(true);
+            Arrays.stream(ChangeType.values()).iterator().forEachRemaining(
+                    changeType -> {
+                        if (changeType.stringStartByIdentifier(line)) {
+                            returnValue.set(false);
+                        }
+                    }
+            );
+            return returnValue.get();
+        }
 
         /**
          * The name of the category, as it's displayed in the embed.
@@ -43,12 +62,13 @@ public class ChangelogCommand implements Command {
             this.identifier = identifier;
         }
 
-        public String getCategoryName() {
-            return categoryName;
-        }
-
-        public String getIdentifier() {
-            return identifier;
+        /**
+         * If the {@code line} argument belong to this category (if it starts by the category's {@code identifier}).
+         * @param line the {@code String} to test
+         * @return if {@code line} is in this category.
+         */
+        private boolean stringStartByIdentifier(String line) {
+            return Pattern.compile("^" + identifier).matcher(line).find();
         }
     }
 
@@ -79,7 +99,23 @@ public class ChangelogCommand implements Command {
 
             try {
                 List<String> changelog = Files.readAllLines(Path.of(changelogFilePath));
-                changelog.forEach(line -> builder.appendDescription(line + "\n"));
+                List<String> other = new ArrayList<>();
+                Arrays.stream(ChangeType.values()).iterator().forEachRemaining(
+                        changeType -> {
+                            builder.appendDescription("## " + changeType.categoryName + ":\n");
+                            changelog.forEach(
+                                    line -> {
+                                        if (changeType.stringStartByIdentifier(line)) {
+                                            builder.appendDescription("- " + line.substring(changeType.identifier.length()) + "\n");
+                                        } else if (ChangeType.isNotInCategory(line) && !other.contains(line)){
+                                            other.add(line);
+                                        }
+                                    }
+                            );
+                        }
+                );
+                builder.appendDescription("## Other:\n");
+                other.forEach(line -> builder.appendDescription("- " + line + "\n"));
 
             } catch (Exception e) {
                 builder.setColor(Color.red);
