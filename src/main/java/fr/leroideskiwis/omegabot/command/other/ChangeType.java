@@ -41,10 +41,6 @@ enum ChangeType {
         return line.replaceFirst(identifier + " ", "");
     }
 
-    public String getIdentifier() {
-        return identifier;
-    }
-
     public String getCategoryName() {
         return categoryName;
     }
