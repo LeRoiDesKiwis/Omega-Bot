@@ -52,7 +52,7 @@ public class ShameGoulagCommand implements Command {
                     int check = message.retrieveReactionUsers(Emoji.fromUnicode("\u2705")).complete().size();
                     int cross = message.retrieveReactionUsers(Emoji.fromUnicode("\u274C")).complete().size();
                     OmegaUser goulaged = check > cross ? toGoulagUser : user;
-                    goulaged.goulag(10, TimeUnit.SECONDS);
+                    goulaged.goulag(10, "shame goulag");
                     event.getChannel().sendMessage(String.format("%d :white_check_mark: vs %d :x: : le %s l'emporte donc et %s se prend 5min de goulag.",
                             check, cross, (check > cross ? ":white_check_mark:" : ":x:"), goulaged.getAsMention())).queue();
                 }

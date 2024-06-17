@@ -58,19 +58,21 @@ public class OmegaUser {
     /**
      * timeout the user for {@code time} minutes
      * @param time duration of the timeout
-     * @see #goulag(int, TimeUnit)
+     * @param reason the reason of the goulag
+     * @see #goulag(int, TimeUnit, String)
      */
-    public void goulag(int time){
-        goulag(time, TimeUnit.MINUTES);
+    public void goulag(int time, String reason){
+        goulag(time, TimeUnit.MINUTES, reason);
     }
 
     /**
      * timeout the user for {@code time} of {@code unit}
      * @param time duration of the timeout
+     * @param reason the reason of the goulag
      * @param unit the unit of the duration
      */
-    public void goulag(int time, TimeUnit unit){
-        member.timeoutFor(time, unit).queue();
+    public void goulag(int time, TimeUnit unit, String reason){
+        member.timeoutFor(time, unit).reason(reason).queue();
     }
 
     /**

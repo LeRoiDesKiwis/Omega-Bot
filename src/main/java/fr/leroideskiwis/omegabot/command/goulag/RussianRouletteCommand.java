@@ -41,7 +41,7 @@ public class RussianRouletteCommand implements Command {
         if(!user.buy(event, PRICE)) return;
         if(Math.random() < 1f/CHANCE){
             event.reply(String.format("%s a joué à la roulette russe et a perdu ! Au goulag !", toPlayUser.getAsMention())).queue();
-            toPlayUser.goulag(10, TimeUnit.MINUTES); //10min pour la version finale
+            toPlayUser.goulag(10, "roulette russe"); //10min pour la version finale
         }else{
             event.reply(String.format("%s a gagné à la roulette russe ! +%dpts !", toPlayUser.getAsMention(), (int)(PRICE*MULTIPLICATOR))).queue();
             toPlayUser.givePoints((int)(PRICE*MULTIPLICATOR));
