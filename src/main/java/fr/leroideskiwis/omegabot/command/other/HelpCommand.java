@@ -4,6 +4,7 @@ import fr.leroideskiwis.omegabot.command.Category;
 import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.command.CommandManager;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
+import fr.leroideskiwis.omegabot.util.Util;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -41,7 +42,17 @@ public class HelpCommand implements Command {
                 if(entryset.getValue().price() > 0) stringBuilder.append(entryset.getValue().price()).append("pts").append(" - ");
                 stringBuilder.append(slashCommandData.getDescription()).append("`\n");
             });
-            embedBuilder.addField(category.emote+"  "+category.name(), stringBuilder.toString(), false);
+            String categoryName = Util.capitalize(category.name().toLowerCase());
+            if(categoryName.contains("_")) {
+                String[] split = categoryName.split("_");
+                for(int i = 0; i < split.length; i++) {
+                    split[i] = Util.capitalize(split[i].toLowerCase());
+                }
+                categoryName = String.join(" - ", split);
+            }
+
+
+            embedBuilder.addField(category.emote+"  "+categoryName, stringBuilder.toString(), false);
         }
         event.replyEmbeds(embedBuilder.build()).setEphemeral(true).queue();
 
