@@ -20,7 +20,7 @@ public class GiveBomb implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte " + CREATION_PRICE + "pts si c'est une création)")
+        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte " + CREATION_PRICE + "pts si c'est une création (30 pts sinon))")
                 .addOption(OptionType.USER, "user", "Utilisateur à qui donner la bombe", true);
     }
 
