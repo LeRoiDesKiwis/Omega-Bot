@@ -58,7 +58,7 @@ public class BombCommand implements Command {
 
         @Override
         public Category category() {
-            return Category.BOUTIQUE_SANCTIONS;
+            return Category.BOUTIQUE_SANCTIONS_BOMB;
         }
     }
 }
