@@ -78,6 +78,11 @@ public class ChangelogCommand implements Command {
         event.replyEmbeds(builder.build()).setEphemeral(true).queue();
     }
 
+    /**
+     * Return wether a string is a valid version number (eg: 1.3.2)
+     * @param changelog The string to test
+     * @return true if the provided string is a valid version number, otherwise false.
+     */
     private boolean isValidChangelogVersion(String changelog){
         return Pattern.compile("(^(\\d+\\.)?(\\d+\\.)?\\d+$)").matcher(changelog).find();
     }
