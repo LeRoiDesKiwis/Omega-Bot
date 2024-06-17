@@ -20,27 +20,32 @@ public class GiveBomb implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte "+ CREATION_PRICE +"pts si c'est une création)")
+        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte " + CREATION_PRICE + "pts si c'est une création)")
                 .addOption(OptionType.USER, "user", "Utilisateur à qui donner la bombe", true);
     }
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OmegaUser target = userManager.from(event.getOption("user").getAsMember());
-        if(target.hasBomb()) {
+        if (target.hasBomb()) {
             event.reply("Cet utilisateur a déjà une bombe !").setEphemeral(true).queue();
             return;
         }
 
-        if(user.hasBomb()) {
-            if(!user.buy(event, price())) return;
-            user.ifBombPresentOrElse(bomb -> bomb.giveBomb(event, target), () -> {});
-        }
-        else {
-            if(!user.buy(event, CREATION_PRICE)) return;
-            target.createBomb(event.getGuildChannel().asTextChannel());
-            event.reply(String.format("%s a donné une bombe à %s !", user.getAsMention(), target.getAsMention())).queue();
-        }
+        user.ifBombPresentOrElse(bomb -> {
+                    if (bomb.isLocked()) {
+                        event.reply("La bombe ne peut plus être donnée").queue();
+                        return;
+                    }
+                    if (!user.buy(event, price())) return;
+                    bomb.giveBomb(event, target);
+                },
+                () -> {
+                    if (!user.buy(event, CREATION_PRICE)) return;
+
+                    target.createBomb(event.getGuildChannel().asTextChannel());
+                    event.reply(String.format("%s a donné une bombe à %s !", user.getAsMention(), target.getAsMention())).queue();
+                });
 
     }
 
