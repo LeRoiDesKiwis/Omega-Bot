@@ -31,14 +31,17 @@ public class ClassementCommand implements Command {
         AtomicInteger counter = new AtomicInteger(1);
         userManager.stream()
                 .sorted((o1, o2) -> o2.getPoints() - o1.getPoints())
-                .limit(10)
-                .forEach(omegaUser -> builder
-                        .append(counter.getAndIncrement())
-                        .append(". ")
-                        .append(omegaUser.getName())
-                        .append(" : ")
-                        .append(omegaUser.getPoints())
-                        .append("\n"));
+                .forEach(omegaUser -> {
+                    int i = counter.getAndIncrement();
+                    if(i <= 10 || omegaUser.isMember(event.getMember())){
+                        builder.append(i)
+                                .append(". ")
+                                .append(omegaUser.getName())
+                                .append(" : ")
+                                .append(omegaUser.getPoints())
+                                .append("\n");
+                    }
+                });
         event.replyEmbeds(new EmbedBuilder()
                 .setTitle("Classement")
                 .setColor(Color.ORANGE)
