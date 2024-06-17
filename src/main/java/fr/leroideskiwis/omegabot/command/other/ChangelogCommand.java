@@ -12,16 +12,18 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.awt.*;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class ChangelogCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("changelog", "Dernières nouveautés du Bot.").addOption(OptionType.STRING, "version", "Le numéro de version (de la forme X.Y.Z)", false);
+        return Commands.slash("changelog", "Dernières nouveautés du Bot.").addOption(OptionType.STRING, "version", "Le numéro de version (de la forme X.Y.Z). Mettre `list` pour une liste des changelogs existant.", false);
     }
 
     @Override
@@ -29,9 +31,9 @@ public class ChangelogCommand implements Command {
         OptionMapping userInput = event.getOption("version");
         String changelogNumber = (userInput == null) ? Main.version : userInput.getAsString();
 
-        // check if
-        boolean isValidChangelog = Pattern.compile("^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$").matcher(changelogNumber).find();
-        if (!isValidChangelog){
+        boolean isValidChangelog = isValidChangelogVersion(changelogNumber) || changelogNumber.equals("list");
+
+        if (!isValidChangelog) {
             EmbedBuilder errorBuilder = new EmbedBuilder().setTitle("Numéro de version invalide").setColor(Color.red);
             errorBuilder.addField(changelogNumber + " n'est pas un numéro de version valide", "Le numéro de version doit être de la forme X.Y.Z (ex: " + Main.version + ")", false);
             event.replyEmbeds(errorBuilder.build()).setEphemeral(true).queue();
@@ -40,18 +42,44 @@ public class ChangelogCommand implements Command {
 
         EmbedBuilder builder = new EmbedBuilder().setTitle("Nouveautés de la version v" + changelogNumber).setColor(new Color(109, 50, 109));
 
-        String changelogFilePath = "changelog/" + changelogNumber + ".md";
+        String changelogDirectory = "changelog/";
+        if (!changelogNumber.equals("list")) {
+            String changelogFilePath = changelogDirectory + changelogNumber + ".md";
 
-        try {
-            List<String> changelog = Files.readAllLines(Path.of(changelogFilePath));
-            changelog.forEach(line -> builder.appendDescription(line + "\n"));
+            try {
+                List<String> changelog = Files.readAllLines(Path.of(changelogFilePath));
+                changelog.forEach(line -> builder.appendDescription(line + "\n"));
 
-        } catch (Exception e) {
-            builder.setColor(Color.red);
-            builder.setDescription("Pas de changelog pour la v" + changelogNumber + " trouvé");
+            } catch (Exception e) {
+                builder.setColor(Color.red);
+                builder.setDescription("Pas de changelog pour la v" + changelogNumber + " trouvé");
+            }
+        } else {
+            builder.setTitle("Changelogs disponibles:");
+            File[] fileList = new File(changelogDirectory).listFiles();
+
+            if (fileList != null) {
+                List<String> availableChangelogs = Stream.of(fileList)
+                        .filter(file -> !file.isDirectory())
+                        .map(File::getName)
+                        .toList();
+
+                availableChangelogs.forEach(changelog -> {
+                    System.out.println(changelog.substring(0, 5));
+                    if (isValidChangelogVersion(changelog.substring(0, 5))){
+                        builder.appendDescription("- " + changelog.substring(0, 5) + "\n");
+                    }
+                });
+            } else {
+                builder.appendDescription("**No changelog founds.**");
+            }
         }
 
         event.replyEmbeds(builder.build()).setEphemeral(true).queue();
+    }
+
+    private boolean isValidChangelogVersion(String changelog){
+        return Pattern.compile("(^(\\d+\\.)?(\\d+\\.)?\\d+$)").matcher(changelog).find();
     }
 
     @Override
