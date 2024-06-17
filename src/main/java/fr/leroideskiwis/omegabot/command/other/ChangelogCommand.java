@@ -36,15 +36,12 @@ public class ChangelogCommand implements Command {
          * @return if the given line isn't in any category.
          */
         static private boolean isNotInCategory(String line) {
-            AtomicBoolean returnValue = new AtomicBoolean(true);
-            Arrays.stream(ChangeType.values()).iterator().forEachRemaining(
-                    changeType -> {
-                        if (changeType.startByIdentifier(line)) {
-                            returnValue.set(false);
-                        }
-                    }
-            );
-            return returnValue.get();
+            for (ChangeType changeType : ChangeType.values()) {
+                if (changeType.startByIdentifier(line)) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /**
