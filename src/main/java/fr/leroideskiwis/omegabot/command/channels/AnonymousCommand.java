@@ -16,7 +16,7 @@ public class AnonymousCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("anonyme", "Poste un message anonyme")
+        return Commands.slash("anonyme", "Poste un message anonyme (20 pts)")
                 .addOption(OptionType.STRING, "message", "Le message à envoyer", true)
                 .addOption(OptionType.CHANNEL, "channel", "Le channel où envoyer le message", false);
     }
