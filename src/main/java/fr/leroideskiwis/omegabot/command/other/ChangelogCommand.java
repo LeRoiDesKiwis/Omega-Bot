@@ -100,14 +100,14 @@ public class ChangelogCommand implements Command {
             String changelogFilePath = changelogDirectory + changelogNumber + ".md";
 
             try {
-                List<String> changelog = Files.readAllLines(Path.of(changelogFilePath));
+                List<String> lines = Files.readAllLines(Path.of(changelogFilePath));
 
                 for(ChangeType changeType : ChangeType.values()){
                     builder.appendDescription("## " + changeType.categoryName+"\n");
-                    for(String line : new ArrayList<>(changelog)){
+                    for(String line : new ArrayList<>(lines)){
                         if(changeType.startByIdentifier(line)){
                             builder.appendDescription("- " + changeType.removeIdentifier(line) + "\n");
-                            changelog.remove(line);
+                            lines.remove(line);
                         }
                     }
                 }
