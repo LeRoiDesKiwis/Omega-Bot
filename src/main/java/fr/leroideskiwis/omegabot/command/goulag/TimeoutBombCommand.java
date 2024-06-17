@@ -23,7 +23,7 @@ public class TimeoutBombCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("timeoutbomb", "Met au goulag pendant 5min les 3 prochaines personnes qui parleront (300pts)")
+        return Commands.slash("timeoutbomb", "Met au goulag pendant 5min les 3 prochaines personnes qui parleront (" + PRICE + " pts)")
                 .setGuildOnly(true);
     }
 

@@ -13,6 +13,7 @@ public class GiveBomb implements Command {
 
     private final UserManager userManager;
     private final int CREATION_PRICE = 200;
+    private final int PRICE = 30;
 
     public GiveBomb(UserManager userManager) {
         this.userManager = userManager;
@@ -20,7 +21,7 @@ public class GiveBomb implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte " + CREATION_PRICE + "pts si c'est une création (30 pts sinon))")
+        return Commands.slash("give", "Donne une bombe à un utilisateur (coûte " + CREATION_PRICE + "pts si c'est une création (" + PRICE + " pts sinon))")
                 .addOption(OptionType.USER, "user", "Utilisateur à qui donner la bombe", true);
     }
 
@@ -51,7 +52,7 @@ public class GiveBomb implements Command {
 
     @Override
     public int price() {
-        return 30;
+        return PRICE;
     }
 
     @Override

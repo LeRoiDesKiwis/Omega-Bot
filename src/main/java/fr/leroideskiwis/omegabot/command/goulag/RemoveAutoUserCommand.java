@@ -24,7 +24,7 @@ public class RemoveAutoUserCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("mutelight", "Supprime les messages d'un utilisateur pendant 10min")
+        return Commands.slash("mutelight", "Supprime les messages d'un utilisateur pendant 10min (" + PRICE + " pts)")
                 .addOption(OptionType.USER, "user", "L'utilisateur qui va recevoir le châtiment mouahaha", true);
     }
 

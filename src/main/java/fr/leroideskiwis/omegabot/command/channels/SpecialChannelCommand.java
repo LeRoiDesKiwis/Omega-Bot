@@ -24,9 +24,11 @@ public class SpecialChannelCommand implements Command{
         this.eventManager = eventManager;
     }
 
+    private final int PRICE = 15;
+
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("livredargent", "permet d'écrire dans le livre d'argent (15 pts)");
+        return Commands.slash("livredargent", "permet d'écrire dans le livre d'argent (" + PRICE + " pts)");
     }
 
     @Override
@@ -45,7 +47,7 @@ public class SpecialChannelCommand implements Command{
 
     @Override
     public int price() {
-        return 15;
+        return PRICE;
     }
 
     @Override

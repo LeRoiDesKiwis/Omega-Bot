@@ -16,7 +16,7 @@ public class LotteryCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("lottery", "Une chance sur 100 de gagner 1000pts (15 pts)");
+        return Commands.slash("lottery", "Une chance sur 100 de gagner 1000pts (" + PRICE + " pts)");
     }
 
     @Override

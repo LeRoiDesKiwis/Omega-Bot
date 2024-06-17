@@ -12,14 +12,14 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 public class LockBomb implements Command {
 
     private UserManager userManager;
-
+    private final int PRICE = 400;
     public LockBomb(UserManager userManager) {
         this.userManager = userManager;
     }
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("lock", "empêche l'utilisateur de redonner la bombe. (400 pts)")
+        return Commands.slash("lock", "empêche l'utilisateur de redonner la bombe. (" + PRICE + " pts)")
                 .addOption(OptionType.USER, "user", "utilisateur à lock", true);
     }
 
@@ -35,7 +35,7 @@ public class LockBomb implements Command {
 
     @Override
     public int price() {
-        return 400;
+        return PRICE;
     }
 
     @Override
