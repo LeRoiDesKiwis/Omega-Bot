@@ -111,6 +111,7 @@ public class ChangelogCommand implements Command {
                                             other.add(line);
                                         }
                                     }
+
                             );
                         }
                 );
