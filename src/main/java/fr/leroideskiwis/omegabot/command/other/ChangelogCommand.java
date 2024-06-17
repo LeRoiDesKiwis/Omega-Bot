@@ -20,6 +20,37 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class ChangelogCommand implements Command {
+    /**
+     * This enum keep track of all existing types of modifications possible in a changelog
+     */
+    private enum ChangeType {
+        FEAT("Features", "feat"),
+        FIX("Fixes", "fix"),
+        OTHER("Other", "");
+
+        /**
+         * The name of the category, as it's displayed in the embed.
+         */
+        final private String categoryName;
+
+        /**
+         * What string need to be found at the start of the line in the changelog.
+         */
+        final private String identifier;
+
+        ChangeType(String categoryName, String identifier) {
+            this.categoryName = categoryName;
+            this.identifier = identifier;
+        }
+
+        public String getCategoryName() {
+            return categoryName;
+        }
+
+        public String getIdentifier() {
+            return identifier;
+        }
+    }
 
     @Override
     public SlashCommandData commandData() {
@@ -65,8 +96,7 @@ public class ChangelogCommand implements Command {
                         .toList();
 
                 availableChangelogs.forEach(changelog -> {
-                    System.out.println(changelog.substring(0, 5));
-                    if (isValidChangelogVersion(changelog.substring(0, 5))){
+                    if (isValidChangelogVersion(changelog.substring(0, 5))) {
                         builder.appendDescription("- " + changelog.substring(0, 5) + "\n");
                     }
                 });
@@ -80,10 +110,11 @@ public class ChangelogCommand implements Command {
 
     /**
      * Return wether a string is a valid version number (eg: 1.3.2)
+     *
      * @param changelog The string to test
      * @return true if the provided string is a valid version number, otherwise false.
      */
-    private boolean isValidChangelogVersion(String changelog){
+    private boolean isValidChangelogVersion(String changelog) {
         return Pattern.compile("(^(\\d+\\.)?(\\d+\\.)?\\d+$)").matcher(changelog).find();
     }
 
