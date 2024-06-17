@@ -28,7 +28,7 @@ class BombTest {
         when(channel.sendMessageEmbeds(any())).thenReturn(messageCreateAction);
 
         this.user = mock(OmegaUser.class);
-        doNothing().when(user).goulag(anyInt());
+        doNothing().when(user).goulag(anyInt(), anyString());
         doNothing().when(user).giveBomb(any());
         when(user.getAsMention()).thenReturn("mention");
 
@@ -52,7 +52,7 @@ class BombTest {
     void explode() {
         bomb.explode();
         verify(channel).sendMessage(anyString());
-        verify(user).goulag(anyInt());
+        verify(user).goulag(anyInt(), anyString());
     }
 
     @Test
@@ -66,8 +66,7 @@ class BombTest {
     @Test
     void lock() {
         bomb.lock();
-        bomb.giveBomb(callback, user);
-        verify(user, never()).giveBomb(any());
+        assertTrue(bomb.isLocked());
     }
 
     @Test

@@ -66,12 +66,15 @@ class OmegaUserTest {
         AuditableRestAction auditablebleRestAction = mock(AuditableRestAction.class);
         doNothing().when(auditablebleRestAction).queue();
         when(member.timeoutFor(anyLong(), any())).thenReturn(auditablebleRestAction);
+        when(auditablebleRestAction.reason(anyString())).thenReturn(auditablebleRestAction);
 
-        omegaUser.goulag(1);
+        omegaUser.goulag(1, "damn");
         verify(member).timeoutFor(1, TimeUnit.MINUTES);
+        verify(auditablebleRestAction, times(1)).reason(anyString());
 
-        omegaUser.goulag(2, TimeUnit.SECONDS);
+        omegaUser.goulag(2, TimeUnit.SECONDS, "damn1");
         verify(member).timeoutFor(2, TimeUnit.SECONDS);
+        verify(auditablebleRestAction, times(2)).reason(anyString());
     }
 
     @Test
