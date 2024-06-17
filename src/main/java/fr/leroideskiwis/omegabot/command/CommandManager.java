@@ -14,7 +14,6 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -38,27 +37,25 @@ public class CommandManager {
         //register(new GrosPuantCommand()); (dont work)
     }
 
-    /**
-     * Register a command
-     * @param command the command
-     */
-    private void register(Command command) {
-        SlashCommandData data = command.commandData();
-        commands.put(data.getName(), command);
-        jda.upsertCommand(data).queue();
-    }
-
     public void register(Command command, Command... subcommands){
-        SlashCommandData data = command.commandData();
+        SlashCommandData data = command.commandData().setDescription(formatCommandDescription(command, command.commandData().getDescription()));
+        if(subcommands.length == 0) commands.put(data.getName(), command);
         for(Command subcommand : subcommands) {
             SlashCommandData slashCommandData = subcommand.commandData();
             commands.put(data.getName()+" "+slashCommandData.getName(), subcommand);
 
-            SubcommandData subcommandData = new SubcommandData(slashCommandData.getName(), slashCommandData.getDescription());
+            SubcommandData subcommandData = new SubcommandData(slashCommandData.getName(), formatCommandDescription(subcommand, slashCommandData.getDescription()));
             subcommandData.addOptions(slashCommandData.getOptions());
             data.addSubcommands(subcommandData);
         }
         jda.upsertCommand(data).queue();
+    }
+
+    private String formatCommandDescription(Command command, String description){
+        if(command.price() == 0) return description;
+        String newDescription = String.format("%s - %s", command.price()+"pts", description);
+        if(newDescription.length() > 100) return description;
+        else return newDescription;
     }
 
     /**
