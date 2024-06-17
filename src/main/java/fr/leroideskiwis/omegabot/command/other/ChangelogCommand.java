@@ -17,62 +17,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class ChangelogCommand implements Command {
-    /**
-     * This enum keep track of all existing types of modifications possible in a changelog
-     */
-    private enum ChangeType {
-        FEAT("Features", "feat:"),
-        FIX("Fixes", "fix:"),
-        OTHER("Others", "");
-
-        /**
-         * Static method to handle everything not in any category given by {@code ChangeType}.
-         * @param line the string to test
-         * @return if the given line isn't in any category.
-         */
-        static private boolean isNotInCategory(String line) {
-            for (ChangeType changeType : ChangeType.values()) {
-                if (changeType.startByIdentifier(line)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        /**
-         * The name of the category, as it's displayed in the embed.
-         */
-        final private String categoryName;
-
-        /**
-         * What string need to be found at the start of the line in the changelog.
-         */
-        final private String identifier;
-
-        ChangeType(String categoryName, String identifier) {
-            this.categoryName = categoryName;
-            this.identifier = identifier;
-        }
-
-        /**
-         * If the {@code line} argument belong to this category (if it starts by the category's {@code identifier}).
-         * @param line the {@code String} to test
-         * @return if {@code line} is in this category.
-         */
-        private boolean startByIdentifier(String line) {
-            if(identifier.isEmpty()) return true;
-            return Pattern.compile("^" + identifier).matcher(line).find();
-        }
-
-        public String removeIdentifier(String line) {
-            return line.replaceFirst(identifier+" ", "");
-        }
-    }
 
     @Override
     public SlashCommandData commandData() {
@@ -103,7 +51,7 @@ public class ChangelogCommand implements Command {
                 List<String> lines = Files.readAllLines(Path.of(changelogFilePath));
 
                 for(ChangeType changeType : ChangeType.values()){
-                    builder.appendDescription("## " + changeType.categoryName+"\n");
+                    builder.appendDescription("## " + changeType.getCategoryName()+"\n");
                     for(String line : new ArrayList<>(lines)){
                         if(changeType.startByIdentifier(line)){
                             builder.appendDescription("- " + changeType.removeIdentifier(line) + "\n");
