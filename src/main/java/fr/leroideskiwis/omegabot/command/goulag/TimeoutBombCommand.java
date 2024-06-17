@@ -50,4 +50,9 @@ public class TimeoutBombCommand implements Command {
     public Category category() {
         return Category.BOUTIQUE_SANCTIONS;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
 }

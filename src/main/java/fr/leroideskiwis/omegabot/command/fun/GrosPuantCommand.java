@@ -47,4 +47,9 @@ public class GrosPuantCommand implements Command {
     public Category category() {
         return Category.BOUTIQUE_FUN;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
 }

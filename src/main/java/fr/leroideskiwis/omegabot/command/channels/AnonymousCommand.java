@@ -49,4 +49,9 @@ public class AnonymousCommand implements Command {
         return Category.BOUTIQUE_CANAUX;
     }
 
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
+
 }

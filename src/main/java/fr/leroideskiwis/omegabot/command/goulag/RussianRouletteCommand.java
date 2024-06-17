@@ -62,4 +62,9 @@ public class RussianRouletteCommand implements Command {
     public Category category() {
         return Category.BOUTIQUE_SANCTIONS;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return true;
+    }
 }

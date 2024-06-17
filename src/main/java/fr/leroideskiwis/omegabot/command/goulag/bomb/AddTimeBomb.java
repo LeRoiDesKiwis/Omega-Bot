@@ -49,4 +49,16 @@ public class AddTimeBomb implements Command {
     public Category category() {
         return Category.BOUTIQUE_SANCTIONS_BOMB;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return true;
+    }
+
+    /*
+     * [X] donner une raison aux to
+     * XXX supprimer les perms au lieu de juste les deny
+     * XXX timestamp dynamic pour les bombes
+     * indiquer les prix dans description
+     */
 }

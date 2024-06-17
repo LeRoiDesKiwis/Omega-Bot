@@ -70,17 +70,22 @@ public class CommandManager {
         commands.entrySet().stream()
                 .filter(command -> command.getKey().equalsIgnoreCase(event.getFullCommandName()))
                 .findFirst()
-                .ifPresent(command -> {
+                .ifPresent(entrySet -> {
+                    Command command = entrySet.getValue();
+                    if(command.isBlacklisted() && !event.getChannelId().equals(System.getenv("BOT_CHANNEL_ID"))){
+                        event.reply("Cette commande est désactivée dans ce salon.").setEphemeral(true).queue();
+                        return;
+                    }
                     int pointsBefore = 0;
                     try {
                         pointsBefore = user.getPoints();
-                        command.getValue().execute(user, event);
+                        command.execute(user, event);
                     }catch(Exception e){
                         e.printStackTrace();
                         user.givePoints(pointsBefore- user.getPoints());
                         event.getChannel().sendMessageEmbeds(MessageUtil.error(e)).queue();
                     }
-                    if(command.getValue().isLoggable()) event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
+                    if(command.isLoggable()) event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
                 });
     }
 

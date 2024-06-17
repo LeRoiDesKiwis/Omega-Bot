@@ -32,6 +32,11 @@ public class BombCommand implements Command {
         return Category.BOUTIQUE_SANCTIONS;
     }
 
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
+
     public static class InfoCommand implements Command {
 
         @Override
@@ -59,6 +64,11 @@ public class BombCommand implements Command {
         @Override
         public Category category() {
             return Category.BOUTIQUE_SANCTIONS_BOMB;
+        }
+
+        @Override
+        public boolean isBlacklisted() {
+            return false;
         }
     }
 }

@@ -59,4 +59,9 @@ public class ClassementCommand implements Command {
     public Category category() {
         return Category.BOUTIQUE_FUN;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return true;
+    }
 }

@@ -43,4 +43,9 @@ public class SoldeCommand implements Command {
     public Category category() {
         return Category.BANQUE;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
 }

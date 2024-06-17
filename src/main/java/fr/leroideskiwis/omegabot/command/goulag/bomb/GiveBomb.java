@@ -63,4 +63,9 @@ public class GiveBomb implements Command {
     public Category category() {
         return Category.BOUTIQUE_SANCTIONS_BOMB;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return true;
+    }
 }

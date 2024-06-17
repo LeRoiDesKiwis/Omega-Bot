@@ -58,6 +58,11 @@ public class SpecialChannelCommand implements Command{
         return Category.BOUTIQUE_CANAUX;
     }
 
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
+
     public class DeletePermissionEvent implements OmegaEvent{
 
         private final TextChannel channel;

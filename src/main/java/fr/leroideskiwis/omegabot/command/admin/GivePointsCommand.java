@@ -59,5 +59,10 @@ public class GivePointsCommand implements Command {
         return Category.ADMIN;
     }
 
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
+
 
 }

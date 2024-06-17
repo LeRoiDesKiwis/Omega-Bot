@@ -66,4 +66,9 @@ public class TransferCommand implements Command {
     public Category category() {
         return Category.BANQUE;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return true;
+    }
 }
