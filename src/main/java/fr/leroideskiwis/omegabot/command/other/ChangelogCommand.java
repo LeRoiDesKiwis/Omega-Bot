@@ -15,8 +15,7 @@ import java.awt.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
@@ -28,7 +27,8 @@ public class ChangelogCommand implements Command {
      */
     private enum ChangeType {
         FEAT("Features", "feat:"),
-        FIX("Fixes", "fix");
+        FIX("Fixes", "fix:"),
+        OTHER("Others", "");
 
         /**
          * Static method to handle everything not in any category given by {@code ChangeType}.
@@ -65,7 +65,12 @@ public class ChangelogCommand implements Command {
          * @return if {@code line} is in this category.
          */
         private boolean startByIdentifier(String line) {
+            if(identifier.isEmpty()) return true;
             return Pattern.compile("^" + identifier).matcher(line).find();
+        }
+
+        public String removeIdentifier(String line) {
+            return line.replaceFirst(identifier+" ", "");
         }
     }
 
@@ -96,24 +101,16 @@ public class ChangelogCommand implements Command {
 
             try {
                 List<String> changelog = Files.readAllLines(Path.of(changelogFilePath));
-                List<String> other = new ArrayList<>();
-                Arrays.stream(ChangeType.values()).iterator().forEachRemaining(
-                        changeType -> {
-                            builder.appendDescription("## " + changeType.categoryName + ":\n");
-                            changelog.forEach(
-                                    line -> {
-                                        if (changeType.startByIdentifier(line)) {
-                                            builder.appendDescription("- " + line.substring(changeType.identifier.length()) + "\n");
-                                        } else if (ChangeType.isNotInCategory(line) && !other.contains(line)){
-                                            other.add(line);
-                                        }
-                                    }
 
-                            );
+                for(ChangeType changeType : ChangeType.values()){
+                    builder.appendDescription("## " + changeType.categoryName+"\n");
+                    for(String line : new ArrayList<>(changelog)){
+                        if(changeType.startByIdentifier(line)){
+                            builder.appendDescription("- " + changeType.removeIdentifier(line) + "\n");
+                            changelog.remove(line);
                         }
-                );
-                builder.appendDescription("## Other:\n");
-                other.forEach(line -> builder.appendDescription("- " + line + "\n"));
+                    }
+                }
 
             } catch (Exception e) {
                 builder.setColor(Color.red);
