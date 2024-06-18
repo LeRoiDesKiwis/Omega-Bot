@@ -92,9 +92,7 @@ public class ChangelogCommand implements Command {
         }
 
         event.replyEmbeds(builder.build()).
-
                 setEphemeral(true).
-
                 queue();
     }
 
