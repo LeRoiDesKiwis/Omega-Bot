@@ -39,9 +39,7 @@ class ChangelogSubCategory extends AbstractChangelogCategory {
     }
 
     public String getSubCategoryName(String line) {
-        System.out.println(line);
         if (ChangelogSubCategory.isInASubCategory(line)) {
-            System.out.println(ChangelogSubCategory.isInASubCategory(line));
             return line.substring(1, line.indexOf(")"));
         } else {
             return "";

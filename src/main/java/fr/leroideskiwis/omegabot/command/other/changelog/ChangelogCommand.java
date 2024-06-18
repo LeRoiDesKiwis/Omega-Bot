@@ -67,7 +67,6 @@ public class ChangelogCommand implements Command {
             } catch (Exception e) {
                 builder.setColor(Color.red);
                 builder.setDescription("Pas de changelog pour la v" + changelogNumber + " trouvé");
-                System.out.println(e);
             }
         } else {
             builder.setTitle("Changelogs disponibles:");

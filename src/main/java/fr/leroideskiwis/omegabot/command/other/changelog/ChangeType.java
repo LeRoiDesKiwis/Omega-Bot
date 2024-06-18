@@ -38,7 +38,6 @@ enum ChangeType {
     }
 
     public String removeIdentifier(String line) {
-        // System.out.println("this one?");
         return line.replaceFirst(identifier, "");
     }
 

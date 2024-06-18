@@ -66,7 +66,6 @@ public class ChangelogCategory extends AbstractChangelogCategory {
         for (String line : content) {
             formattedContent.append("- ").append(changeType.removeIdentifier(line).replaceFirst(": |:", "")).append("\n");
         }
-        System.out.println(formattedContent.toString());
         return formattedContent.toString();
     }
 }
