@@ -40,7 +40,7 @@ public class TimeoutEvent implements OmegaEvent{
     @Override
     public void apply(MessageReceivedEvent event) {
         int duration = random.nextInt(3, 6);
-        userManager.from(event.getMember()).goulag(duration, TimeUnit.MINUTES);
+        userManager.from(event.getMember()).goulag(duration, "timeout bomb");
         users.put(duration, event.getAuthor());
         counter--;
     }

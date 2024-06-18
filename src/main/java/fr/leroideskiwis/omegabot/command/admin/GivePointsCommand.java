@@ -41,7 +41,7 @@ public class GivePointsCommand implements Command {
         String message = money > 0 ? "donné" : "retiré";
         String emote = money > 0 ? ":chart_with_upwards_trend:" : ":chart_with_downwards_trend:";
 
-        event.reply(String.format(":dollar: %s Vous avez %s %d points à %s (ancien solde: **%d**, nouveau solde: **%d**)", emote, message, Math.abs(money), toGiveUser.getAsMention(), user.getPoints()-money, user.getPoints())).queue();
+        event.reply(String.format(":dollar: %s Vous avez %s %d points à %s (ancien solde: **%d**, nouveau solde: **%d**)", emote, message, Math.abs(money), toGiveUser.getAsMention(), toGiveUser.getPoints()-money, toGiveUser.getPoints())).queue();
     }
 
     @Override
@@ -57,6 +57,11 @@ public class GivePointsCommand implements Command {
     @Override
     public Category category() {
         return Category.ADMIN;
+    }
+
+    @Override
+    public boolean isBlacklisted() {
+        return false;
     }
 
 

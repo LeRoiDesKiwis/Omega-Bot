@@ -39,7 +39,10 @@ class CommandManagerTest {
         SlashCommandData commandData = mock(SlashCommandData.class);
         when(command.commandData()).thenReturn(commandData);
         when(commandData.getName()).thenReturn("test");
+        when(commandData.getDescription()).thenReturn("test");
+        when(commandData.setDescription(anyString())).thenReturn(commandData);
         when(command.category()).thenReturn(Category.BOUTIQUE_FUN);
+        when(command.price()).thenReturn(100);
 
         slashCommandInteraction = mock(SlashCommandInteraction.class);
         commandManager = new CommandManager(jda, userManager, command);
@@ -48,6 +51,7 @@ class CommandManagerTest {
     @Test
     void execute() {
         when(slashCommandInteraction.getName()).thenReturn("test");
+        when(slashCommandInteraction.getFullCommandName()).thenReturn("test");
         commandManager.execute(slashCommandInteraction);
         verify(command).execute(user, slashCommandInteraction);
     }

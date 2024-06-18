@@ -63,4 +63,9 @@ public class AboutCommand implements Command {
     public Category category() {
         return Category.DIVERS;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
 }

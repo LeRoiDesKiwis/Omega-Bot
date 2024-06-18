@@ -46,4 +46,9 @@ public class LotteryCommand implements Command {
     public Category category() {
         return Category.BOUTIQUE_FUN;
     }
+
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
 }

@@ -11,4 +11,5 @@ public interface Command {
     int price();
     boolean isLoggable();
     Category category();
+    boolean isBlacklisted();
 }

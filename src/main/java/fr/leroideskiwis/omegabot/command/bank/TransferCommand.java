@@ -30,20 +30,26 @@ public class TransferCommand implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        OmegaUser toGiveUser = userManager.from(event.getOption("user").getAsMember());
+        OmegaUser target = userManager.from(event.getOption("user").getAsMember());
         int points = event.getOption("points").getAsInt();
+
+        if(user.equals(target)){
+            event.reply("Tu ne peux pas te donner des points à toi même.").setEphemeral(true).queue();
+            return;
+        }
+
         if(points <= 0){
-            event.reply("You can't transfer negative points.").queue();
+            event.reply("Tu ne peux pas donner un nombre négatif de points.").setEphemeral(true).queue();
             return;
         }
 
         if(!user.buy(event, points)) return;
 
-        toGiveUser.givePoints(points);
+        target.givePoints(points);
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle(String.format("Transfert de points entre %s et %s", user.getName(), toGiveUser.getName()));
+        embedBuilder.setTitle(String.format("Transfert de points entre %s et %s", user.getName(), target.getName()));
         embedBuilder.addField(createField(user.getName(), user.getPoints()+points, user.getPoints()));
-        embedBuilder.addField(createField(toGiveUser.getName(), toGiveUser.getPoints()-points, toGiveUser.getPoints()));
+        embedBuilder.addField(createField(target.getName(), target.getPoints()-points, target.getPoints()));
         embedBuilder.setColor(Color.ORANGE);
         event.replyEmbeds(embedBuilder.build()).queue();
     }
@@ -65,5 +71,10 @@ public class TransferCommand implements Command {
     @Override
     public Category category() {
         return Category.BANQUE;
+    }
+
+    @Override
+    public boolean isBlacklisted() {
+        return true;
     }
 }

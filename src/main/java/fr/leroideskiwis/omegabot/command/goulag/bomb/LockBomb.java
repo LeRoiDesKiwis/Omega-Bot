@@ -1,4 +1,4 @@
-package fr.leroideskiwis.omegabot.command.bank;
+package fr.leroideskiwis.omegabot.command.goulag.bomb;
 
 import fr.leroideskiwis.omegabot.command.Category;
 import fr.leroideskiwis.omegabot.command.Command;
@@ -9,29 +9,33 @@ import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
-public class SoldeCommand implements Command {
+public class LockBomb implements Command {
 
     private UserManager userManager;
 
-    public SoldeCommand(UserManager userManager) {
+    public LockBomb(UserManager userManager) {
         this.userManager = userManager;
     }
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("solde", "Voir votre solde")
-                .addOption(OptionType.USER, "user", "L'utilisateur dont vous voulez voir le solde", false);
+        return Commands.slash("lock", "empêche l'utilisateur de redonner la bombe.")
+                .addOption(OptionType.USER, "user", "utilisateur à lock", true);
     }
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        OmegaUser target = event.getOption("user") == null ? user : userManager.from(event.getOption("user").getAsMember());
-        event.reply(target.getAsMention()+" a " + target.getPoints() + " points.").setEphemeral(true).queue();
+        OmegaUser target = userManager.from(event.getOption("user").getAsMember());
+        target.ifBombPresentOrElse(bomb -> {
+            if(!user.buy(event, price())) return;
+            bomb.lock();
+            event.reply("Vous avez lock la bombe de "+target.getAsMention()).queue();
+        }, () -> event.reply("Cet utilisateur n'a pas de bombe !").setEphemeral(true).queue());
     }
 
     @Override
     public int price() {
-        return 0;
+        return 400;
     }
 
     @Override
@@ -41,11 +45,11 @@ public class SoldeCommand implements Command {
 
     @Override
     public Category category() {
-        return Category.BANQUE;
+        return Category.BOUTIQUE_SANCTIONS_BOMB;
     }
 
     @Override
     public boolean isBlacklisted() {
-        return false;
+        return true;
     }
 }

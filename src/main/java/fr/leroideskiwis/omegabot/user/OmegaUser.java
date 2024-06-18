@@ -1,11 +1,13 @@
 package fr.leroideskiwis.omegabot.user;
 
+import fr.leroideskiwis.omegabot.Bomb;
 import fr.leroideskiwis.omegabot.BuyType;
 import fr.leroideskiwis.omegabot.database.Database;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.sql.SQLException;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * Represents a member of the Omega WTF server
@@ -23,6 +26,7 @@ public class OmegaUser {
     private final Member member;
     private int points;
     private final Map<BuyType, Date> immunes = new HashMap<>();
+    private Bomb bomb;
 
     public OmegaUser(Member member, int points) {
         this.member = member;
@@ -48,25 +52,27 @@ public class OmegaUser {
      * @return if the user is immune
      */
     public boolean isImmune(BuyType type){
-        return immunes.containsKey(type) && immunes.get(type).before(new Date());
+        return immunes.containsKey(type) && immunes.get(type).after(new Date());
     }
 
     /**
      * timeout the user for {@code time} minutes
      * @param time duration of the timeout
-     * @see #goulag(int, TimeUnit)
+     * @param reason the reason of the goulag
+     * @see #goulag(int, TimeUnit, String)
      */
-    public void goulag(int time){
-        goulag(time, TimeUnit.MINUTES);
+    public void goulag(int time, String reason){
+        goulag(time, TimeUnit.MINUTES, reason);
     }
 
     /**
      * timeout the user for {@code time} of {@code unit}
      * @param time duration of the timeout
+     * @param reason the reason of the goulag
      * @param unit the unit of the duration
      */
-    public void goulag(int time, TimeUnit unit){
-        member.timeoutFor(time, unit).queue();
+    public void goulag(int time, TimeUnit unit, String reason){
+        member.timeoutFor(time, unit).reason(reason).queue();
     }
 
     /**
@@ -74,6 +80,7 @@ public class OmegaUser {
      * @param points the amount of points to remove
      */
     public void takePoints(int points){
+        points = Math.max(0, points);
         this.points = Math.max(0, this.points - points);
         save(); //pas opti mais comme y'a pas bcp de membres ça va
     }
@@ -107,8 +114,9 @@ public class OmegaUser {
      * @return if the user has enough points
      */
     public boolean buy(SlashCommandInteraction event, int price){
+        if(price < 0) throw new IllegalArgumentException("Price can't be negative");
         if(!hasEnoughPoints(price)){
-            event.reply("Tu n'as pas assez de points pour acheter cet objet.").setEphemeral(true).queue();
+            event.reply(String.format("Tu n'as pas assez de points pour acheter cet objet. Il te manque %d points.", price-this.points)).setEphemeral(true).queue();
             return false;
         }
         takePoints(price);
@@ -127,7 +135,7 @@ public class OmegaUser {
      * Give a role to the user
      * @param id the id of the role
      */
-    public void giveRole(int id){
+    public void giveRole(long id){
         Guild guild = member.getGuild();
         if(guild.getRoleById(id) != null) guild.addRoleToMember(member, guild.getRoleById(id)).queue();
     }
@@ -136,7 +144,7 @@ public class OmegaUser {
      * Remove a role from the user
      * @param id the id of the role
      */
-    public void removeRole(int id){
+    public void removeRole(long id){
         Guild guild = member.getGuild();
         if(guild.getRoleById(id) != null) guild.removeRoleFromMember(member, guild.getRoleById(id)).queue();
     }
@@ -181,5 +189,32 @@ public class OmegaUser {
     public void load() throws SQLException {
         this.points = Database.getDatabase().getFirst("SELECT * FROM users WHERE id = ?", "points", Integer.class, member.getId())
                 .orElse(points);
+    }
+
+    /**
+     * Give a bomb to the user
+     * @param user the user to give the bomb
+     */
+    public void giveBomb(OmegaUser user){
+        user.bomb = bomb;
+        this.bomb = null;
+    }
+
+    public void ifBombPresentOrElse(Consumer<Bomb> consumer, Runnable runnable){
+        if(bomb == null) runnable.run();
+        else consumer.accept(bomb);
+    }
+
+    public boolean hasBomb(){
+        return bomb != null;
+    }
+
+    public void createBomb(TextChannel channel) {
+        this.bomb = new Bomb(this, channel);
+        bomb.run();
+    }
+
+    public void removeBomb() {
+        this.bomb = null;
     }
 }

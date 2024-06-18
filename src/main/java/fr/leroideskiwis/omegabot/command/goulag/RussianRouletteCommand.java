@@ -31,20 +31,20 @@ public class RussianRouletteCommand implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        OmegaUser toPlayUser = userManager.from(event.getOption("user").getAsMember());
+        OmegaUser target = userManager.from(event.getOption("user").getAsMember());
 
-        if(toPlayUser.isImmune(BuyType.RUSSIAN_ROULETTE)){
-            event.reply(toPlayUser.getName()+" est immunisé").setEphemeral(true).queue();
+        if(target.isImmune(BuyType.RUSSIAN_ROULETTE)){
+            event.reply(target.getName()+" est immunisé").setEphemeral(true).queue();
             return;
         }
 
         if(!user.buy(event, PRICE)) return;
         if(Math.random() < 1f/CHANCE){
-            event.reply(String.format("%s a joué à la roulette russe et a perdu ! Au goulag !", toPlayUser.getAsMention())).queue();
-            toPlayUser.goulag(10, TimeUnit.MINUTES); //10min pour la version finale
+            event.reply(String.format("%s a joué à la roulette russe et a perdu ! Au goulag !", target.getAsMention())).queue();
+            target.goulag(7*60+20, TimeUnit.SECONDS, "roulette russe");
         }else{
-            event.reply(String.format("%s a gagné à la roulette russe ! +%dpts !", toPlayUser.getAsMention(), (int)(PRICE*MULTIPLICATOR))).queue();
-            toPlayUser.givePoints((int)(PRICE*MULTIPLICATOR));
+            event.reply(String.format("%s a gagné à la roulette russe ! +%dpts !", target.getAsMention(), (int)(PRICE*MULTIPLICATOR))).queue();
+            target.givePoints((int)(PRICE*MULTIPLICATOR));
         }
     }
 
@@ -61,5 +61,10 @@ public class RussianRouletteCommand implements Command {
     @Override
     public Category category() {
         return Category.BOUTIQUE_SANCTIONS;
+    }
+
+    @Override
+    public boolean isBlacklisted() {
+        return true;
     }
 }

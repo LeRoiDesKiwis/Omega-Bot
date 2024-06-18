@@ -10,10 +10,10 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -37,14 +37,25 @@ public class CommandManager {
         //register(new GrosPuantCommand()); (dont work)
     }
 
-    /**
-     * Register a command
-     * @param command the command
-     */
-    private void register(Command command) {
-        SlashCommandData data = command.commandData();
-        commands.put(data.getName(), command);
+    public void register(Command command, Command... subcommands){
+        SlashCommandData data = command.commandData().setDescription(formatCommandDescription(command, command.commandData().getDescription()));
+        if(subcommands.length == 0) commands.put(data.getName(), command);
+        for(Command subcommand : subcommands) {
+            SlashCommandData slashCommandData = subcommand.commandData();
+            commands.put(data.getName()+" "+slashCommandData.getName(), subcommand);
+
+            SubcommandData subcommandData = new SubcommandData(slashCommandData.getName(), formatCommandDescription(subcommand, slashCommandData.getDescription()));
+            subcommandData.addOptions(slashCommandData.getOptions());
+            data.addSubcommands(subcommandData);
+        }
         jda.upsertCommand(data).queue();
+    }
+
+    private String formatCommandDescription(Command command, String description){
+        if(command.price() == 0) return description;
+        String newDescription = String.format("%s - %s", command.price()+"pts", description);
+        if(newDescription.length() > 100) return description;
+        else return newDescription;
     }
 
     /**
@@ -54,19 +65,24 @@ public class CommandManager {
     public void execute(SlashCommandInteraction event) {
         OmegaUser user = userManager.from(event.getMember());
         commands.entrySet().stream()
-                .filter(command -> command.getKey().equalsIgnoreCase(event.getName()))
+                .filter(command -> command.getKey().equalsIgnoreCase(event.getFullCommandName()))
                 .findFirst()
-                .ifPresent(command -> {
+                .ifPresent(entrySet -> {
+                    Command command = entrySet.getValue();
+                    if(command.isBlacklisted() && !event.getChannelId().equals(System.getenv("BOT_CHANNEL_ID"))){
+                        event.reply("Cette commande est désactivée dans ce salon.").setEphemeral(true).queue();
+                        return;
+                    }
                     int pointsBefore = 0;
                     try {
                         pointsBefore = user.getPoints();
-                        command.getValue().execute(user, event);
+                        command.execute(user, event);
                     }catch(Exception e){
                         e.printStackTrace();
                         user.givePoints(pointsBefore- user.getPoints());
                         event.getChannel().sendMessageEmbeds(MessageUtil.error(e)).queue();
                     }
-                    if(command.getValue().isLoggable()) event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
+                    if(command.isLoggable()) event.getGuild().getChannelById(TextChannel.class, System.getenv("LOG_CHANNEL_ID")).sendMessageEmbeds(createLogEmbed(event)).queue();
                 });
     }
 
@@ -87,7 +103,7 @@ public class CommandManager {
                 .forEach(entry -> consumer.accept(entry.getKey(), entry.getValue()));
     }
 
-    public List<Command> getByCategory(Category category){
-        return commands.values().stream().sorted((o1, o2) -> o2.price() - o1.price()).filter(command -> command.category() == category).collect(Collectors.toList());
+    public Map<String, Command> getByCategory(Category category){
+        return commands.entrySet().stream().filter(command -> command.getValue().category() == category).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

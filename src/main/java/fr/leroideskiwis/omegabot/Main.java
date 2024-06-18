@@ -1,16 +1,18 @@
 package fr.leroideskiwis.omegabot;
 
-import fr.leroideskiwis.omegabot.command.*;
+import fr.leroideskiwis.omegabot.command.CommandManager;
 import fr.leroideskiwis.omegabot.command.admin.GivePointsCommand;
 import fr.leroideskiwis.omegabot.command.bank.SoldeCommand;
 import fr.leroideskiwis.omegabot.command.bank.TransferCommand;
 import fr.leroideskiwis.omegabot.command.channels.AnonymousCommand;
+import fr.leroideskiwis.omegabot.command.channels.SpecialChannelCommand;
+import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
-import fr.leroideskiwis.omegabot.command.goulag.RemoveAutoUserCommand;
-import fr.leroideskiwis.omegabot.command.goulag.RussianRouletteCommand;
-import fr.leroideskiwis.omegabot.command.goulag.ShameGoulagCommand;
-import fr.leroideskiwis.omegabot.command.goulag.TimeoutBombCommand;
+import fr.leroideskiwis.omegabot.command.goulag.*;
+import fr.leroideskiwis.omegabot.command.goulag.bomb.AddTimeBomb;
+import fr.leroideskiwis.omegabot.command.goulag.bomb.GiveBomb;
+import fr.leroideskiwis.omegabot.command.goulag.bomb.LockBomb;
 import fr.leroideskiwis.omegabot.command.other.AboutCommand;
 import fr.leroideskiwis.omegabot.command.other.changelog.ChangelogCommand;
 import fr.leroideskiwis.omegabot.events.EventManager;
@@ -22,7 +24,7 @@ import net.dv8tion.jda.api.JDABuilder;
 
 public class Main {
 
-    public static String version = "1.3.2";
+    public static String version = "1.4.4";
     private CommandManager commandManager;
     private EventManager eventManager;
     private UserManager userManager;
@@ -46,7 +48,14 @@ public class Main {
                 new AboutCommand(),
                 new SlotMachineCommand(),
                 new ChangelogCommand()
+                new ClassementCommand(userManager),
+                new SpecialChannelCommand(eventManager)
         );
+        commandManager.register(new BombCommand(),
+                new AddTimeBomb(userManager),
+                new GiveBomb(userManager),
+                new LockBomb(userManager),
+                new BombCommand.InfoCommand());
 
         jda.addEventListener(new MessageListener(eventManager, userManager));
         jda.addEventListener(new CommandListener(commandManager));
