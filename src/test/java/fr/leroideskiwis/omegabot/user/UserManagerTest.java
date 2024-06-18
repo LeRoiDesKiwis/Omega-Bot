@@ -18,12 +18,11 @@ class UserManagerTest {
     private OmegaUser omegaUser = mock(OmegaUser.class);
     private static Database database;
 
-    @BeforeAll
-    static void setUpAll() throws SQLException {
+    @BeforeEach
+    void setUp() throws SQLException {
         database = mock(Database.class);
         when(database.getFirst(any(), any(), eq(Integer.class), anyInt())).thenReturn(Optional.empty());
-
-        mockStatic(Database.class).when(Database::getDatabase).thenReturn(database);
+        when(Database.getDatabase()).thenReturn(database);
     }
 
     @Test
@@ -36,6 +35,7 @@ class UserManagerTest {
 
         assertEquals(userManager.from(member), omegaUser);
         verify(omegaUser, never()).load();
+        verify(database, never()).getFirst(any(), any(), eq(Integer.class), any());
 
         Member member1 = mock(Member.class);
         assertNotEquals(userManager.from(member1), omegaUser);
