@@ -86,7 +86,7 @@ public class SpecialChannelCommand implements Command{
 
         @Override
         public void apply(MessageReceivedEvent event) {
-            channel.upsertPermissionOverride(member).deny(EnumSet.of(Permission.MESSAGE_SEND)).queue();
+            channel.upsertPermissionOverride(member).deny(EnumSet.of(Permission.MESSAGE_SEND)).queue(); //TODO: trouver un moyen d'enlever la perm plutôt que de la deny
             this.finished = true;
         }
 
