@@ -55,10 +55,10 @@ class ChangelogSubCategory extends AbstractChangelogCategory {
 
     @Override
     public String format() {
-        StringBuilder formattedContent = new StringBuilder("### " + name + "\n");
-        content.forEach(line -> {
-            formattedContent.append("- ").append(line.replaceFirst(": |:", "")).append("\n");
-        });
+        if(content.size() == 1) return "- %s %s\n".formatted(name, content.getFirst());
+        StringBuilder formattedContent = new StringBuilder("- " + name + "\n");
+
+        content.forEach(line -> formattedContent.append("  - ").append(line.replaceFirst(": |:", "")).append("\n"));
         return formattedContent.toString();
     }
 
