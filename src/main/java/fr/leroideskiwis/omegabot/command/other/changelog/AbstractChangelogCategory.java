@@ -11,5 +11,11 @@ public abstract class AbstractChangelogCategory {
     }
 
     public abstract String format();
+
     public abstract boolean addContent(String content);
+
+    @Override
+    public String toString() {
+        return format();
+    }
 }

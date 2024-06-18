@@ -35,7 +35,7 @@ public class ChangelogCategory extends AbstractChangelogCategory {
     public boolean addContent(String content) {
         if (changeType.startByIdentifier(content)) {
             if (ChangelogSubCategory.isInASubCategory(changeType.removeIdentifier(content))) {
-                ChangelogSubCategory contentSubCategory = new ChangelogSubCategory(content);
+                ChangelogSubCategory contentSubCategory = new ChangelogSubCategory(changeType.removeIdentifier(content));
 
                 // On regarde si il est dans une sous-catégorie déjà existante:
                 for (ChangelogSubCategory subCategory : subCategories) {
@@ -59,6 +59,14 @@ public class ChangelogCategory extends AbstractChangelogCategory {
      */
     @Override
     public String format() {
-        return "## " + changeType.getCategoryName();
+        StringBuilder formattedContent = new StringBuilder("## " + changeType.getCategoryName() + "\n");
+        subCategories.forEach(changelogSubCategory -> {
+            formattedContent.append(changelogSubCategory.format()).append("\n");
+        });
+        for (String line : content) {
+            formattedContent.append("- ").append(changeType.removeIdentifier(line).replaceFirst(": |:", "")).append("\n");
+        }
+        System.out.println(formattedContent.toString());
+        return formattedContent.toString();
     }
 }

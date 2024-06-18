@@ -39,9 +39,10 @@ class ChangelogSubCategory extends AbstractChangelogCategory {
     }
 
     public String getSubCategoryName(String line) {
+        System.out.println(line);
         if (ChangelogSubCategory.isInASubCategory(line)) {
-            String rawName = Pattern.compile(regexExpression).matcher(line).group();
-            return rawName.substring(1, rawName.length() - 1);
+            System.out.println(ChangelogSubCategory.isInASubCategory(line));
+            return line.substring(1, line.indexOf(")"));
         } else {
             return "";
         }
@@ -50,14 +51,17 @@ class ChangelogSubCategory extends AbstractChangelogCategory {
 
     @Override
     public boolean addContent(String content) {
-        // getting everything after ": " OR ":"
-        String trimmedContent = Pattern.compile("(?<=(: )|:).*").matcher(content).group();
-        return this.content.add("- " + trimmedContent);
+        String trimmedContent = content.substring(content.indexOf(":"));//Pattern.compile("(?<=(: )|:)[^{]*").matcher(content).group();
+        return this.content.add(trimmedContent);
     }
 
     @Override
     public String format() {
-        return "### " + name;
+        StringBuilder formattedContent = new StringBuilder("### " + name + "\n");
+        content.forEach(line -> {
+            formattedContent.append("- ").append(line.replaceFirst(": |:", "")).append("\n");
+        });
+        return formattedContent.toString();
     }
 
     @Override

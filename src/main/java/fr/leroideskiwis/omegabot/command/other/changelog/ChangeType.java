@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
  * This enum keep track of all existing types of modifications possible in a changelog
  */
 enum ChangeType {
-    FEAT("Features", "feat:"),
-    FIX("Fixes", "fix:"),
+    FEAT("Features", "feat"),
+    FIX("Fixes", "fix"),
     OTHER("Others", "");
 
 
@@ -38,7 +38,8 @@ enum ChangeType {
     }
 
     public String removeIdentifier(String line) {
-        return line.replaceFirst(identifier + " ", "");
+        // System.out.println("this one?");
+        return line.replaceFirst(identifier, "");
     }
 
     public String getCategoryName() {

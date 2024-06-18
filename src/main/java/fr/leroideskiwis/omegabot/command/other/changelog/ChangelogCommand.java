@@ -49,20 +49,25 @@ public class ChangelogCommand implements Command {
 
             try {
                 List<String> lines = Files.readAllLines(Path.of(changelogFilePath));
+                List<ChangelogCategory> changelogCategories = new ArrayList<>();
+                for (ChangeType changeType : ChangeType.values()) {
+                    changelogCategories.add(new ChangelogCategory(changeType));
+                }
 
-                for(ChangeType changeType : ChangeType.values()){
-                    builder.appendDescription("## " + changeType.getCategoryName()+"\n");
-                    for(String line : new ArrayList<>(lines)){
-                        if(changeType.startByIdentifier(line)){
-                            builder.appendDescription("- " + changeType.removeIdentifier(line) + "\n");
-                            lines.remove(line);
-                        }
+                for (String line : lines) {
+                    for (ChangelogCategory changelogCategory : changelogCategories) {
+                        if (changelogCategory.addContent(line)) break;
                     }
                 }
+
+                changelogCategories.forEach(changelogCategory -> {
+                    builder.appendDescription(changelogCategory.format());
+                });
 
             } catch (Exception e) {
                 builder.setColor(Color.red);
                 builder.setDescription("Pas de changelog pour la v" + changelogNumber + " trouvé");
+                System.out.println(e);
             }
         } else {
             builder.setTitle("Changelogs disponibles:");
@@ -84,7 +89,11 @@ public class ChangelogCommand implements Command {
             }
         }
 
-        event.replyEmbeds(builder.build()).setEphemeral(true).queue();
+        event.replyEmbeds(builder.build()).
+
+                setEphemeral(true).
+
+                queue();
     }
 
     /**
