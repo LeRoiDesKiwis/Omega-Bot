@@ -3,11 +3,9 @@ package fr.leroideskiwis.omegabot.user;
 import fr.leroideskiwis.omegabot.Bomb;
 import fr.leroideskiwis.omegabot.BuyType;
 import fr.leroideskiwis.omegabot.database.Database;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.sql.SQLException;
@@ -159,6 +157,10 @@ public class OmegaUser {
 
     public String getName() {
         return member.getEffectiveName();
+    }
+
+    public String getRealName(){
+        return member.getUser().getName();
     }
 
     @Override

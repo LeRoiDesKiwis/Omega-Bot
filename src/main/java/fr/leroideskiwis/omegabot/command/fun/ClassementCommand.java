@@ -37,7 +37,9 @@ public class ClassementCommand implements Command {
                         builder.append(i)
                                 .append(" - ")
                                 .append(omegaUser.getName())
-                                .append(" : ")
+                                .append(" (**")
+                                .append(omegaUser.getRealName())
+                                .append("**) : ")
                                 .append(omegaUser.getPoints())
                                 .append("\n");
                     }
