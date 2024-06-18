@@ -120,4 +120,9 @@ public class ChangelogCommand implements Command {
         return Category.DIVERS;
     }
 
+    @Override
+    public boolean isBlacklisted() {
+        return false;
+    }
+
 }
