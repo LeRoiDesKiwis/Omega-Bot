@@ -35,7 +35,6 @@ class EventManagerTest {
 
         when(omegaEvent.isApplicable(event)).thenReturn(true);
         when(omegaEvent.isFinished()).thenReturn(false);
-        doNothing().when(omegaEvent).apply(event);
 
         eventManager.addEvent(omegaEvent);
         eventManager.handle(event);

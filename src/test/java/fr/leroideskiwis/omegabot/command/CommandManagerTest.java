@@ -33,7 +33,6 @@ class CommandManagerTest {
         jda = mock(JDA.class);
         RestAction restAction = mock(RestAction.class);
         when(jda.upsertCommand(any())).thenReturn(restAction);
-        doNothing().when(restAction).queue();
 
         command = mock(Command.class);
         SlashCommandData commandData = mock(SlashCommandData.class);

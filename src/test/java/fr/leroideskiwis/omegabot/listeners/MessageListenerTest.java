@@ -30,7 +30,6 @@ class MessageListenerTest {
         when(event.getAuthor()).thenReturn(realUser);
 
         eventManager = mock(EventManager.class);
-        doNothing().when(eventManager).handle(event);
 
         userManager = mock(UserManager.class);
         when(userManager.from(any())).thenReturn(user);

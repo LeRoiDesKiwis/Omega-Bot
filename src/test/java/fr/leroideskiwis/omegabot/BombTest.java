@@ -23,18 +23,14 @@ class BombTest {
     void setUp() {
         this.channel = mock(TextChannel.class);
         MessageCreateAction messageCreateAction = mock(MessageCreateAction.class);
-        doNothing().when(messageCreateAction).queue();
         when(channel.sendMessage(anyString())).thenReturn(messageCreateAction);
         when(channel.sendMessageEmbeds(any())).thenReturn(messageCreateAction);
 
         this.user = mock(OmegaUser.class);
-        doNothing().when(user).goulag(anyInt(), anyString());
-        doNothing().when(user).giveBomb(any());
         when(user.getAsMention()).thenReturn("mention");
 
         this.callback = mock(IReplyCallback.class);
         ReplyCallbackAction replyCallbackAction = mock(ReplyCallbackAction.class);
-        doNothing().when(replyCallbackAction).queue();
         when(callback.reply(anyString())).thenReturn(replyCallbackAction);
 
         bomb = new Bomb(user, channel);

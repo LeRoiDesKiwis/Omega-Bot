@@ -97,7 +97,6 @@ class TimeoutEventTest {
     void end() {
         MessageEditAction action = mock(MessageEditAction.class);
         when(message.editMessage(anyString())).thenReturn(action);
-        doNothing().when(action).queue();
 
         timeoutEvent.end();
 
