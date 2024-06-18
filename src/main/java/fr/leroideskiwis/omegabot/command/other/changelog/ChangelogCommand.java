@@ -4,6 +4,7 @@ import fr.leroideskiwis.omegabot.Main;
 import fr.leroideskiwis.omegabot.command.Category;
 import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
+import kotlin.text.Charsets;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -65,6 +66,7 @@ public class ChangelogCommand implements Command {
                 });
 
             } catch (Exception e) {
+                e.printStackTrace();
                 builder.setColor(Color.red);
                 builder.setDescription("Pas de changelog pour la v" + changelogNumber + " trouvé");
             }
@@ -79,8 +81,9 @@ public class ChangelogCommand implements Command {
                         .toList();
 
                 availableChangelogs.forEach(changelog -> {
-                    if (isValidChangelogVersion(changelog.substring(0, 5))) {
-                        builder.appendDescription("- " + changelog.substring(0, 5) + "\n");
+                    String substring = changelog.substring(0, changelog.length() - 3);
+                    if (isValidChangelogVersion(substring)) {
+                        builder.appendDescription("- " + substring + "\n");
                     }
                 });
             } else {
