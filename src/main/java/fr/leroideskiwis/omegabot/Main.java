@@ -47,7 +47,7 @@ public class Main {
                 new AnonymousCommand(),
                 new AboutCommand(),
                 new SlotMachineCommand(),
-                new ChangelogCommand()
+                new ChangelogCommand(),
                 new ClassementCommand(userManager),
                 new SpecialChannelCommand(eventManager)
         );
