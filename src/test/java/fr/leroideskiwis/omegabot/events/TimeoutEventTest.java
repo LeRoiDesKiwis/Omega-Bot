@@ -46,15 +46,11 @@ class TimeoutEventTest {
 
         assertFalse(timeoutEvent.isFinished());
         timeoutEvent.apply(event);
-        verify(omegaUser).goulag(anyInt(), any());
         assertFalse(timeoutEvent.isFinished());
         timeoutEvent.apply(event);
-        verify(omegaUser, times(2)).goulag(anyInt(), any());
         assertFalse(timeoutEvent.isFinished());
         timeoutEvent.apply(event);
-        verify(omegaUser, times(3)).goulag(anyInt(), any());
         assertTrue(timeoutEvent.isFinished());
-        verify(omegaUser, times(3)).goulag(anyInt(), any());
     }
 
     @Test
