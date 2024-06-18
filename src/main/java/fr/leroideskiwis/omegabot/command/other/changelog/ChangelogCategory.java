@@ -59,6 +59,7 @@ public class ChangelogCategory extends AbstractChangelogCategory {
      */
     @Override
     public String format() {
+        if(content.isEmpty() && subCategories.isEmpty()) return "";
         StringBuilder formattedContent = new StringBuilder("## " + changeType.getCategoryName() + "\n");
         subCategories.forEach(changelogSubCategory -> {
             formattedContent.append(changelogSubCategory.format()).append("\n");
