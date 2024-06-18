@@ -3,6 +3,7 @@ package fr.leroideskiwis.omegabot.command.fun;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -22,8 +23,6 @@ import java.io.IOException;
 
 public class UrbanDictionaryCommand implements Command {
 
-    private final int PRICE = 0;
-
     @Override
     public SlashCommandData commandData() {
         return Commands.slash("definition", "Donne le nombre demandé de définitions de UrbanDictionary")
@@ -33,9 +32,9 @@ public class UrbanDictionaryCommand implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
+        OptionMapping definitionsRaw = event.getOption("définitions");
+        int definitions = (definitionsRaw == null || Objects.requireNonNull(definitionsRaw).getAsInt() <= 0) ? 1 : definitionsRaw.getAsInt();
 
-        int providedDefinitionCount = Objects.requireNonNull(event.getOption("définitions")).getAsInt();
-        int definitions = providedDefinitionCount > 0 ? providedDefinitionCount : 1;
         String searchTerm = Objects.requireNonNull(event.getOption("recherche")).getAsString();
 
         try {
@@ -47,7 +46,8 @@ public class UrbanDictionaryCommand implements Command {
             if (definitionsToDisplay > 0) {
                 StringBuilder definitionsText = new StringBuilder();
                 for (int i = 0; i < definitionsToDisplay; i++) {
-                    String definition =  definitionsList.get(i).getAsJsonObject()
+                    String definition =  definitionsList
+                            .get(i).getAsJsonObject()
                             .get("definition").getAsString()
                             .replace("[", "").replace("]", "");
 
@@ -82,7 +82,7 @@ public class UrbanDictionaryCommand implements Command {
 
     @Override
     public int price() {
-        return PRICE;
+        return 0;
     }
 
     @Override
