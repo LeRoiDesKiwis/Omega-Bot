@@ -41,8 +41,7 @@ class TimeoutEventTest {
         MessageReceivedEvent event = mock(MessageReceivedEvent.class);
         Member member = mock(Member.class);
         when(userManager.from(member)).thenReturn(omegaUser);
-        when(event.getAuthor()).thenReturn(mock(User.class));
-        when(userManager.from(any())).thenReturn(omegaUser);
+        when(event.getMember()).thenReturn(member);
 
         assertFalse(timeoutEvent.isFinished());
         timeoutEvent.apply(event);
