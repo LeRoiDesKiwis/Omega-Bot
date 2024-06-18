@@ -3,6 +3,7 @@ package fr.leroideskiwis.omegabot.command.other.changelog;
 import fr.leroideskiwis.omegabot.Main;
 import fr.leroideskiwis.omegabot.command.Category;
 import fr.leroideskiwis.omegabot.command.Command;
+import fr.leroideskiwis.omegabot.comparators.VersionComparator;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import kotlin.text.Charsets;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -77,13 +78,13 @@ public class ChangelogCommand implements Command {
             if (fileList != null) {
                 List<String> availableChangelogs = Stream.of(fileList)
                         .filter(file -> !file.isDirectory())
-                        .map(File::getName)
+                        .map(file -> file.getName().substring(0, file.getName().length() - 3))
+                        .sorted(new VersionComparator())
                         .toList();
 
                 availableChangelogs.forEach(changelog -> {
-                    String substring = changelog.substring(0, changelog.length() - 3);
-                    if (isValidChangelogVersion(substring)) {
-                        builder.appendDescription("- " + substring + "\n");
+                    if (isValidChangelogVersion(changelog)) {
+                        builder.appendDescription("- " + changelog + "\n");
                     }
                 });
             } else {
