@@ -45,14 +45,16 @@ public class UrbanDictionaryCommand implements Command {
 
             if (definitionsToDisplay > 0) {
                 StringBuilder definitionsText = new StringBuilder();
-                for (int i = 0; i < definitionsToDisplay; i++) {
-                    String definition =  definitionsList
-                            .get(i).getAsJsonObject()
-                            .get("definition").getAsString()
-                            .replace("[", "").replace("]", "");
+                definitionsText.append("définitions pour `").append(searchTerm).append("`:\n\n");
 
-                    definitionsText.append((i + 1)).append(": ").append(definition).append("\n");
+                for (int i = 0; i < definitionsToDisplay; i++) {
+                    JsonObject definitionObj = definitionsList.get(i).getAsJsonObject();
+                    String definition = definitionObj.get("definition").getAsString()
+                            .replace("[", "").replace("]", "")
+                            .replace("\r\n\r\n", "\n").replace("\n\n", "\n");
+                    definitionsText.append(i + 1).append(". ").append(definition).append("\n\n");
                 }
+
                 event.reply(definitionsText.toString()).queue();
             } else {
                 event.reply("Aucune définition trouvée pour \"" + searchTerm + "\".").queue();
@@ -77,7 +79,7 @@ public class UrbanDictionaryCommand implements Command {
                 }
             }
         }
-        throw new RuntimeException("Failed to fetch definition");
+        throw new RuntimeException("La requête a échouée");
     }
 
     @Override
