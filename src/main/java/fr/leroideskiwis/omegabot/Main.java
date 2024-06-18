@@ -9,6 +9,7 @@ import fr.leroideskiwis.omegabot.command.channels.SpecialChannelCommand;
 import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
+import fr.leroideskiwis.omegabot.command.fun.UrbanDictionaryCommand;
 import fr.leroideskiwis.omegabot.command.goulag.*;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.AddTimeBomb;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.GiveBomb;
@@ -47,7 +48,8 @@ public class Main {
                 new AboutCommand(),
                 new SlotMachineCommand(),
                 new ClassementCommand(userManager),
-                new SpecialChannelCommand(eventManager)
+                new SpecialChannelCommand(eventManager),
+                new UrbanDictionaryCommand()
         );
         commandManager.register(new BombCommand(),
                 new AddTimeBomb(userManager),

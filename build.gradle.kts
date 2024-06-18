@@ -15,6 +15,9 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.12.0")
     implementation("net.dv8tion:JDA:5.0.0-beta.24")
     implementation("org.xerial:sqlite-jdbc:3.46.0.0")
+    implementation("com.google.code.gson:gson:2.8.5")
+    implementation("org.apache.httpcomponents:httpclient:4.5.13")
+
 }
 
 tasks.test {
