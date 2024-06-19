@@ -65,4 +65,9 @@ public class BoardC4 {
         this.currentPlayer = currentPlayer.equals(players.get(0)) ? players.get(1) : players.get(0);
     }
 
+    public void forceEnd() {
+        finished = true;
+        error = "La partie a expirée !";
+        display();
+    }
 }
