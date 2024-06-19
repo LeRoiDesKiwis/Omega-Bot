@@ -22,10 +22,12 @@ import fr.leroideskiwis.omegabot.listeners.MessageListener;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
-public class Main {
+public class Main extends ListenerAdapter {
 
     public static String version = "1.5";
     private CommandManager commandManager;
@@ -65,7 +67,13 @@ public class Main {
 
         jda.addEventListener(new MessageListener(eventManager, userManager));
         jda.addEventListener(new CommandListener(commandManager));
+        jda.addEventListener(this);
 
+    }
+
+    @Override
+    public void onReady(ReadyEvent event) {
+        jda.getGuilds().forEach(guild -> userManager.loadGuild(guild));
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package fr.leroideskiwis.omegabot.user;
 
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.sql.SQLException;
@@ -39,5 +40,9 @@ public class UserManager {
 
     public Stream<OmegaUser> stream() {
         return users.stream();
+    }
+
+    public void loadGuild(Guild guild) {
+        guild.loadMembers().onSuccess(members -> members.forEach(this::from));
     }
 }
