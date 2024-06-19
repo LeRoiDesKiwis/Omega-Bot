@@ -14,7 +14,7 @@ public class EventManager {
 
     public void handle(MessageReceivedEvent event) {
         for(OmegaEvent omegaEvent : new ArrayList<>(events)){
-            if(omegaEvent.isApplicable(event)) omegaEvent.apply(event);
+            if(!omegaEvent.isFinished() && omegaEvent.isApplicable(event)) omegaEvent.apply(event);
             if(omegaEvent.isFinished()) {
                 omegaEvent.end();
                 events.remove(omegaEvent);

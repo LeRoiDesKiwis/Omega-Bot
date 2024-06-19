@@ -6,6 +6,7 @@ public enum Category {
     BOUTIQUE_SANCTIONS_BOMB(":bomb:"),
     BOUTIQUE_FUN(":tada:"),
     BANQUE(":moneybag:"),
+    GAME(":video_game:"),
     ADMIN(":no_entry_sign:"),
     DIVERS(":flushed:");
 

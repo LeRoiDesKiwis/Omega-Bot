@@ -9,6 +9,7 @@ import fr.leroideskiwis.omegabot.command.channels.SpecialChannelCommand;
 import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
+import fr.leroideskiwis.omegabot.command.game.Connect4Command;
 import fr.leroideskiwis.omegabot.command.goulag.*;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.AddTimeBomb;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.GiveBomb;
@@ -21,6 +22,7 @@ import fr.leroideskiwis.omegabot.listeners.MessageListener;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Main {
 
@@ -32,7 +34,8 @@ public class Main {
     private JDA jda;
 
     private void launch(String token) {
-        this.jda = JDABuilder.createLight(token).build();
+        this.jda = JDABuilder.createLight(token)
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT).build();
         this.eventManager = new EventManager();
         this.userManager = new UserManager();
         this.commandManager = new CommandManager(jda, userManager,
@@ -49,7 +52,8 @@ public class Main {
                 new SlotMachineCommand(),
                 new ChangelogCommand(),
                 new ClassementCommand(userManager),
-                new SpecialChannelCommand(eventManager)
+                new SpecialChannelCommand(eventManager),
+                new Connect4Command(userManager, eventManager)
         );
         commandManager.register(new BombCommand(),
                 new AddTimeBomb(userManager),
