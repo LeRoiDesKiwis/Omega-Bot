@@ -48,7 +48,7 @@ public class TimeoutEvent implements OmegaEvent{
     @Override
     public void end(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\nCamarades tombes au combat : \n");
+        stringBuilder.append("\nCamarades tombés au combat : \n");
         for(Map.Entry<Integer, User> user : users.entrySet()){
             stringBuilder.append(String.format("- %s : %d minutes\n", user.getValue().getAsMention(), user.getKey()));
         }
