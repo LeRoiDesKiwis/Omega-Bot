@@ -32,7 +32,8 @@ public class Main {
     private JDA jda;
 
     private void launch(String token) {
-        this.jda = JDABuilder.createLight(token).build();
+        this.jda = JDABuilder.createLight(token)
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT).build();
         this.eventManager = new EventManager();
         this.userManager = new UserManager();
         this.commandManager = new CommandManager(jda, userManager,
@@ -49,7 +50,8 @@ public class Main {
                 new SlotMachineCommand(),
                 new ChangelogCommand(),
                 new ClassementCommand(userManager),
-                new SpecialChannelCommand(eventManager)
+                new SpecialChannelCommand(eventManager),
+                new Connect4Command(userManager, eventManager)
         );
         commandManager.register(new BombCommand(),
                 new AddTimeBomb(userManager),
