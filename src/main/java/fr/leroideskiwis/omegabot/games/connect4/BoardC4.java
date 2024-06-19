@@ -25,7 +25,11 @@ public class BoardC4 {
     }
 
     public void display(){
-        StringBuilder builder = new StringBuilder("Au tour de %s\n".formatted(currentPlayer.getAsMention()));
+        StringBuilder builder = new StringBuilder("Au tour de %s (%s)\n".formatted(currentPlayer.getAsMention(), currentPlayer.toString()));
+        for(int i = 0; i < 7; i++) {
+            builder.append(columns.get(i));
+        }
+        builder.append("\n");
         for(int i = 5; i >= 0; i--){
             for(ColumnC4 column : columns){
                 Optional<String> piece = column.get(i);

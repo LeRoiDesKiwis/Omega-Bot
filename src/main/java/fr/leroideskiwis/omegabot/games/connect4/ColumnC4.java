@@ -28,4 +28,8 @@ public class ColumnC4 {
     public boolean isIdentifier(String identifier){
         return this.identifier.equals(identifier);
     }
+
+    public String toString(){
+        return ":number_%s:".formatted(identifier);
+    }
 }
