@@ -26,6 +26,10 @@ public class Bomb {
     }
 
     public void giveBomb(IReplyCallback callback, OmegaUser user){
+        if(user.isImmune(BuyType.BOMB)) {
+            callback.reply(String.format("%s est immunisé contre les bombes", user.getAsMention())).queue();
+            return;
+        }
         callback.reply(String.format("Vous avez donné une bombe à %s (pour rappel, elle explosera dans %d secondes)", user.getAsMention(), count)).queue();
         this.user.giveBomb(user);
         this.user = user;
