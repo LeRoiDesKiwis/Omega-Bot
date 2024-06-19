@@ -43,9 +43,12 @@ public class TransferCommand implements Command {
             return;
         }
 
-        if(!user.buy(event, points)) return;
+        if(!user.hasEnoughPoints(points)){
+            event.reply("Tu n'as pas assez de points pour donner autant de points.").setEphemeral(true).queue();
+            return;
+        }
 
-        target.givePoints(points);
+        user.transferPoints(target, points);
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(String.format("Transfert de points entre %s et %s", user.getName(), target.getName()));
         embedBuilder.addField(createField(user.getName(), user.getPoints()+points, user.getPoints()));

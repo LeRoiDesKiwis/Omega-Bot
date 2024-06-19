@@ -96,6 +96,12 @@ public class OmegaUser {
         save(); //pas opti mais comme y'a pas bcp de membres ça va
     }
 
+    public void transferPoints(OmegaUser user, int points){
+        if(!hasEnoughPoints(points)) return;
+        takePoints(points);
+        user.givePoints(points);
+    }
+
     /**
      * check if the user has enough points
      * @param points the amount of points to check
