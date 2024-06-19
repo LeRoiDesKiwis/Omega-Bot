@@ -7,6 +7,7 @@ import fr.leroideskiwis.omegabot.command.bank.TransferCommand;
 import fr.leroideskiwis.omegabot.command.channels.AnonymousCommand;
 import fr.leroideskiwis.omegabot.command.channels.SpecialChannelCommand;
 import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
+import fr.leroideskiwis.omegabot.command.fun.GrosPuantCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
 import fr.leroideskiwis.omegabot.command.goulag.*;
@@ -21,6 +22,8 @@ import fr.leroideskiwis.omegabot.listeners.MessageListener;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class Main {
 
@@ -32,7 +35,9 @@ public class Main {
     private JDA jda;
 
     private void launch(String token) {
-        this.jda = JDABuilder.createLight(token).build();
+        this.jda = JDABuilder.createLight(token)
+                .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                .setMemberCachePolicy(MemberCachePolicy.ALL).build();
         this.eventManager = new EventManager();
         this.userManager = new UserManager();
         this.commandManager = new CommandManager(jda, userManager,
@@ -49,7 +54,8 @@ public class Main {
                 new SlotMachineCommand(),
                 new ChangelogCommand(),
                 new ClassementCommand(userManager),
-                new SpecialChannelCommand(eventManager)
+                new SpecialChannelCommand(eventManager),
+                new GrosPuantCommand()
         );
         commandManager.register(new BombCommand(),
                 new AddTimeBomb(userManager),
