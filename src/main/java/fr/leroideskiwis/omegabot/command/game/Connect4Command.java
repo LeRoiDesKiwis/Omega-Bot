@@ -82,7 +82,7 @@ public class Connect4Command implements Command {
                 @Override
                 public void run() {
                     expirationCount++;
-                    if(expirationCount == 30) {
+                    if(expirationCount == 90) {
                         timer.cancel();
                         board.forceEnd();
                     }
