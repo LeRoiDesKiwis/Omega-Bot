@@ -26,6 +26,7 @@ public class UserManager {
      * @return the OmegaUser
      */
     public OmegaUser from(Member member){
+        if(member.getUser().isBot()) return new OmegaBotUser(member);
         return users.stream().filter(omegaUser -> omegaUser.isMember(member)).findFirst().orElseGet(() -> {
             OmegaUser user = new OmegaUser(member);
             try {

@@ -23,7 +23,6 @@ class UserManagerTest {
     @BeforeEach
     void setUp() throws SQLException {
         database = mock(Database.class);
-        mockStatic(Database.class);
         when(database.getFirst(any(), any(), eq(Integer.class), anyInt())).thenReturn(Optional.empty());
         when(Database.getDatabase()).thenReturn(database);
     }
