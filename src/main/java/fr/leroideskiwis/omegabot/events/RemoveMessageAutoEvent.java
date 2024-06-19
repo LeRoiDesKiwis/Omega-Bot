@@ -20,7 +20,7 @@ public class RemoveMessageAutoEvent implements OmegaEvent {
 
     @Override
     public boolean isApplicable(MessageReceivedEvent event) {
-        return !isFinished() &&omegaUser.isMember(event.getMember());
+        return omegaUser.isMember(event.getMember());
     }
 
     @Override
