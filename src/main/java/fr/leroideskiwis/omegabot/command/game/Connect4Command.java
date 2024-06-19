@@ -8,6 +8,7 @@ import fr.leroideskiwis.omegabot.games.connect4.BoardC4;
 import fr.leroideskiwis.omegabot.games.connect4.PlayerC4;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
 import fr.leroideskiwis.omegabot.user.UserManager;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -35,7 +36,12 @@ public class Connect4Command implements Command {
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        OmegaUser target = userManager.from(event.getOption("user").getAsMember());
+        Member member = event.getOption("user").getAsMember();
+        if(member.getUser().isBot() || member.equals(event.getMember())) {
+            event.reply("Tu ne peux pas jouer avec un bot ou toi même").setEphemeral(true).queue();
+            return;
+        }
+        OmegaUser target = userManager.from(member);
         event.reply("Starting a game of connect4 with " + target.getAsMention())
                 .flatMap(InteractionHook::retrieveOriginal)
                 .queue(message -> {
