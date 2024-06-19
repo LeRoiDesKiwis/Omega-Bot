@@ -24,7 +24,7 @@ import net.dv8tion.jda.api.JDABuilder;
 
 public class Main {
 
-    public static String version = "1.4.4";
+    public static String version = "1.5";
     private CommandManager commandManager;
     private EventManager eventManager;
     private UserManager userManager;
