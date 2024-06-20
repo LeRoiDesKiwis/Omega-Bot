@@ -67,7 +67,7 @@ public class UrbanDictionaryCommand implements Command {
             } else {
                 event.reply("Aucune définition trouvée pour \"" + searchTerm + "\".").queue();
             }
-        } catch (IOException e) { // Use IOException instead of java.io.IOException for better readability
+        } catch (IOException e) {
             event.reply("La requête à l'API UrbanDictionary a échouée.").queue();
         }
     }
