@@ -3,6 +3,7 @@ package fr.leroideskiwis.omegabot.command.fun;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,8 +18,11 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+
+import java.awt.*;
 import java.util.Objects;
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class UrbanDictionaryCommand implements Command {
@@ -33,39 +37,52 @@ public class UrbanDictionaryCommand implements Command {
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
         OptionMapping definitionsRaw = event.getOption("définitions");
-        int definitions = (definitionsRaw == null || Objects.requireNonNull(definitionsRaw).getAsInt() <= 0) ? 1 : definitionsRaw.getAsInt();
+        int definitions = Optional.ofNullable(definitionsRaw)
+                .map(OptionMapping::getAsInt)
+                .filter(def -> def > 0)
+                .orElse(1);
 
-        String searchTerm = Objects.requireNonNull(event.getOption("recherche")).getAsString();
+        String searchTerm = Objects.requireNonNull(event.getOption("recherche"), "Search term cannot be null")
+                .getAsString();
 
         try {
             JsonObject jsonResponse = fetchDefinition(searchTerm);
-
             JsonArray definitionsList = jsonResponse.getAsJsonArray("list");
-            int definitionsToDisplay = java.lang.Math.min(definitionsList.size(), definitions);
+            int definitionsToDisplay = Math.min(definitionsList.size(), definitions);
 
             if (definitionsToDisplay > 0) {
                 StringBuilder definitionsText = new StringBuilder();
-                definitionsText.append("définitions pour `").append(searchTerm).append("`:\n\n");
 
                 for (int i = 0; i < definitionsToDisplay; i++) {
                     JsonObject definitionObj = definitionsList.get(i).getAsJsonObject();
-                    String definition = definitionObj.get("definition").getAsString()
-                            .replace("[", "").replace("]", "")
-                            .replace("\r\n\r\n", "\n").replace("\n\n", "\n");
-                    definitionsText.append(i + 1).append(". ").append(definition).append("\n\n");
+                    String definition = cleanDefinition(definitionObj.get("definition").getAsString());
+                    definitionsText.append("- ").append(definition).append("\n\n");
                 }
 
-                event.reply(definitionsText.toString()).queue();
+                event.replyEmbeds(new EmbedBuilder()
+                        .setTitle("définitions pour `" + searchTerm + "`")
+                        .setColor(Color.BLUE)
+                        .setDescription(definitionsText.toString())
+                        .build()).queue();
             } else {
                 event.reply("Aucune définition trouvée pour \"" + searchTerm + "\".").queue();
             }
-        } catch (java.io.IOException e) {
+        } catch (IOException e) { // Use IOException instead of java.io.IOException for better readability
             event.reply("La requête à l'API UrbanDictionary a échouée.").queue();
         }
     }
 
+    private String cleanDefinition(String definition) {
+        return definition
+                // Remove braces found in links. The API doesn't provide the link URLs, so it is impossible to make these links work properly.
+                // Replace double newlines by a newline and two spaces because discord markdown doesn't support line breaks in lists.
+                .replace("[", "").replace("]", "")
+                .replace("\r\n\r\n", "\n").replace("\n\n", "\n").replace("\n", "\n  ");
+    }
+
     private JsonObject fetchDefinition(String searchTerm) throws IOException {
-        String url = "http://api.urbandictionary.com/v0/define?term=" + searchTerm;
+        String urbanDictionaryURL = "https://api.urbandictionary.com/v0/define?term=";
+        String url = urbanDictionaryURL + searchTerm;
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(url);
@@ -79,7 +96,8 @@ public class UrbanDictionaryCommand implements Command {
                 }
             }
         }
-        throw new RuntimeException("La requête a échouée");
+        // If the reply is null, return an empty definition list. execute() will do error handling.
+        return new Gson().fromJson("{\"list\":[]}", JsonObject.class);
     }
 
     @Override
