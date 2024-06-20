@@ -77,7 +77,7 @@ public class UrbanDictionaryCommand implements Command {
                 // Remove braces found in links. The API doesn't provide the link URLs, so it is impossible to make these links work properly.
                 // Replace double newlines by a newline and two spaces because discord markdown doesn't support line breaks in lists.
                 .replace("[", "").replace("]", "")
-                .replace("\r\n\r\n", "\n").replace("\n\n", "\n").replace("\n", "\n  ");
+                .replaceAll("(\\r?\\n){2}", "\n  ").replaceAll("\\r?\\n", "\n  ");
     }
 
     private JsonObject fetchDefinition(String searchTerm) throws IOException {
