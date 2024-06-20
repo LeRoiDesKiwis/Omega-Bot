@@ -21,7 +21,7 @@ public class Bomb {
         this.user = user;
         this.channel = channel;
         this.count = 300;
-        this.goulagTime = 1;
+        this.goulagTime = 5;
         this.locked = false;
     }
 
