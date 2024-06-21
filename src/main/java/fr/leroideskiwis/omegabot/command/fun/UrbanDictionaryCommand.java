@@ -20,30 +20,29 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.awt.*;
-import java.util.Objects;
 import java.io.IOException;
 import java.util.Optional;
 
 
 public class UrbanDictionaryCommand implements Command {
+    private final Gson json = new Gson();
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("definition", "Donne le nombre demandé de définitions de UrbanDictionary")
+        return Commands.slash("definition", "Donne le nombre demandé de definitions de UrbanDictionary")
                 .addOption(OptionType.STRING, "recherche", "Ce que vous voulez chercher", true)
-                .addOption(OptionType.INTEGER, "définitions", "Le nombre de définitions que vous voulez voir", false);
+                .addOption(OptionType.INTEGER, "définitions", "Le nombre de definitions que vous voulez voir", false);
     }
 
     @Override
     public void execute(OmegaUser user, SlashCommandInteraction event) {
-        OptionMapping definitionsRaw = event.getOption("définitions");
+        OptionMapping definitionsRaw = event.getOption("definitions");
         int definitions = Optional.ofNullable(definitionsRaw)
                 .map(OptionMapping::getAsInt)
                 .filter(def -> def > 0)
                 .orElse(1);
 
-        String searchTerm = Objects.requireNonNull(event.getOption("recherche"), "Search term cannot be null")
-                .getAsString();
+        String searchTerm = event.getOption("recherche").getAsString();
 
         try {
             JsonObject jsonResponse = fetchDefinition(searchTerm);
@@ -65,10 +64,10 @@ public class UrbanDictionaryCommand implements Command {
                         .setDescription(definitionsText.toString())
                         .build()).queue();
             } else {
-                event.reply("Aucune définition trouvée pour \"" + searchTerm + "\".").queue();
+                event.reply("Aucune définition trouvée pour \"" + searchTerm + "\".").setEphemeral(true).queue();
             }
         } catch (IOException e) {
-            event.reply("La requête à l'API UrbanDictionary a échouée.").queue();
+            event.reply("L'API a donné une réponse invalide ou vide.").setEphemeral(true).queue();
         }
     }
 
@@ -92,12 +91,12 @@ public class UrbanDictionaryCommand implements Command {
                 HttpEntity entity = response.getEntity();
                 if (entity!= null) {
                     String responseBody = EntityUtils.toString(entity, "UTF-8");
-                    return new Gson().fromJson(responseBody, JsonObject.class);
+                    return json.fromJson(responseBody, JsonObject.class);
                 }
             }
         }
         // If the reply is null, return an empty definition list. execute() will do error handling.
-        return new Gson().fromJson("{\"list\":[]}", JsonObject.class);
+        return json.fromJson("{\"list\":[]}", JsonObject.class);
     }
 
     @Override
@@ -112,7 +111,7 @@ public class UrbanDictionaryCommand implements Command {
 
     @Override
     public Category category() {
-        return Category.BOUTIQUE_FUN;
+        return Category.DIVERS;
     }
 
     @Override
