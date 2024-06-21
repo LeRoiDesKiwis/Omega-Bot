@@ -43,7 +43,7 @@ public class ChangelogCommand implements Command {
             return;
         }
 
-        EmbedBuilder builder = new EmbedBuilder().setTitle("Nouveautés de la version v" + changelogNumber).setColor(new Color(109, 50, 109));
+        EmbedBuilder builder = new EmbedBuilder().setTitle("Nouveautés de la version " + changelogNumber).setColor(new Color(109, 50, 109));
 
         String changelogDirectory = "changelog/";
         if (!changelogNumber.equals("list")) {
