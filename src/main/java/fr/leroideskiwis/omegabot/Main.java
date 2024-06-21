@@ -10,11 +10,13 @@ import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
 import fr.leroideskiwis.omegabot.command.fun.GrosPuantCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
+import fr.leroideskiwis.omegabot.command.fun.UrbanDictionaryCommand;
 import fr.leroideskiwis.omegabot.command.goulag.*;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.AddTimeBomb;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.GiveBomb;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.LockBomb;
 import fr.leroideskiwis.omegabot.command.other.AboutCommand;
+import fr.leroideskiwis.omegabot.command.other.PingCommand;
 import fr.leroideskiwis.omegabot.command.other.changelog.ChangelogCommand;
 import fr.leroideskiwis.omegabot.events.EventManager;
 import fr.leroideskiwis.omegabot.listeners.CommandListener;
@@ -57,6 +59,8 @@ public class Main extends ListenerAdapter {
                 new ChangelogCommand(),
                 new ClassementCommand(userManager),
                 new SpecialChannelCommand(eventManager),
+                new UrbanDictionaryCommand(),
+                new PingCommand(),
                 new GrosPuantCommand()
         );
         commandManager.register(new BombCommand(),
