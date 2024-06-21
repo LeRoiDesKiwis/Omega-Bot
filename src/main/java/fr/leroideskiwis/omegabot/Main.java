@@ -60,7 +60,7 @@ public class Main extends ListenerAdapter {
                 new ClassementCommand(userManager),
                 new SpecialChannelCommand(eventManager),
                 new UrbanDictionaryCommand(),
-                new PingCommand()
+                new PingCommand(),
                 new GrosPuantCommand()
         );
         commandManager.register(new BombCommand(),
