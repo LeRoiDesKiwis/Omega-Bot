@@ -31,7 +31,7 @@ public class UrbanDictionaryCommand implements Command {
     public SlashCommandData commandData() {
         return Commands.slash("definition", "Donne le nombre demandé de definitions de UrbanDictionary")
                 .addOption(OptionType.STRING, "recherche", "Ce que vous voulez chercher", true)
-                .addOption(OptionType.INTEGER, "définitions", "Le nombre de definitions que vous voulez voir", false);
+                .addOption(OptionType.INTEGER, "definitions", "Le nombre de definitions que vous voulez voir", false);
     }
 
     @Override
@@ -67,7 +67,12 @@ public class UrbanDictionaryCommand implements Command {
                 event.reply("Aucune définition trouvée pour \"" + searchTerm + "\".").setEphemeral(true).queue();
             }
         } catch (IOException e) {
-            event.reply("L'API a donné une réponse invalide ou vide.").setEphemeral(true).queue();
+            event.replyEmbeds(new EmbedBuilder()
+                    .setTitle("Une erreur est survenue lors de la recherche de la définition pour \"" + searchTerm + "\".")
+                    .setColor(Color.RED)
+                    .setDescription(e.getMessage())
+                    .build()).queue();
+            e.printStackTrace();
         }
     }
 
