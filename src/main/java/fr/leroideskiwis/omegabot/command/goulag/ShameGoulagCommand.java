@@ -59,7 +59,7 @@ public class ShameGoulagCommand implements Command {
                     event.getChannel().sendMessage(String.format("%d :white_check_mark: vs %d :x: : le %s l'emporte donc et %s se prend 5min de goulag.",
                             check, cross, (check > cross ? ":white_check_mark:" : ":x:"), goulaged.getAsMention())).queue();
                 }
-            }, 5000);
+            }, 30000);
         }));
     }
 
