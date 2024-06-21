@@ -40,7 +40,7 @@ public class ShameGoulagCommand implements Command {
 
         event.reply(String.format("Un goulag de la honte a ete émis par %s sur %s.\n" +
                         "Si il y a plus de :white_check_mark: que de :x: sur ce message dans les 30 prochaines secondes, %s se prendra 5min de goulag, sinon %s se prendra 5min.\n" +
-                        "Ce vote nécessite la majorité absolue. En cas d'égalité, %s se prendre le goulag.",
+                        "Ce vote nécessite la majorité absolue. En cas d'égalité, %s se prendra le goulag.",
                 user.getAsMention(), target.getAsMention(), target.getAsMention(), user.getAsMention(), user.getAsMention())).queue(hook -> hook.retrieveOriginal().queue(message -> {
             message.addReaction(Emoji.fromUnicode("\u2705")).queue();
             message.addReaction(Emoji.fromUnicode("\u274C")).queue();
@@ -49,7 +49,10 @@ public class ShameGoulagCommand implements Command {
             timer.schedule(new java.util.TimerTask() {
                 @Override
                 public void run() {
-                    int check = message.retrieveReactionUsers(Emoji.fromUnicode("\u2705")).complete().size();
+                    int check = message.retrieveReactionUsers(Emoji.fromUnicode("\u2705")).complete()
+                            .stream()
+                            .filter(user -> !user.isBot())
+                            .mapToInt(t -> 1).sum();
                     int cross = message.retrieveReactionUsers(Emoji.fromUnicode("\u274C")).complete().size();
                     OmegaUser goulaged = check > cross ? target : user;
                     goulaged.goulag(10, "shame goulag");
