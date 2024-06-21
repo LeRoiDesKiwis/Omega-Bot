@@ -17,7 +17,7 @@ public class TimeoutEvent implements OmegaEvent{
     private UserManager userManager;
     private long textChannelId;
     private Message message;
-    private Map<Integer, User> users = new HashMap<>();
+    private List<TimeoutUser> users = new ArrayList<>();
     private Random random = new Random();
 
     public TimeoutEvent(Message message, MessageChannelUnion textChannel, UserManager userManager){
@@ -41,7 +41,7 @@ public class TimeoutEvent implements OmegaEvent{
     public void apply(MessageReceivedEvent event) {
         int duration = random.nextInt(3, 6);
         userManager.from(event.getMember()).goulag(duration, "timeout bomb");
-        users.put(duration, event.getAuthor());
+        users.add(new TimeoutUser(event.getAuthor(), duration));
         counter--;
     }
 
@@ -49,10 +49,20 @@ public class TimeoutEvent implements OmegaEvent{
     public void end(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\nCamarades tombés au combat : \n");
-        for(Map.Entry<Integer, User> user : users.entrySet()){
-            stringBuilder.append(String.format("- %s : %d minutes\n", user.getValue().getAsMention(), user.getKey()));
+        for(TimeoutUser user : users){
+            stringBuilder.append(String.format("- %s : %d minutes\n", user.user.getAsMention(), user.duration));
         }
 
         message.editMessage(message.getContentDisplay()+ stringBuilder).queue();
+    }
+
+    private class TimeoutUser{
+        public final User user;
+        public final int duration;
+
+        public TimeoutUser(User user, int duration){
+            this.user = user;
+            this.duration = duration;
+        }
     }
 }
