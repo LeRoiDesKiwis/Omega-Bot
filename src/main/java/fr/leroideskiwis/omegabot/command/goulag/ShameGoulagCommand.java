@@ -53,7 +53,9 @@ public class ShameGoulagCommand implements Command {
                             .stream()
                             .filter(user -> !user.isBot())
                             .mapToInt(t -> 1).sum();
-                    int cross = message.retrieveReactionUsers(Emoji.fromUnicode("\u274C")).complete().size();
+                    int cross = message.retrieveReactionUsers(Emoji.fromUnicode("\u274C")).complete().stream()
+                            .filter(user -> !user.isBot())
+                            .mapToInt(t -> 1).sum();;
                     OmegaUser goulaged = check > cross ? target : user;
                     goulaged.goulag(10, "shame goulag");
                     event.getChannel().sendMessage(String.format("%d :white_check_mark: vs %d :x: : le %s l'emporte donc et %s se prend 5min de goulag.",
