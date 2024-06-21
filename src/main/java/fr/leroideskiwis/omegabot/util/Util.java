@@ -2,7 +2,6 @@ package fr.leroideskiwis.omegabot.util;
 
 public class Util {
 
-
     public static String capitalize(String str) {
         if (str == null || str.isEmpty()) return str;
 

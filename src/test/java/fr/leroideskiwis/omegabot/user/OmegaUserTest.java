@@ -41,7 +41,6 @@ class OmegaUserTest {
         when(member.getEffectiveName()).thenReturn("kiwi");
         Database database = mock(Database.class);
         when(Database.getDatabase()).thenReturn(database);
-        doNothing().when(database).execute(any());
     }
 
     @Test
@@ -64,7 +63,6 @@ class OmegaUserTest {
     @Test
     void testGoulag() {
         AuditableRestAction auditablebleRestAction = mock(AuditableRestAction.class);
-        doNothing().when(auditablebleRestAction).queue();
         when(member.timeoutFor(anyLong(), any())).thenReturn(auditablebleRestAction);
         when(auditablebleRestAction.reason(anyString())).thenReturn(auditablebleRestAction);
 
@@ -111,7 +109,6 @@ class OmegaUserTest {
         ReplyCallbackAction replyCallbackAction = mock(ReplyCallbackAction.class);
         when(interaction.reply(anyString())).thenReturn(replyCallbackAction);
         when(replyCallbackAction.setEphemeral(true)).thenReturn(replyCallbackAction);
-        doNothing().when(replyCallbackAction).queue();
 
         omegaUser.buy(interaction, 10);
         verify(interaction, never()).reply(anyString());
@@ -132,7 +129,6 @@ class OmegaUserTest {
 
     private AuditableRestAction<Void> fakeRestAction() {
         AuditableRestAction restAction = mock(AuditableRestAction.class);
-        doNothing().when(restAction).queue();
         return restAction;
     }
 

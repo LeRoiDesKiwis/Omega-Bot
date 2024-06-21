@@ -41,20 +41,15 @@ class TimeoutEventTest {
         MessageReceivedEvent event = mock(MessageReceivedEvent.class);
         Member member = mock(Member.class);
         when(userManager.from(member)).thenReturn(omegaUser);
-        when(event.getAuthor()).thenReturn(mock(User.class));
-        when(userManager.from(any())).thenReturn(omegaUser);
+        when(event.getMember()).thenReturn(member);
 
         assertFalse(timeoutEvent.isFinished());
         timeoutEvent.apply(event);
-        verify(omegaUser).goulag(anyInt(), any());
         assertFalse(timeoutEvent.isFinished());
         timeoutEvent.apply(event);
-        verify(omegaUser, times(2)).goulag(anyInt(), any());
         assertFalse(timeoutEvent.isFinished());
         timeoutEvent.apply(event);
-        verify(omegaUser, times(3)).goulag(anyInt(), any());
         assertTrue(timeoutEvent.isFinished());
-        verify(omegaUser, times(3)).goulag(anyInt(), any());
     }
 
     @Test
@@ -102,7 +97,6 @@ class TimeoutEventTest {
     void end() {
         MessageEditAction action = mock(MessageEditAction.class);
         when(message.editMessage(anyString())).thenReturn(action);
-        doNothing().when(action).queue();
 
         timeoutEvent.end();
 

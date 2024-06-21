@@ -36,12 +36,12 @@ public class GivePointsCommand implements Command {
             return;
         }
         OptionMapping option = event.getOption("user");
-        OmegaUser toGiveUser = option == null ? user : userManager.from(option.getAsMember());
-        toGiveUser.givePoints(money);
+        OmegaUser target = option == null ? user : userManager.from(option.getAsMember());
+        target.givePoints(money);
         String message = money > 0 ? "donné" : "retiré";
         String emote = money > 0 ? ":chart_with_upwards_trend:" : ":chart_with_downwards_trend:";
 
-        event.reply(String.format(":dollar: %s Vous avez %s %d points à %s (ancien solde: **%d**, nouveau solde: **%d**)", emote, message, Math.abs(money), toGiveUser.getAsMention(), toGiveUser.getPoints()-money, toGiveUser.getPoints())).queue();
+        event.reply(String.format(":dollar: %s Vous avez %s %d points à %s (ancien solde: **%d**, nouveau solde: **%d**)", emote, message, Math.abs(money), target.getAsMention(), target.getPoints()-money, target.getPoints())).queue();
     }
 
     @Override

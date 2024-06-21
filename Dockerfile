@@ -13,6 +13,7 @@ FROM alpine:latest
 WORKDIR /opt/omega-bot/
 COPY --from=build-stage /builder/build/libs/Omega-Bot-1.0-SNAPSHOT-all.jar /opt/omega-bot/omega-bot.jar
 COPY --from=build-stage /builder/data /opt/omega-bot/data
+COPY --from=build-stage /builder/changelog /opt/omega-bot/changelog
 
 RUN apk add --no-cache openjdk21-jre
 

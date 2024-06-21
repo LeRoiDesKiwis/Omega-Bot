@@ -33,13 +33,15 @@ class CommandManagerTest {
         jda = mock(JDA.class);
         RestAction restAction = mock(RestAction.class);
         when(jda.upsertCommand(any())).thenReturn(restAction);
-        doNothing().when(restAction).queue();
 
         command = mock(Command.class);
         SlashCommandData commandData = mock(SlashCommandData.class);
         when(command.commandData()).thenReturn(commandData);
         when(commandData.getName()).thenReturn("test");
+        when(commandData.getDescription()).thenReturn("test");
+        when(commandData.setDescription(anyString())).thenReturn(commandData);
         when(command.category()).thenReturn(Category.BOUTIQUE_FUN);
+        when(command.price()).thenReturn(100);
 
         slashCommandInteraction = mock(SlashCommandInteraction.class);
         commandManager = new CommandManager(jda, userManager, command);

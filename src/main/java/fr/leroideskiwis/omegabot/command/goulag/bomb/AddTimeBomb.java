@@ -55,10 +55,4 @@ public class AddTimeBomb implements Command {
         return true;
     }
 
-    /*
-     * [X] donner une raison aux to
-     * XXX supprimer les perms au lieu de juste les deny
-     * XXX timestamp dynamic pour les bombes
-     * indiquer les prix dans description
-     */
 }
