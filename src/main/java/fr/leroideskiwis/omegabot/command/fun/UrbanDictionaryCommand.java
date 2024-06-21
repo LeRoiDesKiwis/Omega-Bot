@@ -71,7 +71,7 @@ public class UrbanDictionaryCommand implements Command {
                     .setTitle("Une erreur est survenue lors de la recherche de la définition pour \"" + searchTerm + "\".")
                     .setColor(Color.RED)
                     .setDescription(e.getMessage())
-                    .build()).queue();
+                    .build()).setEphemeral(true).queue();
             e.printStackTrace();
         }
     }
