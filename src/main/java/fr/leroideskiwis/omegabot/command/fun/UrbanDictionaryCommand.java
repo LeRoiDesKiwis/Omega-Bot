@@ -60,6 +60,8 @@ public class UrbanDictionaryCommand implements Command {
                     definitionsText.append("- ").append(definition).append("\n");
                 }
 
+                definitionsText.append("\nSee more [here](https://www.urbandictionary.com/define.php?term=").append(searchTerm).append(")");
+
                 event.replyEmbeds(new EmbedBuilder()
                         .setTitle("définitions pour `" + searchTerm.replace("+", " ") + "`")
                         .setColor(Color.BLUE)
