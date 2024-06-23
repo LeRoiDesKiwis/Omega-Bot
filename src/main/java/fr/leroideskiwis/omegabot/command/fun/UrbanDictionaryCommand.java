@@ -42,7 +42,9 @@ public class UrbanDictionaryCommand implements Command {
                 .filter(def -> def > 0)
                 .orElse(1);
 
-        String searchTerm = event.getOption("recherche").getAsString();
+        String searchTerm = event.getOption("recherche")
+                .getAsString()
+                .replace(" ", "+");
 
         try {
             JsonObject jsonResponse = fetchDefinition(searchTerm);
@@ -59,7 +61,7 @@ public class UrbanDictionaryCommand implements Command {
                 }
 
                 event.replyEmbeds(new EmbedBuilder()
-                        .setTitle("définitions pour `" + searchTerm + "`")
+                        .setTitle("définitions pour `" + searchTerm.replace("+", " ") + "`")
                         .setColor(Color.BLUE)
                         .setDescription(definitionsText.toString())
                         .build()).queue();
