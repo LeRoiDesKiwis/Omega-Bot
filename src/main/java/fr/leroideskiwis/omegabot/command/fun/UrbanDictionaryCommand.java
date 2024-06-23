@@ -57,7 +57,7 @@ public class UrbanDictionaryCommand implements Command {
                 for (int i = 0; i < definitionsToDisplay; i++) {
                     JsonObject definitionObj = definitionsList.get(i).getAsJsonObject();
                     String definition = cleanDefinition(definitionObj.get("definition").getAsString());
-                    definitionsText.append("- ").append(definition).append("\n\n");
+                    definitionsText.append("- ").append(definition).append("\n");
                 }
 
                 event.replyEmbeds(new EmbedBuilder()
