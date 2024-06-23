@@ -62,8 +62,10 @@ public class UrbanDictionaryCommand implements Command {
 
                 definitionsText.append("\nSee more [here](https://www.urbandictionary.com/define.php?term=").append(searchTerm).append(")");
 
+                String plurial = definitionsToDisplay > 1 ? "s" : "";
+
                 event.replyEmbeds(new EmbedBuilder()
-                        .setTitle("définitions pour `" + searchTerm.replace("+", " ") + "`")
+                        .setTitle("Définition%s pour \"%s\"".formatted(plurial, searchTerm.replace("+", " ")))
                         .setColor(Color.BLUE)
                         .setDescription(definitionsText.toString())
                         .build()).queue();
