@@ -31,7 +31,7 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class Main extends ListenerAdapter {
 
-    public static String version = "1.7";
+    public static String version = "1.7.1";
     private CommandManager commandManager;
     private EventManager eventManager;
     private UserManager userManager;
