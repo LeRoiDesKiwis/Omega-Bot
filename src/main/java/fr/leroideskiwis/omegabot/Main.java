@@ -10,6 +10,7 @@ import fr.leroideskiwis.omegabot.command.fun.ClassementCommand;
 import fr.leroideskiwis.omegabot.command.fun.GrosPuantCommand;
 import fr.leroideskiwis.omegabot.command.fun.LotteryCommand;
 import fr.leroideskiwis.omegabot.command.fun.SlotMachineCommand;
+import fr.leroideskiwis.omegabot.command.game.Connect4Command;
 import fr.leroideskiwis.omegabot.command.fun.UrbanDictionaryCommand;
 import fr.leroideskiwis.omegabot.command.goulag.*;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.AddTimeBomb;
@@ -25,6 +26,7 @@ import fr.leroideskiwis.omegabot.listeners.MessageListener;
 import fr.leroideskiwis.omegabot.user.UserManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -60,6 +62,7 @@ public class Main extends ListenerAdapter {
                 new ChangelogCommand(),
                 new ClassementCommand(userManager),
                 new SpecialChannelCommand(eventManager),
+                new Connect4Command(userManager, eventManager),
                 new UrbanDictionaryCommand(),
                 new PingCommand(),
                 new GrosPuantCommand()
