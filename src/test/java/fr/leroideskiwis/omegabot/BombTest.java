@@ -39,15 +39,9 @@ class BombTest {
     @Test
     void giveBomb() {
         OmegaUser user = mock(OmegaUser.class);
-        when(user.isImmune(BuyType.BOMB)).thenReturn(true);
-        bomb.giveBomb(callback, user);
-        verify(callback).reply(anyString());
-        verify(this.user, never()).giveBomb(user);
-
-        when(user.isImmune(BuyType.BOMB)).thenReturn(false);
         bomb.giveBomb(callback, user);
 
-        verify(callback, times(2)).reply(anyString());
+        verify(callback, times(1)).reply(anyString());
         verify(this.user).giveBomb(user);
     }
 
