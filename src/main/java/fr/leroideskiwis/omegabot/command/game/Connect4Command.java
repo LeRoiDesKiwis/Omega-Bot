@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class Connect4Command implements Command {
 
@@ -68,17 +69,19 @@ public class Connect4Command implements Command {
 
     @Override
     public boolean isBlacklisted() {
-        return false;
+        return true;
     }
 
     public class Connect4Event implements OmegaEvent{
 
         private BoardC4 board;
         private int expirationCount;
+        private TimerTask timerTask;
 
         public Connect4Event(BoardC4 board) {
             Timer timer = new Timer();
-            timer.schedule(new java.util.TimerTask() {
+
+            timerTask = new java.util.TimerTask() {
                 @Override
                 public void run() {
                     expirationCount++;
@@ -87,7 +90,8 @@ public class Connect4Command implements Command {
                         board.forceEnd();
                     }
                 }
-            }, 0, 1000);
+            };
+            timer.schedule(timerTask, 0, 1000);
             this.board = board;
         }
 
@@ -113,7 +117,7 @@ public class Connect4Command implements Command {
 
         @Override
         public void end() {
-
+            timerTask.cancel();
         }
     }
 }
