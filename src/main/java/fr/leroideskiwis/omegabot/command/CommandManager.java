@@ -80,7 +80,8 @@ public class CommandManager {
                 .findFirst()
                 .ifPresent(entrySet -> {
                     Command command = entrySet.getValue();
-                    if(command.isBlacklisted() && !event.getChannelId().equals(System.getenv("BOT_CHANNEL_ID"))){
+                    String botChannelId = System.getenv("BOT_CHANNEL_ID");
+                    if(command.isBlacklisted() && !botChannelId.equals("DISABLED") && !event.getChannelId().equals(botChannelId)){
                         event.reply("Cette commande est désactivée dans ce salon.").setEphemeral(true).queue();
                         return;
                     }
