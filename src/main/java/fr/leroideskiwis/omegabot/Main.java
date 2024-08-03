@@ -14,6 +14,7 @@ import fr.leroideskiwis.omegabot.command.fun.UrbanDictionaryCommand;
 import fr.leroideskiwis.omegabot.command.goulag.*;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.AddTimeBomb;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.GiveBomb;
+import fr.leroideskiwis.omegabot.command.goulag.bomb.ImmuneBomb;
 import fr.leroideskiwis.omegabot.command.goulag.bomb.LockBomb;
 import fr.leroideskiwis.omegabot.command.other.AboutCommand;
 import fr.leroideskiwis.omegabot.command.other.PingCommand;
@@ -67,7 +68,8 @@ public class Main extends ListenerAdapter {
                 new AddTimeBomb(userManager),
                 new GiveBomb(userManager),
                 new LockBomb(userManager),
-                new BombCommand.InfoCommand());
+                new BombCommand.InfoCommand(),
+                new ImmuneBomb());
 
         jda.addEventListener(new MessageListener(eventManager, userManager));
         jda.addEventListener(new CommandListener(commandManager));

@@ -45,6 +45,14 @@ public class OmegaUser {
     }
 
     /**
+     * remove the immunity of the user to the {@code type} of buy
+     * @param type the type of buy
+     */
+    public void removeImmunity(BuyType type) {
+        immunes.remove(type);
+    }
+
+    /**
      * check if the user is immune to the {@code type} of buy
      * @param type the type of buy
      * @return if the user is immune
