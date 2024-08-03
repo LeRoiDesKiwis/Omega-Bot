@@ -1,5 +1,6 @@
 package fr.leroideskiwis.omegabot.command.goulag.bomb;
 
+import fr.leroideskiwis.omegabot.BuyType;
 import fr.leroideskiwis.omegabot.command.Category;
 import fr.leroideskiwis.omegabot.command.Command;
 import fr.leroideskiwis.omegabot.user.OmegaUser;
@@ -38,15 +39,27 @@ public class GiveBomb implements Command {
                         return;
                     }
                     if (!user.buy(event, price())) return;
+                    if(checkImmunity(user, target, event)) return;
                     bomb.giveBomb(event, target);
                 },
                 () -> {
                     if (!user.buy(event, CREATION_PRICE)) return;
+                    if(checkImmunity(user, target, event)) return;
 
                     target.createBomb(event.getGuildChannel().asTextChannel());
                     event.reply(String.format("%s a donné une bombe à %s !", user.getAsMention(), target.getAsMention())).queue();
                 });
 
+    }
+
+    private boolean checkImmunity(OmegaUser user, OmegaUser target, SlashCommandInteraction event){
+        if(target.isImmune(BuyType.BOMB)){
+            event.reply("Oups ! La bombe t'a glissé des mains et t'as explosé dessus, tu pars donc 5min au goulag. :wave:").queue();
+            user.goulag(5, "bomb");
+            target.removeImmunity(BuyType.BOMB);
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -15,7 +15,7 @@ public class SlotMachineCommand implements Command {
 
     @Override
     public SlashCommandData commandData() {
-        return Commands.slash("slotmachine", "Vous pouvez gagner la moitié de votre mise ou la perdre complètement.")
+        return Commands.slash("slotmachine", "Vous pouvez gagner jusqu'à 80% de votre mise ou la perdre complètement.")
                 .addOption(OptionType.INTEGER, "mise", "La mise", true);
     }
 
@@ -31,7 +31,7 @@ public class SlotMachineCommand implements Command {
             return;
         }
         if(random.nextBoolean()){
-            int won = random.nextInt((int)(mise*0.5))+1;
+            int won = random.nextInt((int)(mise*0.8))+1;
             user.givePoints(won);
             event.reply(String.format("Vous avez gagné %d points !", won)).queue();
         } else {

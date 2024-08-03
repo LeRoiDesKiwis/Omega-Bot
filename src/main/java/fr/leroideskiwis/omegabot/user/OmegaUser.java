@@ -3,11 +3,9 @@ package fr.leroideskiwis.omegabot.user;
 import fr.leroideskiwis.omegabot.Bomb;
 import fr.leroideskiwis.omegabot.BuyType;
 import fr.leroideskiwis.omegabot.database.Database;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.interactions.callbacks.IReplyCallback;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
 import java.sql.SQLException;
@@ -44,6 +42,14 @@ public class OmegaUser {
      */
     public void immune(BuyType type, Date date){
         immunes.put(type, date);
+    }
+
+    /**
+     * remove the immunity of the user to the {@code type} of buy
+     * @param type the type of buy
+     */
+    public void removeImmunity(BuyType type) {
+        immunes.remove(type);
     }
 
     /**
@@ -96,6 +102,12 @@ public class OmegaUser {
         }
         this.points += points;
         save(); //pas opti mais comme y'a pas bcp de membres ça va
+    }
+
+    public void transferPoints(OmegaUser user, int points){
+        if(!hasEnoughPoints(points)) return;
+        takePoints(points);
+        user.givePoints(points);
     }
 
     /**
@@ -159,6 +171,10 @@ public class OmegaUser {
 
     public String getName() {
         return member.getEffectiveName();
+    }
+
+    public String getRealName(){
+        return member.getUser().getName();
     }
 
     @Override

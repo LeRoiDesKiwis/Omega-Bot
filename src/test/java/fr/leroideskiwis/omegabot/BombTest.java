@@ -40,7 +40,8 @@ class BombTest {
     void giveBomb() {
         OmegaUser user = mock(OmegaUser.class);
         bomb.giveBomb(callback, user);
-        verify(callback).reply(anyString());
+
+        verify(callback, times(1)).reply(anyString());
         verify(this.user).giveBomb(user);
     }
 

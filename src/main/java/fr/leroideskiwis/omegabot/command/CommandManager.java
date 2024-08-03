@@ -7,7 +7,10 @@ import fr.leroideskiwis.omegabot.util.MessageUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -64,12 +67,21 @@ public class CommandManager {
      */
     public void execute(SlashCommandInteraction event) {
         OmegaUser user = userManager.from(event.getMember());
+
+        if(event.getOptions().stream()
+                .filter(option -> option.getType() == OptionType.USER)
+                .map(OptionMapping::getAsUser)
+                .anyMatch(User::isBot)){
+            event.reply("Vous ne pouvez pas mentionner de bot.").setEphemeral(true).queue();
+            return;
+        }
         commands.entrySet().stream()
                 .filter(command -> command.getKey().equalsIgnoreCase(event.getFullCommandName()))
                 .findFirst()
                 .ifPresent(entrySet -> {
                     Command command = entrySet.getValue();
-                    if(command.isBlacklisted() && !event.getChannelId().equals(System.getenv("BOT_CHANNEL_ID"))){
+                    String botChannelId = System.getenv("BOT_CHANNEL_ID");
+                    if(command.isBlacklisted() && !botChannelId.equals("DISABLED") && !event.getChannelId().equals(botChannelId)){
                         event.reply("Cette commande est désactivée dans ce salon.").setEphemeral(true).queue();
                         return;
                     }
