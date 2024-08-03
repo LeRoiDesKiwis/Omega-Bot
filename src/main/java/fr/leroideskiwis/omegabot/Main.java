@@ -62,7 +62,7 @@ public class Main extends ListenerAdapter {
                 new ChangelogCommand(),
                 new ClassementCommand(userManager),
                 new SpecialChannelCommand(eventManager),
-                new Connect4Command(userManager, eventManager)
+                new Connect4Command(userManager, eventManager),
                 new UrbanDictionaryCommand(),
                 new PingCommand(),
                 new GrosPuantCommand()
