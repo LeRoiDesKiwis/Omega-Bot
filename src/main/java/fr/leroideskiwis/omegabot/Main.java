@@ -44,6 +44,7 @@ public class Main extends ListenerAdapter {
     private void launch(String token) {
         this.jda = JDABuilder.createLight(token)
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .setMemberCachePolicy(MemberCachePolicy.ALL).build();
         this.eventManager = new EventManager();
         this.userManager = new UserManager();
