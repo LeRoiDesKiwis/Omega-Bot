@@ -32,8 +32,8 @@ public class BoardC4 {
         builder.append("\n");
         for(int i = 5; i >= 0; i--){
             for(ColumnC4 column : columns){
-                Optional<String> piece = column.get(i);
-                builder.append(piece.orElse(":black_circle:"));
+                Optional<PieceC4> piece = column.get(i);
+                builder.append(piece.map(PieceC4::toString).orElse(":black_circle:"));
             }
             builder.append("\n");
         }
@@ -54,6 +54,12 @@ public class BoardC4 {
         if(column.isEmpty()) return false;
         if(column.get().isFull()) return false;
         column.get().addPiece(new PieceC4(currentPlayer));
+        Optional<PlayerC4> player = checkWin();
+        if(player.isPresent()){
+            finished = true;
+            error = "Le joueur %s a gagné !".formatted(player.get().getAsMention());
+            display();
+        }
         return true;
     }
 
@@ -73,5 +79,20 @@ public class BoardC4 {
         finished = true;
         error = "La partie a expirée !";
         display();
+    }
+
+    public Optional<PieceC4> getPiece(int i, int j){
+        return columns.get(i).get(j);
+    }
+
+    public Optional<PlayerC4> checkWin(){
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 8; j++){
+                TokenSolver solver = new TokenSolver(this, i, j);
+                Optional<PlayerC4> player = solver.solve();
+                if(player.isPresent()) return player;
+            }
+        }
+        return Optional.empty();
     }
 }

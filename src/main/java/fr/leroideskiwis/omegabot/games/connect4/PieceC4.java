@@ -12,4 +12,15 @@ public class PieceC4 {
         return player.toString();
     }
 
+    public boolean isPlayer(PlayerC4 player){
+        return this.player.equals(player);
+    }
+
+    public PlayerC4 getPlayer(){
+        return player;
+    }
+
+    public boolean isSamePlayer(PieceC4 pieceC4) {
+        return isPlayer(pieceC4.getPlayer());
+    }
 }

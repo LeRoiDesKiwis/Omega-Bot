@@ -21,8 +21,8 @@ public class ColumnC4 {
         return pieces.size() >= 6;
     }
 
-    public Optional<String> get(int i){
-        return pieces.size() > i ? Optional.of(pieces.get(i).toString()) : Optional.empty();
+    public Optional<PieceC4> get(int i){
+        return pieces.size() > i ? Optional.of(pieces.get(i)) : Optional.empty();
     }
 
     public boolean isIdentifier(String identifier){
