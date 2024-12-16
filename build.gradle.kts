@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
     testImplementation("org.mockito:mockito-core:5.14.1")
     implementation("net.dv8tion:JDA:5.1.2")
     implementation("org.xerial:sqlite-jdbc:3.46.1.3")
